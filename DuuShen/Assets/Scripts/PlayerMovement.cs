@@ -14,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     private float xMove = 0f; //Horizontal Movement
     [SerializeField] float moveSpeed = 6f; //Move Speed
     [SerializeField] private float jumpForce = 14f; //Jump Force
+    private bool doubleJump;
+    private float coyoteTime = 0.2f; //Late jump smoothness
+    private float coyoteTimeCounter; //Late jump smoothness
+
     private float speedBoostTimer; //Speed Boost Timer
     private bool checkBoost; //Speed Boost Toggle
     private float slowTimer; //Slow Debuff Timer
@@ -41,9 +45,33 @@ public class PlayerMovement : MonoBehaviour
         xMove = Input.GetAxisRaw("Horizontal"); //Horizontal movement with input Manager - Horizontal
         rb.velocity = new Vector2(xMove * moveSpeed, rb.velocity.y); //Negative and positive x values, don't set y to 0
 
-        if (Input.GetButtonDown("Jump") && isGrounded() == true) //Jump with GetButtonDown in Input Manager
+        //Late jump smoothness
+        if (IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce); //Don't set x to 0
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        if (IsGrounded() && !Input.GetButton("Jump"))
+        {
+            doubleJump = false;
+        }
+
+        if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
+        {
+            if (coyoteTimeCounter > 0f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+
+            if (IsGrounded() || doubleJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                doubleJump = !doubleJump;
+            }
         }
 
         if (checkBoost) //Speed boost timer
@@ -120,8 +148,9 @@ public class PlayerMovement : MonoBehaviour
         anim.SetInteger("state", (int)state); //Animation states line 15
     }
 
-    private bool isGrounded() //Check whether is grounded to prevent infinite jumps
+    private bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
+
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, jumpableGround); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 }
