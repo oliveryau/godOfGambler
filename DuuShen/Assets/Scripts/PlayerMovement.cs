@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Dash") && canDash)
+        if (Input.GetKeyDown(KeyCode.S) && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -149,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (xMove > 0f) //Running - Right/positive direction
         {
-            state = movementState.running; //Line 15, go to run
+            state = movementState.running; //movementState line, go to run
             rbSprite.flipX = false; //Flip back to turn right when going forward
         }
         else if (xMove < 0f) //Left/negative direction
@@ -172,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
             state = movementState.falling;
         }
 
-        anim.SetInteger("state", (int)state); //Animation states line 15
+        anim.SetInteger("state", (int)state); //Animation states at movementState line
     }
 
     private bool IsGrounded() //Check whether is grounded to prevent infinite jumps
