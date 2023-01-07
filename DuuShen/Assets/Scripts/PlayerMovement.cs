@@ -8,13 +8,22 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
     private SpriteRenderer rbSprite; //Flip left when moving back
     private Animator anim; //Trigger animation
+    [SerializeField] private TrailRenderer tr;
 
     [SerializeField] private LayerMask jumpableGround;
 
     private float xMove = 0f; //Horizontal Movement
     [SerializeField] float moveSpeed = 6f; //Move Speed
-    [SerializeField] private float jumpForce = 14f; //Jump Force
-    private bool doubleJump;
+    [SerializeField] private float jumpForce = 12f; //Jump Force
+
+    private bool canDash = true;
+    private bool isDashing;
+    private bool isDashingCooldown;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 0.5f;
+    private float originalGravity;
+
     private float coyoteTime = 0.2f; //Late jump smoothness
     private float coyoteTimeCounter; //Late jump smoothness
 
@@ -32,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         rbColl = GetComponent<BoxCollider2D>(); //Standard stuff
         rbSprite = GetComponent<SpriteRenderer>(); //Standard stuff
         anim = GetComponent<Animator>(); //Standard stuff
+        tr = GetComponent<TrailRenderer>();
 
         speedBoostTimer = 0f;
         checkBoost = false;
@@ -42,6 +52,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //dash once only
+        if (isDashing) //Prevent player from doing any other action while dashing
+        {
+            return;
+        }
+
         xMove = Input.GetAxisRaw("Horizontal"); //Horizontal movement with input Manager - Horizontal
         rb.velocity = new Vector2(xMove * moveSpeed, rb.velocity.y); //Negative and positive x values, don't set y to 0
 
@@ -55,22 +71,25 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        if (IsGrounded() && !Input.GetButton("Jump"))
-        {
-            doubleJump = false;
-        }
-
         if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
         {
             if (coyoteTimeCounter > 0f)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }
+        }
 
-            if (IsGrounded() || doubleJump)
+        if (Input.GetButtonDown("Dash") && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+
+        if (!isDashingCooldown)
+        {
+            canDash = true;
+            if (IsGrounded())
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                doubleJump = !doubleJump;
+                canDash = false;
             }
         }
 
@@ -99,6 +118,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         UpdateAnimation();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDashing)
+        {
+            return;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -152,5 +179,23 @@ public class PlayerMovement : MonoBehaviour
     {
 
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, jumpableGround); //center, size, angle, direction, distance, layer - Returns boolean by itself
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        isDashingCooldown = true;
+        originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(xMove * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+        isDashingCooldown = false;
     }
 }
