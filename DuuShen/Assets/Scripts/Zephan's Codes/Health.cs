@@ -10,6 +10,9 @@ public class Health : MonoBehaviour
     private Animator anim;
     [SerializeField] private int health = 100;
 
+    [SerializeField]
+    private Text statusText;
+
     private int MAX_HEALTH = 100;
 
     // Update is called once per frame
@@ -36,6 +39,7 @@ public class Health : MonoBehaviour
         {
             Die();
         }
+
     }
 
     public void Heal (int amount)
@@ -56,8 +60,18 @@ public class Health : MonoBehaviour
         {
             this.health += amount;
         }
-    } 
-    
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Enemy")) //Check Enemy tag
+        {
+            Destroy(collider.gameObject);
+            statusText.text = "Enemy Defeated!";
+
+        }
+    }
+
     private void Die()
     {
         rb.bodyType = RigidbodyType2D.Static; //Make player rb unable to move
