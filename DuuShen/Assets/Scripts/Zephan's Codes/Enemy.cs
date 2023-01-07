@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Enemy : MonoBehaviour
     private float speed = 1.5f;
     [SerializeField]
     private EnemyData data;
+    [SerializeField] 
+    private Text statusText;
 
     private GameObject player;
 
@@ -21,7 +24,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        
+        Swarm();   
     }
 
     private void SetEnemyValues()
@@ -41,6 +44,13 @@ public class Enemy : MonoBehaviour
         {
            collider.GetComponent<Health>().Damage(damage);
            this.GetComponent<Health>().Damage(10000);
+        }
+
+        if (collider.gameObject.CompareTag("Enemy")) //Check Slows tag
+        {
+            Destroy(collider.gameObject);
+            statusText.text = "Enemy Defeated!";
+
         }
     }
 }
