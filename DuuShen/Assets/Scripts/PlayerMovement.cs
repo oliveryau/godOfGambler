@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
-    private SpriteRenderer rbSprite; //Flip left when moving back
+    public SpriteRenderer rbSprite; //Flip left when moving back
     private Animator anim; //Trigger animation
     [SerializeField] private TrailRenderer tr;
 
@@ -52,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //dash once only
         if (isDashing) //Prevent player from doing any other action while dashing
         {
             return;

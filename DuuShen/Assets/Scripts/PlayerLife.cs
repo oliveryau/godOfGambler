@@ -9,8 +9,9 @@ public class PlayerLife : MonoBehaviour
     //private Rigidbody2D rb;
     private Animator anim; //Trigger animation
 
-    [SerializeField] private int health = 100;
-    private int maxHealth = 100;
+    public int currentHealth = 100;
+    public int maxHealth = 100;
+    public Slider slider;
 
     //public float timeRemaining = 120f;
     //public bool timeRun = false;
@@ -24,13 +25,15 @@ public class PlayerLife : MonoBehaviour
         //rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>(); //Get animation component
         //timeRun = true;
+        currentHealth = maxHealth;
+        SetMaxHealth(maxHealth);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-        //    Damage(10);
+            //Damage(10); //Can test if health / attacking is working
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -91,15 +94,27 @@ public class PlayerLife : MonoBehaviour
     //    Physics2D.IgnoreLayerCollision(7, 8, false);
     //}
 
+    public void SetMaxHealth(int health)
+    {
+        slider.maxValue = health;
+        slider.value = health;
+    }
+
+    public void SetHealth(int health)
+    {
+        slider.value = health;
+    }
+
     public void Damage (int amount)
     {
         if (amount < 0)
         {
-            throw new System.ArgumentOutOfRangeException("No negative health");
+            throw new System.ArgumentOutOfRangeException("No negative damage");
         }
-        health -= amount;
+        currentHealth -= amount;
+        SetHealth(currentHealth);
 
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -112,13 +127,13 @@ public class PlayerLife : MonoBehaviour
             throw new System.ArgumentOutOfRangeException("No negative healing");
         }
 
-        if (health + amount > maxHealth)
+        if (currentHealth + amount > maxHealth)
         {
-            health = maxHealth;
+            currentHealth = maxHealth;
         }
         else
         {
-            health += amount;
+            currentHealth += amount;
         }
     }
 
@@ -126,6 +141,6 @@ public class PlayerLife : MonoBehaviour
     {
         //rb.bodyType = RigidbodyType2D.Static; //Make player rb unable to move
         anim.SetTrigger("death"); //Animation state/condition
-        //Destroy(gameObject);
+        gameOverScreen.SetActive(true);
     }
 }
