@@ -15,16 +15,18 @@ public class AttackArea : MonoBehaviour
     private void Update()
     {
         Vector2 attackScale = transform.localScale;
-        if (Input.GetAxis("Horizontal") < 0)
+        if (Input.GetAxisRaw("Horizontal") < 0)
         {
             attackScale.x = -2;
-            shortAttack.flipX = true;
+            transform.eulerAngles = new Vector3(180, 0);
+            //shortAttack.flipX = true;
         }
 
-        if (Input.GetAxis("Horizontal") > 0)
+        if (Input.GetAxisRaw("Horizontal") > 0)
         {
             attackScale.x = 2;
-            shortAttack.flipX = false;
+            transform.eulerAngles = new Vector3(0, 0);
+            //shortAttack.flipX = false;
         }
         transform.localScale = attackScale;
     }

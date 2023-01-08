@@ -144112,7 +144112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308aae9870ba27c4991e0b3fcfaae5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shortAttack: {fileID: 0}
+  shortAttack: {fileID: 1693480547}
 --- !u!60 &1693480546
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -144138,9 +144138,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2, y: 2}
-      - {x: 0.5, y: 0}
-      - {x: 2, y: -2}
+    - - {x: 0, y: 0.75}
+      - {x: 0, y: -0.75}
+      - {x: 1.5, y: -2}
+      - {x: 1.5, y: 2}
 --- !u!212 &1693480547
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -144179,8 +144180,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1296268063
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 97c2ef8705b939d4191a376f5c620814, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
