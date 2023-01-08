@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float moveSpeed = 6f; //Move Speed
     [SerializeField] private float jumpForce = 12f; //Jump Force
 
+    private bool doubleJump;
+
     private bool canDash = true;
     private bool isDashing;
     private bool isDashingCooldown;
@@ -27,10 +29,10 @@ public class PlayerMovement : MonoBehaviour
     private float coyoteTime = 0.2f; //Late jump smoothness
     private float coyoteTimeCounter; //Late jump smoothness
 
-    private float speedBoostTimer; //Speed Boost Timer
-    private bool checkBoost; //Speed Boost Toggle
-    private float slowTimer; //Slow Debuff Timer
-    private bool checkSlow; //Slow Debuff Toggle
+    //private float speedBoostTimer; //Speed Boost Timer
+    //private bool checkBoost; //Speed Boost Toggle
+    //private float slowTimer; //Slow Debuff Timer
+    //private bool checkSlow; //Slow Debuff Toggle
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -43,10 +45,10 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>(); //Standard stuff
         tr = GetComponent<TrailRenderer>();
 
-        speedBoostTimer = 0f;
-        checkBoost = false;
-        slowTimer = 0f;
-        checkSlow = false;
+        //speedBoostTimer = 0f;
+        //checkBoost = false;
+        //slowTimer = 0f;
+        //checkSlow = false;
     }
 
     // Update is called once per frame
@@ -70,11 +72,22 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
+        if (IsGrounded() && !Input.GetButton("Jump"))
+        {
+            doubleJump = false;
+        }
+
         if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
         {
             if (coyoteTimeCounter > 0f)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
+
+            if (IsGrounded() || doubleJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                doubleJump = !doubleJump;
             }
         }
 
@@ -92,29 +105,29 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (checkBoost) //Speed boost timer
-        {
-            moveSpeed = 8.5f;
-            speedBoostTimer += Time.deltaTime;
-            if (speedBoostTimer >= 4) //4 second buff
-            {
-                moveSpeed = 6f;
-                speedBoostTimer = 0f;
-                checkBoost = false;
-            }
-        }
+        //if (checkBoost) //Speed boost timer
+        //{
+        //    moveSpeed = 8.5f;
+        //    speedBoostTimer += Time.deltaTime;
+        //    if (speedBoostTimer >= 4) //4 second buff
+        //    {
+        //        moveSpeed = 6f;
+        //        speedBoostTimer = 0f;
+        //        checkBoost = false;
+        //    }
+        //}
 
-        if (checkSlow) //Slow debuff timer
-        {
-            moveSpeed = 3f;
-            slowTimer += Time.deltaTime;
-            if (slowTimer >= 3) //3 second buff
-            {
-                moveSpeed = 6f;
-                slowTimer = 0f;
-                checkSlow = false;
-            }
-        }
+        //if (checkSlow) //Slow debuff timer
+        //{
+        //    moveSpeed = 3f;
+        //    slowTimer += Time.deltaTime;
+        //    if (slowTimer >= 3) //3 second buff
+        //    {
+        //        moveSpeed = 6f;
+        //        slowTimer = 0f;
+        //        checkSlow = false;
+        //    }
+        //}
 
         UpdateAnimation();
     }
@@ -129,17 +142,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Slows")) //Check Slows tag
-        {
-            checkBoost = false;
-            checkSlow = true; //For speed debuff timer
-        }
+        //if (collision.gameObject.CompareTag("Slows")) //Check Slows tag
+        //{
+        //    checkBoost = false;
+        //    checkSlow = true; //For speed debuff timer
+        //}
 
-        if (collision.gameObject.CompareTag("Collectible")) //Check Collectible tag
-        {
-            checkSlow = false;
-            checkBoost = true; //For speed boost timer
-        }
+        //if (collision.gameObject.CompareTag("Collectible")) //Check Collectible tag
+        //{
+        //    checkSlow = false;
+        //    checkBoost = true; //For speed boost timer
+        //}
     }
 
     private void UpdateAnimation()
@@ -194,7 +207,10 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
-        isDashingCooldown = false;
+        //if (IsGrounded())
+        //{
+            canDash = true;
+            isDashingCooldown = false;
+        //}
     }
 }
