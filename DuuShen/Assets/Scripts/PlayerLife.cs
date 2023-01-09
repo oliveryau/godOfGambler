@@ -9,8 +9,10 @@ public class PlayerLife : MonoBehaviour
     //private Rigidbody2D rb;
     private Animator anim; //Trigger animation
 
-    public int currentHealth = 100;
+    public int currentHealth;
     public int maxHealth = 100;
+    public int healthPickup = 10;
+    public int healthTraps = 10;
     public Slider slider;
 
     //public float timeRemaining = 120f;
@@ -29,17 +31,17 @@ public class PlayerLife : MonoBehaviour
         SetMaxHealth(maxHealth);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            //Damage(10); //Can test if health / attacking is working
-        }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        Damage(10); //Can test if health / attacking is working
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            //Heal(10);
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    Heal(10);
+        //}
 
         //if (timeRemaining > 0)
         //{
@@ -59,45 +61,64 @@ public class PlayerLife : MonoBehaviour
         //    timeRun = false;
         //    gameOverScreen.SetActive(true);
         //}
+    //}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            if (currentHealth == 0)
+            {
+                Die();
+                SetHealth(currentHealth);
+            }
+            else
+            {
+                currentHealth -= healthTraps;
+                SetHealth(currentHealth);
+                StartCoroutine(GetHurt());
+            }
+        }
+        //    if (collision.gameObject.CompareTag("Trap")) //Check tag
+        //    {
+        //        health--;
+        //        if (health <= 0)
+        //        {
+        //            Die();
+        //        }
+        //        else
+        //        {
+        //            StartCoroutine(GetHurt()); //Hearts
+        //        }
+        //    }
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Trap")) //Check tag
-    //    {
-    //        health--;
-    //        if (health <= 0)
-    //        {
-    //            Die();
-    //            gameOverScreen.SetActive(true);
-    //        }
-    //        else
-    //        {
-    //            StartCoroutine(GetHurt()); //Hearts
-    //        }
-    //    }
-    //}
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Slows"))
-    //    {
-    //        StartCoroutine(GetHurt());
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Heal"))
+        {
+            if (currentHealth < maxHealth)
+            {
+                Destroy(collision.gameObject);
+                currentHealth += healthPickup;
+                SetHealth(currentHealth);
+            }
+        }
+    }
 
-    //IEnumerator GetHurt() //can use for hearts too
-    //{
-    //    Physics2D.IgnoreLayerCollision(7, 8);
-    //    anim.SetLayerWeight(1, 1); //Animator layer 1(gethurt animation), weight 1(visible)
-    //    yield return new WaitForSeconds(3);
-    //    anim.SetLayerWeight(1, 0); //Animator layer 0(base), weight 0(invisible)
-    //    Physics2D.IgnoreLayerCollision(7, 8, false);
-    //}
+    IEnumerator GetHurt() //can use for hearts too
+    {
+        Physics2D.IgnoreLayerCollision(7, 8);
+        anim.SetLayerWeight(1, 1); //Animator layer 1(gethurt animation), weight 1(visible)
+        yield return new WaitForSeconds(3);
+        anim.SetLayerWeight(1, 0); //Animator layer 0(base), weight 0(invisible)
+        Physics2D.IgnoreLayerCollision(7, 8, false);
+    }
 
     public void SetMaxHealth(int health)
     {
-        slider.maxValue = health;
-        slider.value = health;
+        slider.maxValue = health; //Max value of healthbar = currentHealth which is 100
+        slider.value = health; //Making sure the slider starts at maxHealth
     }
 
     public void SetHealth(int health)
@@ -105,37 +126,37 @@ public class PlayerLife : MonoBehaviour
         slider.value = health;
     }
 
-    public void Damage (int amount)
-    {
-        if (amount < 0)
-        {
-            throw new System.ArgumentOutOfRangeException("No negative damage");
-        }
-        currentHealth -= amount;
-        SetHealth(currentHealth);
+    //public void Damage (int amount)
+    //{
+    //    if (amount < 0)
+    //    {
+    //        throw new System.ArgumentOutOfRangeException("No negative damage");
+    //    }
+    //    currentHealth -= amount;
+    //    SetHealth(currentHealth);
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
+    //    if (currentHealth <= 0)
+    //    {
+    //        Die();
+    //    }
+    //}
 
-    public void Heal(int amount)
-    {
-        if (amount < 0)
-        {
-            throw new System.ArgumentOutOfRangeException("No negative healing");
-        }
+    //public void Heal(int amount)
+    //{
+    //    if (amount < 0)
+    //    {
+    //        throw new System.ArgumentOutOfRangeException("No negative healing");
+    //    }
 
-        if (currentHealth + amount > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        else
-        {
-            currentHealth += amount;
-        }
-    }
+    //    if (currentHealth + amount > maxHealth)
+    //    {
+    //        currentHealth = maxHealth;
+    //    }
+    //    else
+    //    {
+    //        currentHealth += amount;
+    //    }
+    //}
 
     private void Die()
     {
