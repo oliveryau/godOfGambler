@@ -50,7 +50,7 @@ public class EnemyMovement : MonoBehaviour
     {
         distance = Vector2.Distance(transform.position, player.transform.position); //calculate the distance
 
-        if (distance < startFollowRange && !colliderType.IsTouchingLayers(LayerMask.GetMask("Ground"))) //Check if player is in following range
+        if (distance < startFollowRange) //Check if player is in following range
         {
             MoveToPlayer();
         }

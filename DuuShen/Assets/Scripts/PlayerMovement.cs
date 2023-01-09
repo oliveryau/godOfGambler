@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask jumpableGround;
 
     private float xMove = 0f; //Horizontal Movement
-    [SerializeField] float moveSpeed = 6f; //Move Speed
+    [SerializeField] private float moveSpeed = 6f; //Move Speed
     [SerializeField] private float jumpForce = 12f; //Jump Force
 
     private bool doubleJump;
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashingCooldown;
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.5f;
+    //private float dashingCooldown = 0.5f;
     private float originalGravity;
 
     private float coyoteTime = 0.2f; //Late jump smoothness
@@ -140,8 +140,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
         //if (collision.gameObject.CompareTag("Slows")) //Check Slows tag
         //{
         //    checkBoost = false;
@@ -153,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         //    checkSlow = false;
         //    checkBoost = true; //For speed boost timer
         //}
-    }
+    //}
 
     private void UpdateAnimation()
     {
@@ -187,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetInteger("state", (int)state); //Animation states at movementState line
     }
 
-    private bool IsGrounded() //Check whether is grounded to prevent infinite jumps
+    public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
 
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, jumpableGround); //center, size, angle, direction, distance, layer - Returns boolean by itself
@@ -206,11 +206,8 @@ public class PlayerMovement : MonoBehaviour
         tr.emitting = false;
         rb.gravityScale = originalGravity;
         isDashing = false;
-        yield return new WaitForSeconds(dashingCooldown);
-        //if (IsGrounded())
-        //{
-            canDash = true;
-            isDashingCooldown = false;
-        //}
+        yield return new WaitUntil(() => IsGrounded());
+        canDash = true;
+        isDashingCooldown = false;
     }
 }

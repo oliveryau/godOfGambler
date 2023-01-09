@@ -8,6 +8,7 @@ TagManager:
   - Trap
   - Slows
   - Enemy
+  - Attack
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Ground
   - Slows
   - Player
-  - 
+  - Wall
   - 
   - 
   - 
