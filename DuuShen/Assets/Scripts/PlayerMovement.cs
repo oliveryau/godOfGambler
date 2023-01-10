@@ -6,17 +6,20 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
-    public SpriteRenderer rbSprite; //Flip left when moving back
+    private SpriteRenderer rbSprite; //Flip left when moving back
     private Animator anim; //Trigger animation
-    [SerializeField] private TrailRenderer tr;
-
+    [SerializeField] private TrailRenderer trail;
     [SerializeField] private LayerMask jumpableGround;
 
     private float xMove = 0f; //Horizontal Movement
     [SerializeField] private float moveSpeed = 6f; //Move Speed
     [SerializeField] private float jumpForce = 12f; //Jump Force
-
     private bool doubleJump;
+
+    private float vertical;
+    private float verticalSpeed = 6f;
+    private bool isLadder;
+    private bool isClimbing;
 
     private bool canDash = true;
     private bool isDashing;
@@ -43,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         rbColl = GetComponent<BoxCollider2D>(); //Standard stuff
         rbSprite = GetComponent<SpriteRenderer>(); //Standard stuff
         anim = GetComponent<Animator>(); //Standard stuff
-        tr = GetComponent<TrailRenderer>();
+        //trail = GetComponent<TrailRenderer>();
 
         //speedBoostTimer = 0f;
         //checkBoost = false;
@@ -61,6 +64,13 @@ public class PlayerMovement : MonoBehaviour
 
         xMove = Input.GetAxisRaw("Horizontal"); //Horizontal movement with input Manager - Horizontal
         rb.velocity = new Vector2(xMove * moveSpeed, rb.velocity.y); //Negative and positive x values, don't set y to 0
+
+        vertical = Input.GetAxisRaw("Vertical");
+
+        if (isLadder && Mathf.Abs(vertical) > 0f)
+        {
+            isClimbing = true;
+        }
 
         //Late jump smoothness
         if (IsGrounded())
@@ -128,20 +138,33 @@ public class PlayerMovement : MonoBehaviour
         //        checkSlow = false;
         //    }
         //}
-
         UpdateAnimation();
     }
 
     private void FixedUpdate()
     {
+        if (isClimbing)
+        {
+            rb.gravityScale = 0f;
+            rb.velocity = new Vector2(rb.velocity.x, vertical * verticalSpeed);
+        }
+        else
+        {
+            rb.gravityScale = 3f;
+        }
+
         if (isDashing)
         {
             return;
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = true;
+        }
         //if (collision.gameObject.CompareTag("Slows")) //Check Slows tag
         //{
         //    checkBoost = false;
@@ -153,7 +176,16 @@ public class PlayerMovement : MonoBehaviour
         //    checkSlow = false;
         //    checkBoost = true; //For speed boost timer
         //}
-    //}
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = false;
+            isClimbing = false;
+        }
+    }
 
     private void UpdateAnimation()
     {
@@ -201,9 +233,9 @@ public class PlayerMovement : MonoBehaviour
         originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(xMove * dashingPower, 0f);
-        tr.emitting = true;
+        trail.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
+        trail.emitting = false;
         rb.gravityScale = originalGravity;
         isDashing = false;
         yield return new WaitUntil(() => IsGrounded());
