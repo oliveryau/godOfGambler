@@ -84,13 +84,6 @@ public class EnemyMovement : MonoBehaviour
         return transform.localScale.x > Mathf.Epsilon; //checking for an extremely small x value if x-value is > 0.0001 it is right < 0.001 is left
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        //Turn
-        transform.localScale = new Vector2(-(Mathf.Sign(myRigidbody.velocity.x)), transform.localScale.y);
-
-    }
-
     //void OnTriggerEnter2D(Collider2D colliderType)
     //{
     //    if (colliderType.IsTouchingLayers(LayerMask.GetMask("Ground")))

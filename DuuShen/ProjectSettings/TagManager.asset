@@ -9,6 +9,7 @@ TagManager:
   - Bounce
   - Heal
   - Ladder
+  - Wall
   layers:
   - Default
   - TransparentFX
