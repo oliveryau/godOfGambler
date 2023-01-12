@@ -624,6 +624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501fbbcf650835343b132d410d01f829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 912119646}
+  playerCombat: {fileID: 912119654}
   pauseScreen: {fileID: 1469420663}
 --- !u!1 &715891684
 GameObject:
@@ -142131,6 +142133,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  canMove: 1
   moveSpeed: 9
   acceleration: 13
   deceleration: 18
@@ -142287,9 +142290,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
+  slider: {fileID: 1848631902}
   healthPickup: 10
   healthTraps: 10
-  slider: {fileID: 1848631902}
   gameOverScreen: {fileID: 1284914911}
 --- !u!114 &912119654
 MonoBehaviour:
@@ -142304,10 +142307,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 912119651}
-  attackPoint: {fileID: 715891685}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 2147483647
+  canAttack: 0
+  attackPoint: {fileID: 715891685}
   attackRange: 1
   attackRate: 2
 --- !u!1 &1049884689
@@ -142845,6 +142849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501fbbcf650835343b132d410d01f829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 912119646}
+  playerCombat: {fileID: 912119654}
   pauseScreen: {fileID: 1469420663}
 --- !u!1 &1419040656
 GameObject:
@@ -143313,6 +143319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501fbbcf650835343b132d410d01f829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 912119646}
+  playerCombat: {fileID: 912119654}
   pauseScreen: {fileID: 1469420663}
 --- !u!1 &1653856229
 GameObject:

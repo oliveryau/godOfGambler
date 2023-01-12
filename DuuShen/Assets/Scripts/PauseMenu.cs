@@ -5,11 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    public PlayerMovement playerMovement;
+    public PlayerCombat playerCombat;
     public GameObject pauseScreen;
-    //public PlayerMovement script;
+
+    private void Start()
+    {
+        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+        PlayerCombat playerCombat = GetComponent<PlayerCombat>();
+    }
 
     public void PauseGame()
     {
+        playerMovement.canMove = false;
+        playerCombat.canAttack = false;
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
         //script.rbSprite.flipX = false;
@@ -17,6 +26,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        playerMovement.canMove = true;
+        playerCombat.canAttack = true;
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
     }

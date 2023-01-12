@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public Animator anim;
-
-    public Transform attackPoint;
     public LayerMask enemyLayers;
 
+    [Header("Attacking")]
+    public bool canAttack;
+    public Transform attackPoint;
     public float attackRange = 1f;
     //public int attackDamage = 30;
     public float attackRate = 2f;
@@ -17,12 +18,19 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.time >= nextAttackTime)
+        if (!canAttack)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+
+        }
+        else
+        {
+            if (Time.time >= nextAttackTime)
             {
-                Attack();
-                nextAttackTime = Time.time + 1f / attackRate;
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    Attack();
+                    nextAttackTime = Time.time + 1f / attackRate;
+                }
             }
         }
     }

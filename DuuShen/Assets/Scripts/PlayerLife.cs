@@ -9,11 +9,14 @@ public class PlayerLife : MonoBehaviour
     //private Rigidbody2D rb;
     private Animator anim; //Trigger animation
 
+    [Header("Player Health")]
     public int currentHealth;
     public int maxHealth = 100;
+    public Slider slider;
+
+    [Header("Objects")]
     public int healthPickup = 10;
     public int healthTraps = 10;
-    public Slider slider;
 
     //public float timeRemaining = 120f;
     //public bool timeRun = false;

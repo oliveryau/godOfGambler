@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Movement")]
-    private float horizontalMovementInput = 0f; //Horizontal Movement
+    public bool canMove = true;
+    private float horizontalMovementInput; //Horizontal Movement
     [SerializeField] private float moveSpeed = 9f; //Move Speed
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 18f;
@@ -58,87 +59,94 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (isDashing) //Prevent player from doing any other action while dashing
+        if (!canMove)
         {
-            return;
-        }
-
-        horizontalMovementInput = Input.GetAxis("Horizontal"); //Horizontal movement with input Manager - Horizontal
-        rb.velocity = new Vector2(horizontalMovementInput * moveSpeed, rb.velocity.y); //Negative and positive x values, don't set y to 0
-
-        //Late jump smoothness
-        if (IsGrounded())
-        {
-            coyoteTimeCounter = coyoteTime;
-        }
+            
+        } 
         else
         {
-            coyoteTimeCounter -= Time.deltaTime;
-        }
-
-        if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
-        {
-            if (coyoteTimeCounter > 0f)
+            if (isDashing) //Prevent player from doing any other action while dashing
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            }
-        }
-
-        if (Input.GetButtonUp("Jump"))
-        {
-            if (rb.velocity.y > 0f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                return;
             }
 
-            //if (rb.velocity.y < 0)
-            //{
-            //    rb.gravityScale = originalGravity * fallGravityMultiplier;
-            //}
-            //else
-            //{
-            //    rb.gravityScale = originalGravity;
-            //}
-        }
+            horizontalMovementInput = Input.GetAxis("Horizontal"); //Horizontal movement with input Manager - Horizontal
+            rb.velocity = new Vector2(horizontalMovementInput * moveSpeed, rb.velocity.y); //Negative and positive x values, don't set y to 0
 
-        if (Input.GetKeyDown(KeyCode.S) && canDash)
-        {
-            StartCoroutine(Dash());
-        }
-
-        if (!isDashingCooldown)
-        {
-            canDash = true;
+            //Late jump smoothness
             if (IsGrounded())
             {
-                canDash = false;
+                coyoteTimeCounter = coyoteTime;
             }
+            else
+            {
+                coyoteTimeCounter -= Time.deltaTime;
+            }
+
+            if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
+            {
+                if (coyoteTimeCounter > 0f)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                }
+            }
+
+            if (Input.GetButtonUp("Jump"))
+            {
+                if (rb.velocity.y > 0f)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                }
+
+                //if (rb.velocity.y < 0)
+                //{
+                //    rb.gravityScale = originalGravity * fallGravityMultiplier;
+                //}
+                //else
+                //{
+                //    rb.gravityScale = originalGravity;
+                //}
+            }
+
+            if (Input.GetKeyDown(KeyCode.S) && canDash)
+            {
+                StartCoroutine(Dash());
+            }
+
+            if (!isDashingCooldown)
+            {
+                canDash = true;
+                if (IsGrounded())
+                {
+                    canDash = false;
+                }
+            }
+
+            //if (checkBoost) //Speed boost timer
+            //{
+            //    moveSpeed = 8.5f;
+            //    speedBoostTimer += Time.deltaTime;
+            //    if (speedBoostTimer >= 4) //4 second buff
+            //    {
+            //        moveSpeed = 6f;
+            //        speedBoostTimer = 0f;
+            //        checkBoost = false;
+            //    }
+            //}
+
+            //if (checkSlow) //Slow debuff timer
+            //{
+            //    moveSpeed = 3f;
+            //    slowTimer += Time.deltaTime;
+            //    if (slowTimer >= 3) //3 second buff
+            //    {
+            //        moveSpeed = 6f;
+            //        slowTimer = 0f;
+            //        checkSlow = false;
+            //    }
+            //}
+            UpdateAnimation();
         }
-
-        //if (checkBoost) //Speed boost timer
-        //{
-        //    moveSpeed = 8.5f;
-        //    speedBoostTimer += Time.deltaTime;
-        //    if (speedBoostTimer >= 4) //4 second buff
-        //    {
-        //        moveSpeed = 6f;
-        //        speedBoostTimer = 0f;
-        //        checkBoost = false;
-        //    }
-        //}
-
-        //if (checkSlow) //Slow debuff timer
-        //{
-        //    moveSpeed = 3f;
-        //    slowTimer += Time.deltaTime;
-        //    if (slowTimer >= 3) //3 second buff
-        //    {
-        //        moveSpeed = 6f;
-        //        slowTimer = 0f;
-        //        checkSlow = false;
-        //    }
-        //}
-        UpdateAnimation();
     }
 
     private void FixedUpdate()
