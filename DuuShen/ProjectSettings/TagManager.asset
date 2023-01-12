@@ -8,7 +8,6 @@ TagManager:
   - Enemy
   - Bounce
   - Heal
-  - Ladder
   - Wall
   layers:
   - Default
@@ -52,9 +51,6 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 2685023527
-    locked: 0
-  - name: Ladder
-    uniqueID: 4140604761
     locked: 0
   - name: Player
     uniqueID: 2998699233
