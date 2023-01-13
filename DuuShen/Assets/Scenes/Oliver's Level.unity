@@ -142106,6 +142106,7 @@ GameObject:
   - component: {fileID: 912119649}
   - component: {fileID: 912119648}
   - component: {fileID: 912119647}
+  - component: {fileID: 912119655}
   - component: {fileID: 912119651}
   - component: {fileID: 912119646}
   - component: {fileID: 912119653}
@@ -142314,6 +142315,22 @@ MonoBehaviour:
   attackPoint: {fileID: 715891685}
   attackRange: 1
   attackRate: 2
+--- !u!70 &912119655
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912119645}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.105350494, y: -0.17558384}
+  m_Size: {x: 1.2836151, y: 1.6488323}
+  m_Direction: 0
 --- !u!1 &1049884689
 GameObject:
   m_ObjectHideFlags: 0
@@ -143475,11 +143492,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
       propertyPath: m_Size.x
-      value: 2.375
+      value: 1.8296413
       objectReference: {fileID: 0}
     - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
       propertyPath: m_Size.y
-      value: 2.375
+      value: 1.6933017
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.04544735
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.022723436
       objectReference: {fileID: 0}
     - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
       propertyPath: m_IsTrigger

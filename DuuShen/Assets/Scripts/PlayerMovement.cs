@@ -151,19 +151,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        #region Run
-        //Calculate direction player moves in and the desired velocity
-        float targetSpeed = horizontalMovementInput * moveSpeed;
-        //Calculate difference between current velocity and desired velocity
-        float speedDif = targetSpeed - rb.velocity.x;
-        //Change acceleration rate depending on situation
-        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
-        //Applies acceleration to speed difference, raises to a set power so acceleration increases with higher speeds
-        //Finally multiplies by sign to reapply direction
-        float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
-        //Applies force to rigidbody, multiplying by Vector2.right so it only affects X axis
-        rb.AddForce(movement * Vector2.right);
-        #endregion
+        if (!canMove)
+        {
+
+        }
+        else
+        {
+            #region Run
+            //Calculate direction player moves in and the desired velocity
+            float targetSpeed = horizontalMovementInput * moveSpeed;
+            //Calculate difference between current velocity and desired velocity
+            float speedDif = targetSpeed - rb.velocity.x;
+            //Change acceleration rate depending on situation
+            float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
+            //Applies acceleration to speed difference, raises to a set power so acceleration increases with higher speeds
+            //Finally multiplies by sign to reapply direction
+            float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+            //Applies force to rigidbody, multiplying by Vector2.right so it only affects X axis
+            rb.AddForce(movement * Vector2.right);
+            #endregion
+        }
     }
 
     //private void OnTriggerEnter2D(Collider2D collision)
