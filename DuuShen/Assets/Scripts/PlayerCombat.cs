@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public Animator anim;
+    public PlayerMovement playerMovement;
     public LayerMask enemyLayers;
 
     [Header("Attacking")]
@@ -37,6 +38,14 @@ public class PlayerCombat : MonoBehaviour
 
     public void Attack()
     {
+        if (playerMovement.rbSprite.flipX == false) //False flipX = Right side attack
+        {
+            attackPoint.localPosition = new Vector2(1.5f, -0.2f);
+        }
+        else if (playerMovement.rbSprite.flipX == true) //True flipX = Left side attack
+        {
+            attackPoint.localPosition = new Vector2(-1.5f, -0.2f);
+        }
         //Play attack animation
         anim.SetTrigger("attack");
 

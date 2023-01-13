@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private BoxCollider2D rbColl; //GroundCheckTransform for rb
-    private SpriteRenderer rbSprite; //Flip left when moving back
+    private CapsuleCollider2D rbColl; //GroundCheckTransform for rb
+    public SpriteRenderer rbSprite; //Flip left when moving back
     private Animator anim; //Trigger animation
     [SerializeField] private TrailRenderer trail1;
     //[SerializeField] private TrailRenderer trail2;
@@ -20,20 +20,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 18f;
     [SerializeField] private float velPower = 0.96f;
+    private float frictionAmount = 0.2f;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 13f; //Jump Force
     private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
-    public float fallGravityMultiplier = 2f;
+    private float originalGravity = 3f;
+    public float fallGravityMultiplier = 1.5f;
+    public float maxFallSpeed = 30f;
 
     [Header("Dash")]
-    private bool canDash = true;
+    public bool canDash = true;
     private bool isDashing;
     private bool isDashingCooldown;
     private float dashingPower = 60f;
     private float dashingTime = 0.2f;
-    private float originalGravity;
+    private float dashGravity;
 
     //private float speedBoostTimer; //Speed Boost Timer
     //private bool checkBoost; //Speed Boost Toggle
@@ -46,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>(); //Standard stuff
-        rbColl = GetComponent<BoxCollider2D>(); //Standard stuff
+        rbColl = GetComponent<CapsuleCollider2D>(); //Standard stuff
         rbSprite = GetComponent<SpriteRenderer>(); //Standard stuff
         anim = GetComponent<Animator>(); //Standard stuff
 
@@ -83,6 +86,17 @@ public class PlayerMovement : MonoBehaviour
                 coyoteTimeCounter -= Time.deltaTime;
             }
 
+            //Friction
+            if (IsGrounded() && horizontalMovementInput < 0.01f)
+            {
+                //Use either friction amount (~ 0.2) or 
+                float amount = Mathf.Min(Mathf.Abs(rb.velocity.x), Mathf.Abs(frictionAmount));
+                //Sets to movement direction
+                amount *= Mathf.Sign(rb.velocity.x);
+                //Applies force against movement direction
+                rb.AddForce(Vector2.right * -amount, ForceMode2D.Impulse);
+            }
+
             if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
             {
                 if (coyoteTimeCounter > 0f)
@@ -97,15 +111,19 @@ public class PlayerMovement : MonoBehaviour
                 {
                     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 }
+            }
 
-                //if (rb.velocity.y < 0)
-                //{
-                //    rb.gravityScale = originalGravity * fallGravityMultiplier;
-                //}
-                //else
-                //{
-                //    rb.gravityScale = originalGravity;
-                //}
+            //Setting gravity for fall speed
+            if (rb.velocity.y < 0f)
+            {
+                rb.gravityScale = originalGravity * fallGravityMultiplier;
+
+                //Capping max fall speed, so when falling large distances, it is not too fast
+                rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -maxFallSpeed));
+            }
+            else
+            {
+                rb.gravityScale = originalGravity;
             }
 
             if (Input.GetKeyDown(KeyCode.S) && canDash)
@@ -222,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
-
+        //isJumping = false;
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
@@ -231,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         isDashing = true;
         isDashingCooldown = true;
-        originalGravity = rb.gravityScale;
+        dashGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.velocity = new Vector2(horizontalMovementInput * dashingPower, 0f);
         trail1.emitting = true;
@@ -240,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         trail1.emitting = false;
         //trail2.emitting = false;
-        rb.gravityScale = originalGravity;
+        rb.gravityScale = dashGravity;
         isDashing = false;
         Physics2D.IgnoreLayerCollision(7, 8, false);
         yield return new WaitUntil(() => IsGrounded());
