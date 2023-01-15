@@ -24,11 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 13f; //Jump Force
-    private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
     private float originalGravity = 3f;
-    public float fallGravityMultiplier = 1.5f;
-    public float maxFallSpeed = 30f;
+    public float fallGravityMultiplier = 2f;
+    public float maxFallSpeed = 40f;
+    public float coyoteTime = 0.15f;
 
     [Header("Dash")]
     public bool canDash = true;

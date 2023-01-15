@@ -141762,8 +141762,9 @@ MonoBehaviour:
   deceleration: 13
   velPower: 0.96
   jumpForce: 13
-  fallGravityMultiplier: 1.5
-  maxFallSpeed: 30
+  fallGravityMultiplier: 2
+  maxFallSpeed: 40
+  coyoteTime: 0.15
   canDash: 1
 --- !u!50 &912119648
 Rigidbody2D:
@@ -141846,7 +141847,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912119645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 3.6, z: 0}
+  m_LocalPosition: {x: 24, y: 42.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
