@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
     private Animator anim; //Trigger animation
-    [SerializeField] private TrailRenderer trail1;
+    [SerializeField] private TrailRenderer trail;
     //[SerializeField] private TrailRenderer trail2;
     [SerializeField] private LayerMask groundLayer;
 
@@ -256,16 +256,24 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 direction = new Vector2(horizontalMovementInput, 0f);
 
-        if (direction == Vector2.zero)
+        if (rbSprite.flipX == true)
         {
-            direction = new Vector2(transform.localScale.x, 0f);
+            direction = new Vector2(-dashingPower, 0f);
         }
+        else if (rbSprite.flipX == false)
+        {
+            direction = new Vector2(dashingPower, 0f);
+        }
+        //if (direction == Vector2.zero)
+        //{
+        //    direction = new Vector2(transform.localScale.x, 0f);
+        //}
         rb.velocity = direction.normalized * dashingPower;
-        trail1.emitting = true;
+        trail.emitting = true;
         Physics2D.IgnoreLayerCollision(7, 8);
         yield return new WaitForSeconds(dashingTime);
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        trail1.emitting = false;
+        trail.emitting = false;
         rb.gravityScale = dashGravity;
         isDashing = false;
         Physics2D.IgnoreLayerCollision(7, 8, false);

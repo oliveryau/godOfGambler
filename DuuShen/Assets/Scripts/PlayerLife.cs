@@ -8,6 +8,7 @@ public class PlayerLife : MonoBehaviour
 {
     //private Rigidbody2D rb;
     private Animator anim; //Trigger animation
+    public GameObject respawnPoint;
 
     [Header("Player Health")]
     public int currentHealth;
@@ -15,8 +16,8 @@ public class PlayerLife : MonoBehaviour
     public Slider slider;
 
     [Header("Objects")]
-    public int healthPickup = 10;
-    public int healthTraps = 10;
+    public int heals = 10;
+    public int normalDamage = 20;
 
     //public float timeRemaining = 120f;
     //public bool timeRun = false;
@@ -24,6 +25,11 @@ public class PlayerLife : MonoBehaviour
     //public Text redTimeText; //final few seconds warning
 
     public GameObject gameOverScreen; //Game over screen
+
+    private void Awake()
+    {
+        GameObject.FindGameObjectWithTag("Respawn");
+    }
 
     private void Start()
     {
@@ -77,23 +83,11 @@ public class PlayerLife : MonoBehaviour
             }
             else
             {
-                currentHealth -= healthTraps;
+                currentHealth -= normalDamage;
                 SetHealth(currentHealth);
                 StartCoroutine(GetHurt());
             }
         }
-        //    if (collision.gameObject.CompareTag("Trap")) //Check tag
-        //    {
-        //        health--;
-        //        if (health <= 0)
-        //        {
-        //            Die();
-        //        }
-        //        else
-        //        {
-        //            StartCoroutine(GetHurt()); //Hearts
-        //        }
-        //    }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -103,8 +97,23 @@ public class PlayerLife : MonoBehaviour
             if (currentHealth < maxHealth)
             {
                 Destroy(collision.gameObject);
-                currentHealth += healthPickup;
+                currentHealth += heals;
                 SetHealth(currentHealth);
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Respawn"))
+        {
+            if (currentHealth == 0)
+            {
+                Die();
+                SetHealth(currentHealth);
+            }
+            else
+            {
+                currentHealth -= normalDamage;
+                SetHealth(currentHealth);
+                StartCoroutine(GetHurt());
             }
         }
     }

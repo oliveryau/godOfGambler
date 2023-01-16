@@ -6,11 +6,11 @@ TagManager:
   tags:
   - Trap
   - Enemy
-  - Bounce
   - Heal
   - Wall
   - Attack
   - Teleporter
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
