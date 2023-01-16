@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private CapsuleCollider2D rbColl; //GroundCheckTransform for rb
+    private BoxCollider2D rbColl; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
     private Animator anim; //Trigger animation
     [SerializeField] private TrailRenderer trail1;
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private float frictionAmount = 0.2f;
 
     [Header("Jump")]
-    [SerializeField] private float jumpForce = 13f; //Jump Force
+    [SerializeField] private float jumpForce = 15f; //Jump Force
     private float coyoteTimeCounter;
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 2f;
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>(); //Standard stuff
-        rbColl = GetComponent<CapsuleCollider2D>(); //Standard stuff
+        rbColl = GetComponent<BoxCollider2D>(); //Standard stuff
         rbSprite = GetComponent<SpriteRenderer>(); //Standard stuff
         anim = GetComponent<Animator>(); //Standard stuff
 
