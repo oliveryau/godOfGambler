@@ -34,9 +34,9 @@ public class PlayerMovement : MonoBehaviour
     public bool canDash = true;
     private bool isDashing;
     private bool isDashingCooldown;
-    private float dashingPower = 60f;
+    private float dashingPower = 25f;
     private float dashingTime = 0.2f;
-    private float dashGravity;
+    private float dashingCooldown = 0.5f;
 
     //private float speedBoostTimer; //Speed Boost Timer
     //private bool checkBoost; //Speed Boost Toggle
@@ -74,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
             horizontalMovementInput = Input.GetAxis("Horizontal"); //Horizontal movement with input Manager - Horizontal
-            rb.velocity = new Vector2(horizontalMovementInput * moveSpeed, rb.velocity.y); //Negative and positive x values, don't set y to 0
 
             //Late jump smoothness
             if (IsGrounded())
@@ -131,13 +130,9 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(Dash());
             }
 
-            if (!isDashingCooldown)
+            if (IsGrounded() && !isDashingCooldown)
             {
                 canDash = true;
-                if (IsGrounded())
-                {
-                    canDash = false;
-                }
             }
 
             //if (checkBoost) //Speed boost timer
@@ -175,6 +170,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (isDashing)
+            {
+                return;
+            }
+
+            rb.velocity = new Vector2(horizontalMovementInput * moveSpeed, rb.velocity.y); //Negative and positive x values, don't set y to 0
+
             #region Run
             //Calculate direction player moves in and the desired velocity
             float targetSpeed = horizontalMovementInput * moveSpeed;
@@ -249,20 +251,26 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         isDashing = true;
         isDashingCooldown = true;
-        dashGravity = rb.gravityScale;
+        float dashGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(horizontalMovementInput * dashingPower, 0f);
+
+        Vector2 direction = new Vector2(horizontalMovementInput, 0f);
+
+        if (direction == Vector2.zero)
+        {
+            direction = new Vector2(transform.localScale.x, 0f);
+        }
+        rb.velocity = direction.normalized * dashingPower;
         trail1.emitting = true;
-        //trail2.emitting = true;
         Physics2D.IgnoreLayerCollision(7, 8);
         yield return new WaitForSeconds(dashingTime);
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         trail1.emitting = false;
-        //trail2.emitting = false;
         rb.gravityScale = dashGravity;
         isDashing = false;
         Physics2D.IgnoreLayerCollision(7, 8, false);
-        yield return new WaitUntil(() => IsGrounded());
-        canDash = true;
+        yield return new WaitForSeconds(dashingCooldown);
+        //canDash = true;
         isDashingCooldown = false;
     }
 }
