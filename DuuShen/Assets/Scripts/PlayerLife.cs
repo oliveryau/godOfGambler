@@ -6,18 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
-    //private Rigidbody2D rb;
+    private Rigidbody2D rb;
     private Animator anim; //Trigger animation
     public GameObject respawnPoint;
 
     [Header("Player Health")]
-    public int currentHealth;
+    public int currentHealth = 100;
     public int maxHealth = 100;
     public Slider slider;
 
-    [Header("Objects")]
+    [Header("Health Changes")]
     public int heals = 10;
-    public int normalDamage = 20;
+    public int fallDamage = 10;
+    public int trapDamage = 30;
 
     //public float timeRemaining = 120f;
     //public bool timeRun = false;
@@ -33,7 +34,7 @@ public class PlayerLife : MonoBehaviour
 
     private void Start()
     {
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>(); //Get animation component
         //timeRun = true;
         currentHealth = maxHealth;
@@ -76,14 +77,14 @@ public class PlayerLife : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-            if (currentHealth == 0)
+            currentHealth -= trapDamage;
+            if (currentHealth <= 0)
             {
                 Die();
                 SetHealth(currentHealth);
             }
             else
             {
-                currentHealth -= normalDamage;
                 SetHealth(currentHealth);
                 StartCoroutine(GetHurt());
             }
@@ -104,14 +105,14 @@ public class PlayerLife : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Respawn"))
         {
-            if (currentHealth == 0)
+            currentHealth -= fallDamage;
+            if (currentHealth <= 0)
             {
                 Die();
                 SetHealth(currentHealth);
             }
             else
             {
-                currentHealth -= normalDamage;
                 SetHealth(currentHealth);
                 StartCoroutine(GetHurt());
             }
@@ -172,7 +173,7 @@ public class PlayerLife : MonoBehaviour
 
     private void Die()
     {
-        //rb.bodyType = RigidbodyType2D.Static; //Make player rb unable to move
+        rb.bodyType = RigidbodyType2D.Static; //Make player rb unable to move
         anim.SetTrigger("death"); //Animation state/condition
         gameOverScreen.SetActive(true);
     }

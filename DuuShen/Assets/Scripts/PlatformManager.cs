@@ -22,7 +22,7 @@ public class PlatformManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(platformPrefab, new Vector2(49f, -1.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(60f, -1.5f), platformPrefab.transform.rotation);
     }
 
     public IEnumerator SpawnPlatform(Vector2 spawnPosition)
