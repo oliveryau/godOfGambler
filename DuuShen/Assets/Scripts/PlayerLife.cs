@@ -16,8 +16,8 @@ public class PlayerLife : MonoBehaviour
     public Slider slider;
 
     [Header("Health Changes")]
-    public int heals = 10;
-    public int fallDamage = 10;
+    public int heals = 20;
+    public int fallDamage = 20;
     public int trapDamage = 30;
 
     //public float timeRemaining = 120f;
