@@ -8,9 +8,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
-    private Animator anim; //Trigger animation
     [SerializeField] private TrailRenderer trail;
+    [SerializeField] private CameraControl cameraControl;
     [SerializeField] private LayerMask groundLayer;
+    private Animator anim; //Trigger animation
 
     [Header("Movement")]
     private Vector2 moveInput; //Horizontal Movement
@@ -22,11 +23,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float frictionAmount = 0.6f;
 
     [Header("Jump")]
-    [SerializeField] private float jumpForce = 15f; //Jump Force
+    [SerializeField] private float jumpForce = 15f;
     private float coyoteTimeCounter;
     private float jumpCutMultiplier = 0.5f;
-    private float jumpHangTimeThreshold;
-    [Range(0f, 1)] private float jumpHangGravityMultiplier;
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 2f;
     public float maxFallSpeed = 40f;
@@ -40,8 +39,6 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 0.5f;
 
-    //private float speedBoostTimer; //Speed Boost Timer
-    //private bool checkBoost; //Speed Boost Toggle
     //private float slowTimer; //Slow Debuff Timer
     //private bool checkSlow; //Slow Debuff Toggle
 
@@ -50,10 +47,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); //Standard stuff
-        rbColl = GetComponent<BoxCollider2D>(); //Standard stuff
-        rbSprite = GetComponent<SpriteRenderer>(); //Standard stuff
-        anim = GetComponent<Animator>(); //Standard stuff
+        rb = GetComponent<Rigidbody2D>();
+        rbColl = GetComponent<BoxCollider2D>();
+        rbSprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -269,6 +266,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity = direction.normalized * dashingPower;
+        StartCoroutine(cameraControl.ScreenShake());
         trail.emitting = true;
         Physics2D.IgnoreLayerCollision(7, 8);
         yield return new WaitForSeconds(dashingTime);

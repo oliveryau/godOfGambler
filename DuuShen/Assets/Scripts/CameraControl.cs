@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public GameObject virtualCam;
+    [SerializeField] private Transform target;
+    private Vector3 offset = new Vector3(0f, 0f, -10f);
+    private float smoothTime = 0.1f;
+    private Vector3 velocity = Vector3.zero;
 
-    //[SerializeField] private Transform player; //Want to get the transform values of player
+    public AnimationCurve curve;
+    private float duration = 0.5f;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Update()
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger)
-        {
-            virtualCam.SetActive(true);
-        }
+        Vector3 targetposition = target.position + offset;
+        transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, smoothTime);
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
+    
+    public IEnumerator ScreenShake()
     {
-        if (collision.CompareTag("Player") && !collision.isTrigger)
+        Vector3 startPosition = transform.position;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
         {
-            virtualCam.SetActive(false);
+            elapsedTime += Time.deltaTime;
+            float strength = curve.Evaluate(elapsedTime / duration);
+            transform.position = startPosition + Random.insideUnitSphere * strength;
+            yield return null;
         }
+
+        transform.position = startPosition;
     }
 }
