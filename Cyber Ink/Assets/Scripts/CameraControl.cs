@@ -10,7 +10,7 @@ public class CameraControl : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     public AnimationCurve curve;
-    private float duration = 0.5f;
+    private float duration = 0.2f;
 
     private void Update()
     {

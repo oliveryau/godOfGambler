@@ -388,7 +388,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 16
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -438,29 +438,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2
-      value: 0.2
-      inSlope: -0.013851727
-      outSlope: -0.013851727
+      time: 0.3
+      value: 0.3
+      inSlope: 0.03288691
+      outSlope: 0.03288691
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.2721642
+      outWeight: 0.10652065
     - serializedVersion: 3
-      time: 0.5
-      value: -0.024974823
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      time: 1
+      value: 0
+      inSlope: -0.42857146
+      outSlope: -0.42857146
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -2997,9 +2997,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d0323dae6d12f49b224cd184f33a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraControl: {fileID: 519420033}
   rbSprite: {fileID: 912119649}
   trail: {fileID: 439838396}
-  cameraControl: {fileID: 519420033}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -3013,7 +3013,6 @@ MonoBehaviour:
   fallGravityMultiplier: 2
   maxFallSpeed: 40
   coyoteTime: 0.15
-  canDash: 1
 --- !u!50 &912119648
 Rigidbody2D:
   serializedVersion: 4
@@ -5737,7 +5736,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
       propertyPath: m_Size.x
-      value: 1.8296413
+      value: 1.5635777
       objectReference: {fileID: 0}
     - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
       propertyPath: m_Size.y
@@ -5745,7 +5744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
       propertyPath: m_Offset.x
-      value: -0.04544735
+      value: 0.021069527
       objectReference: {fileID: 0}
     - target: {fileID: 6423487890371123097, guid: 358f5443e8969ac46b2861a4cbfaad3d, type: 3}
       propertyPath: m_Offset.y

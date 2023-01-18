@@ -5,25 +5,24 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private CameraControl cameraControl;
     private Rigidbody2D rb;
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
     [SerializeField] private TrailRenderer trail;
-    [SerializeField] private CameraControl cameraControl;
     [SerializeField] private LayerMask groundLayer;
     private Animator anim; //Trigger animation
 
     [Header("Movement")]
-    private Vector2 moveInput; //Horizontal Movement
     public bool canMove = true;
+    private float moveInput; //Horizontal Movement
     [SerializeField] private float moveSpeed = 11f;
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 13f;
-    [SerializeField] private float velPower = 0.96f;
+    [SerializeField] private float velPower = 1f;
     [SerializeField] private float frictionAmount = 0.6f;
 
     [Header("Jump")]
-    private bool isJumping;
     [SerializeField] private float jumpForce = 15f;
     private float coyoteTimeCounter;
     private float jumpCutMultiplier = 0.5f;
@@ -32,13 +31,12 @@ public class PlayerMovement : MonoBehaviour
     public float maxFallSpeed = 40f;
     public float coyoteTime = 0.15f;
 
-    [Header("Dash")]
-    [SerializeField] private bool canDash = true;
+    private bool canDash = true;
     private bool isDashing;
     private bool isDashingCooldown;
-    private float dashingPower = 25f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.5f;
+    private float dashingPower = 30f;
+    private float dashingTime = 0.1f;
+    private float dashingCooldown = 0.1f;
 
     //private float slowTimer; //Slow Debuff Timer
     //private bool checkSlow; //Slow Debuff Toggle
@@ -70,8 +68,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //Register movement
-            moveInput.x = Input.GetAxisRaw("Horizontal"); //Horizontal movement with input Manager - Horizontal
-            moveInput.y = Input.GetAxisRaw("Vertical"); //Vertical movement input manager - Vertical
+            moveInput = Input.GetAxis("Horizontal"); //Horizontal movement with input Manager - Horizontal
 
             //Late jump smoothness
             if (IsGrounded())
@@ -86,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
             //Friction
             if (IsGrounded())
             {
-                if (rbSprite.flipX == true && moveInput.x > -0.01f)
+                if (rbSprite.flipX == true && moveInput > -0.01f)
                 {
                     //Use either friction amount (~ 0.2) or 
                     float amount = Mathf.Min(Mathf.Abs(rb.velocity.x), Mathf.Abs(frictionAmount));
@@ -95,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
                     //Applies force against movement direction
                     rb.AddForce(Vector2.left * amount, ForceMode2D.Impulse);
                 }
-                else if (rbSprite.flipX == false && moveInput.x < 0.01f)
+                else if (rbSprite.flipX == false && moveInput < 0.01f)
                 {
                     //Use either friction amount (~ 0.2) or 
                     float amount = Mathf.Min(Mathf.Abs(rb.velocity.x), Mathf.Abs(frictionAmount));
@@ -108,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
             {
-                isJumping = true;
                 if (coyoteTimeCounter > 0f)
                 {
                     //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -125,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //Setting gravity for fall speed
-            if (rb.velocity.y < 0f && isJumping == true)
+            if (rb.velocity.y < 0f)
             {
                 rb.gravityScale = originalGravity * fallGravityMultiplier;
                 //Capping max fall speed, so when falling large distances, it is not too fast
@@ -176,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
 
             #region Run
             //Calculate direction player moves in and the desired velocity
-            float targetSpeed = moveInput.x * moveSpeed;
+            float targetSpeed = moveInput * moveSpeed;
             //Calculate difference between current velocity and desired velocity
             float speedDif = targetSpeed - rb.velocity.x;
             //Change acceleration rate depending on situation
@@ -185,13 +181,13 @@ public class PlayerMovement : MonoBehaviour
             //Finally multiplies by sign to reapply direction
             float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
             //Applies force to rigidbody, multiplying by Vector2.right so it only affects X axis
-            if (moveInput.x < 0f)
+            if (moveInput < 0f)
             {
-                rb.AddForce(-movement * Vector2.left);
+                rb.AddForce(-movement * Vector2.left, ForceMode2D.Force);
             }
             else
             {
-                rb.AddForce(movement * Vector2.right);
+                rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
             }
             #endregion
         }
@@ -216,12 +212,12 @@ public class PlayerMovement : MonoBehaviour
     {
         movementState state;
 
-        if (moveInput.x > 0f) //Running - Right/positive direction
+        if (moveInput > 0f) //Running - Right/positive direction
         {
             state = movementState.running; //movementState line, go to run
             rbSprite.flipX = false; //Flip back to turn right when going forward
         }
-        else if (moveInput.x < 0f) //Left/negative direction
+        else if (moveInput < 0f) //Left/negative direction
         {
             state = movementState.running;
             rbSprite.flipX = true; //Turn left when going backwards
@@ -246,7 +242,6 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
-        isJumping = false;
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
@@ -258,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
         float dashGravity = rb.gravityScale;
         rb.gravityScale = 0f;
 
-        Vector2 direction = new Vector2(moveInput.x, 0f);
+        Vector2 direction = new Vector2(moveInput, 0f);
         if (rbSprite.flipX == true)
         {
             direction = new Vector2(-dashingPower, 0f);
