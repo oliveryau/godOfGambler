@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float frictionAmount = 0.6f;
 
     [Header("Jump")]
+    private bool isJumping;
     [SerializeField] private float jumpForce = 15f;
     private float coyoteTimeCounter;
     private float jumpCutMultiplier = 0.5f;
@@ -107,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
             {
+                isJumping = true;
                 if (coyoteTimeCounter > 0f)
                 {
                     //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -123,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //Setting gravity for fall speed
-            if (rb.velocity.y < 0f)
+            if (rb.velocity.y < 0f && isJumping == true)
             {
                 rb.gravityScale = originalGravity * fallGravityMultiplier;
                 //Capping max fall speed, so when falling large distances, it is not too fast
@@ -244,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
+        isJumping = false;
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
