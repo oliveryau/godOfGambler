@@ -12,6 +12,7 @@ TagManager:
   - Teleporter
   - Checkpoint
   - Back Collider
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Waypoint Collider
   - TerrainWall
   - Player Collider
-  - 
+  - Wall Collider
   - 
   - 
   - 

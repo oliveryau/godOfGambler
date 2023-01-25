@@ -95,6 +95,7 @@ public class PlayerLife : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Heal"))
         {
+            //Debug.Log("Hi");
             if (currentHealth < maxHealth)
             {
                 Destroy(collision.gameObject);
@@ -118,20 +119,20 @@ public class PlayerLife : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            currentHealth -= trapDamage; // should we have different damage for enemy?
-            if (currentHealth <= 0)
-            {
-                Die();
-                SetHealth(currentHealth);
-            }
-            else
-            {
-                SetHealth(currentHealth);
-                StartCoroutine(GetHurt());
-            }
-        }
+        //if (collision.gameObject.CompareTag("Enemy"))
+        //{
+        //    currentHealth -= trapDamage; // should we have different damage for enemy?
+        //    if (currentHealth <= 0)
+        //    {
+        //        Die();
+        //        SetHealth(currentHealth);
+        //    }
+        //    else
+        //    {
+        //        SetHealth(currentHealth);
+        //        StartCoroutine(GetHurt());
+        //    }
+        //}
     }
 
     IEnumerator GetHurt() //can use for hearts too

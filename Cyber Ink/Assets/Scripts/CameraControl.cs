@@ -9,13 +9,28 @@ public class CameraControl : MonoBehaviour
     private float smoothTime = 0.1f;
     private Vector3 velocity = Vector3.zero;
 
+    //private Camera camera;
+    //private BoxCollider2D cameraBox;
+    //private float sizeX, sizeY, ratio;
+
     public AnimationCurve curve;
     private float duration = 0.2f;
+
+    //private void Start()
+    //{
+    //    camera = GetComponent<Camera>();
+    //    cameraBox = GetComponent<BoxCollider2D>();
+    //}
 
     private void Update()
     {
         Vector3 targetposition = target.position + offset;
         transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, smoothTime);
+
+        //sizeY = camera.orthographicSize * 2;
+        //ratio = (float)Screen.width / (float)Screen.height;
+        //sizeX = sizeY * ratio;
+        //cameraBox.size = new Vector2(sizeX, sizeY);
     }
     
     public IEnumerator ScreenShake()

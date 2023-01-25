@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing;
     private bool isDashingCooldown;
     private float dashingPower = 30f;
-    private float dashingTime = 0.1f;
+    private float dashingTime = 0.2f;
     private float dashingCooldown = 0.1f;
 
     //private float slowTimer; //Slow Debuff Timer
@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         Physics2D.IgnoreLayerCollision(8, 9);
-        Physics2D.IgnoreLayerCollision(0, 8);
+        Physics2D.IgnoreLayerCollision(12, 8);
 
     }
 

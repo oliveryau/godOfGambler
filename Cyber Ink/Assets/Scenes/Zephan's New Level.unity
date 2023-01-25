@@ -3624,7 +3624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1230203294}
   - component: {fileID: 1230203295}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Wall Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
