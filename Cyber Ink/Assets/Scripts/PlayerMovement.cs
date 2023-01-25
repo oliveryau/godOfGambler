@@ -15,12 +15,14 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public bool canMove = true;
+    public float moveSpeed = 11f;
     private float moveInput; //Horizontal Movement
-    [SerializeField] private float moveSpeed = 11f;
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 13f;
     [SerializeField] private float velPower = 1f;
     [SerializeField] private float frictionAmount = 0.6f;
+    public float slowTimer; //Slow Debuff Timer
+    public bool checkSlow; //Slow Debuff Toggle
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 15f;
@@ -37,9 +39,6 @@ public class PlayerMovement : MonoBehaviour
     private float dashingPower = 30f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 0.1f;
-
-    //private float slowTimer; //Slow Debuff Timer
-    //private bool checkSlow; //Slow Debuff Toggle
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -145,20 +144,7 @@ public class PlayerMovement : MonoBehaviour
                 canDash = true;
             }
 
-            //if (checkSlow) //Slow debuff timer
-            //{
-            //    moveSpeed = 3f;
-            //    slowTimer += Time.deltaTime;
-            //    if (slowTimer >= 3) //3 second buff
-            //    {
-            //        moveSpeed = 6f;
-            //        slowTimer = 0f;
-            //        checkSlow = false;
-            //    }
-            //}
             UpdateAnimation();
-
-            
         }
     }
 
@@ -175,7 +161,6 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
 
-            #region Run
             //Calculate direction player moves in and the desired velocity
             float targetSpeed = moveInput * moveSpeed;
             //Calculate difference between current velocity and desired velocity
@@ -194,24 +179,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
             }
-            #endregion
         }
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //if (collision.gameObject.CompareTag("Slows")) //Check Slows tag
-    //{
-    //    checkBoost = false;
-    //    checkSlow = true; //For speed debuff timer
-    //}
-
-    //if (collision.gameObject.CompareTag("Collectible")) //Check Collectible tag
-    //{
-    //    checkSlow = false;
-    //    checkBoost = true; //For speed boost timer
-    //}
-    //}
 
     private void UpdateAnimation()
     {

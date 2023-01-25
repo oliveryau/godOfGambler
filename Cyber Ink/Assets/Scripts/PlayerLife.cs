@@ -8,6 +8,7 @@ public class PlayerLife : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim; //Trigger animation
+    private PlayerMovement playerMovement;
     public GameObject respawnPoint;
 
     [Header("Player Health")]
@@ -15,7 +16,8 @@ public class PlayerLife : MonoBehaviour
     public int maxHealth = 100;
     public Slider slider;
 
-    [Header("Health Changes")]
+    [Header("Health Edits")]
+    public int slowDamage = 10;
     public int heals = 20;
     public int fallDamage = 20;
     public int trapDamage = 30;
@@ -35,43 +37,38 @@ public class PlayerLife : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>(); //Get animation component
+        anim = GetComponent<Animator>();
+        playerMovement = GetComponent<PlayerMovement>();
         //timeRun = true;
         currentHealth = maxHealth;
         SetMaxHealth(maxHealth);
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        Damage(10); //Can test if health / attacking is working
-    //    }
+    private void Update()
+    {
+        //Test if attack/healing is working
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    Damage(10);
+        //}
 
         //if (Input.GetKeyDown(KeyCode.Q))
         //{
         //    Heal(10);
         //}
 
-        //if (timeRemaining > 0)
-        //{
-        //    timeRemaining -= Time.deltaTime;
-        //    timeText.text = "Time Left: " + (int)timeRemaining;
-        //    if (timeRemaining < 31) //Little time left
-        //    {
-        //        timeText.text = "";
-        //        redTimeText.text = "Time Left: " + (int)timeRemaining;
-        //    }
-        //}
-        //else
-        //{
-        //    rb.bodyType = RigidbodyType2D.Static; //Make player rb unable to move
-        //    anim.SetTrigger("death"); //Animation state/condition
-        //    timeRemaining = 0f;
-        //    timeRun = false;
-        //    gameOverScreen.SetActive(true);
-        //}
-    //}
+        if (playerMovement.checkSlow) //Slow debuff timer
+        {
+            playerMovement.moveSpeed = 3f;
+            playerMovement.slowTimer += Time.deltaTime;
+            if (playerMovement.slowTimer >= 3) //3 second debuff
+            {
+                playerMovement.moveSpeed = 11f;
+                playerMovement.slowTimer = 0f;
+                playerMovement.checkSlow = false;
+            }
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -89,13 +86,28 @@ public class PlayerLife : MonoBehaviour
                 StartCoroutine(GetHurt());
             }
         }
+
+        if (collision.gameObject.CompareTag("Slow Trap"))
+        {
+            currentHealth -= slowDamage;
+            playerMovement.checkSlow = true;
+            if (currentHealth <= 0)
+            {
+                Die();
+                SetHealth(currentHealth);
+            }
+            else
+            {
+                SetHealth(currentHealth);
+                StartCoroutine(GetHurt());
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Heal"))
         {
-            //Debug.Log("Hi");
             if (currentHealth < maxHealth)
             {
                 Destroy(collision.gameObject);
@@ -119,20 +131,20 @@ public class PlayerLife : MonoBehaviour
             }
         }
 
-        //if (collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    currentHealth -= trapDamage; // should we have different damage for enemy?
-        //    if (currentHealth <= 0)
-        //    {
-        //        Die();
-        //        SetHealth(currentHealth);
-        //    }
-        //    else
-        //    {
-        //        SetHealth(currentHealth);
-        //        StartCoroutine(GetHurt());
-        //    }
-        //}
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            currentHealth -= trapDamage; // should we have different damage for enemy?
+            if (currentHealth <= 0)
+            {
+                Die();
+                SetHealth(currentHealth);
+            }
+            else
+            {
+                SetHealth(currentHealth);
+                StartCoroutine(GetHurt());
+            }
+        }
     }
 
     IEnumerator GetHurt() //can use for hearts too

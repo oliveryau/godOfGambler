@@ -13,6 +13,7 @@ TagManager:
   - Checkpoint
   - Back Collider
   - Terrain
+  - Slow Trap
   layers:
   - Default
   - TransparentFX
