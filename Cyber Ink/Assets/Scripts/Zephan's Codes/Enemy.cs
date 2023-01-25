@@ -61,25 +61,19 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerlocation = GameObject.FindGameObjectWithTag("Player").transform;
 
-
-
-        //SetEnemyValues();
-        //Vector2[] waypoints = new Vector2[pathHolder.childCount];
-        //for(int i = 0; i < waypoints.Length; i++)
-        //{
-        //    waypoints[i] = pathHolder.GetChild(i).position; 
-        //}
-
-        //StartCoroutine(FollowPath(waypoints));
     }
 
     void Update()
     {
-        float distanceToplayer = Vector2.Distance(transform.position, player.transform.position);
+        float distanceToplayer;
+        RaycastHit2D hitInfo;
         //RaycastHit2D front = Physics2D.Raycast(frontDetection.position, Vector2.right, (int)agroRange);
         RaycastHit2D front = Physics2D.Linecast(transform.position, player.transform.position);
 
+        //if(Physics.Linecast(transform.position, player.transform.position, out hitInfo, 1 << LayerMask.NameToLayer("Ground")))
+        //    {
 
+        //}
         if (colliderType.IsTouchingLayers(LayerMask.GetMask("Waypoint Collider")))
         {
             FlipEnemy();
@@ -87,19 +81,25 @@ public class Enemy : MonoBehaviour
         }
         else if (movingRight == true)
         {
-            if (player.transform.position.x - front.distance < agroRange)
+            if (front.distance <= agroRange)
                 speed = 0;
             else
+            {
                 speed = storeSpeed;
                 Patrol();
+            }
+                
         }
         else if (movingRight == false)
         {
-            if (front.transform.position.x < agroRange) //need to check this 
+            if (front.distance >= agroRange) //need to check this 
                 speed = 0;
             else
+            {
                 speed = storeSpeed;
                 Patrol();
+            }
+                
         }
         else if (front.collider.tag == "Player")
         {
@@ -141,8 +141,8 @@ public class Enemy : MonoBehaviour
 
     private void Patrol()
     {
-        if(speed !=0)
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        if (speed != 0)
+            transform.Translate(Vector2.right * speed * Time.deltaTime);
         else
             transform.Translate(Vector2.right * storeSpeed * Time.deltaTime);
     }
@@ -212,7 +212,7 @@ public class Enemy : MonoBehaviour
     //        DamagePlayer();
 
     //    }
-        
+
     //}
 
     //private void OnCollisionExit2D(Collision2D collision) // need to edit this
@@ -275,6 +275,18 @@ public class Enemy : MonoBehaviour
     //    damage = data.damage;
     //    speed = data.speed;
     //}
+
+
+    //place in Start() for waypoints
+
+    //SetEnemyValues();
+    //Vector2[] waypoints = new Vector2[pathHolder.childCount];
+    //for(int i = 0; i < waypoints.Length; i++)
+    //{
+    //    waypoints[i] = pathHolder.GetChild(i).position; 
+    //}
+
+    //StartCoroutine(FollowPath(waypoints));
 
     //void OnDrawGizmos()
     //{

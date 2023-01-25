@@ -635,7 +635,7 @@ MonoBehaviour:
   enemy: {fileID: 316477122}
   frontDetection: {fileID: 1528127274}
   rearDetection: {fileID: 1034957425}
-  agroRange: 6
+  agroRange: 0
   damageRange: 0.5
   damageAgainDelay: 1
 --- !u!50 &316477120
