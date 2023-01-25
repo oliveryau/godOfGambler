@@ -50,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
         rbColl = GetComponent<BoxCollider2D>();
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        Physics2D.IgnoreLayerCollision(8, 9);
+        Physics2D.IgnoreLayerCollision(0, 8);
+
     }
 
     // Update is called once per frame
@@ -154,6 +157,8 @@ public class PlayerMovement : MonoBehaviour
             //    }
             //}
             UpdateAnimation();
+
+            
         }
     }
 

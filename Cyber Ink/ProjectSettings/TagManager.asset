@@ -11,19 +11,20 @@ TagManager:
   - Attack
   - Teleporter
   - Checkpoint
+  - Back Collider
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - Terrain
   - Traps
   - Player
-  - Wall
+  - Waypoint Collider
   - TerrainWall
-  - 
+  - Player Collider
   - 
   - 
   - 

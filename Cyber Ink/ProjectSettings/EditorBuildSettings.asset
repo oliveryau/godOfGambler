@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Oliver's Level.unity
     guid: d49b53c9090a43f42ba2fd86f365e06c
   - enabled: 1
-    path: Assets/Scenes/End.unity
+    path: Assets/Art/End.unity
     guid: e0b819702132b4a478c9cb8ff168f382
   m_configObjects: {}

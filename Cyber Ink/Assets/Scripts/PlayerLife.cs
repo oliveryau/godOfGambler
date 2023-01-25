@@ -117,15 +117,32 @@ public class PlayerLife : MonoBehaviour
                 StartCoroutine(GetHurt());
             }
         }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            currentHealth -= trapDamage; // should we have different damage for enemy?
+            if (currentHealth <= 0)
+            {
+                Die();
+                SetHealth(currentHealth);
+            }
+            else
+            {
+                SetHealth(currentHealth);
+                StartCoroutine(GetHurt());
+            }
+        }
     }
 
     IEnumerator GetHurt() //can use for hearts too
     {
         Physics2D.IgnoreLayerCollision(7, 8);
+        Physics2D.IgnoreLayerCollision(3, 8);
         anim.SetLayerWeight(1, 1); //Animator layer 1(gethurt animation), weight 1(visible)
         yield return new WaitForSeconds(3);
         anim.SetLayerWeight(1, 0); //Animator layer 0(base), weight 0(invisible)
         Physics2D.IgnoreLayerCollision(7, 8, false);
+        Physics2D.IgnoreLayerCollision(3, 8,false);
     }
 
     public void SetMaxHealth(int health)
