@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private CameraControl cameraControl;
+    [SerializeField] private PlayerCombat playerCombat;
     private Rigidbody2D rb;
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
@@ -181,6 +182,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
+    {
+        return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
+    }
 
     private void UpdateAnimation()
     {
@@ -214,10 +219,6 @@ public class PlayerMovement : MonoBehaviour
         anim.SetInteger("state", (int)state); //Animation states at movementState line
     }
 
-    public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
-    {
-        return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
-    }
 
     private IEnumerator Dash()
     {
@@ -238,6 +239,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity = direction.normalized * dashingPower;
+        anim.SetTrigger("attack");
+        Attack();
         StartCoroutine(cameraControl.ScreenShake());
         trail.emitting = true;
         Physics2D.IgnoreLayerCollision(7, 8);
@@ -249,5 +252,29 @@ public class PlayerMovement : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 8, false);
         yield return new WaitForSeconds(dashingCooldown);
         isDashingCooldown = false;
+    }
+
+    public void Attack()
+    {
+        playerCombat.attackRange = new Vector3(8f, 2f, 0f);
+        if (rbSprite.flipX == false) //False flipX = Right side attack
+        {
+            playerCombat.attackPoint.localPosition = new Vector2(4f, 0f);
+        }
+        else if (rbSprite.flipX == true) //True flipX = Left side attack
+        {
+            playerCombat.attackPoint.localPosition = new Vector2(-4f, 0f);
+        }
+        //Play attack animation
+        //anim.SetTrigger("attack");
+
+        //Detect enemies in range of attack
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(playerCombat.attackPoint.position, playerCombat.attackRange, playerCombat.enemyLayers);
+
+        //Damage enemies
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("Attacking");
+        }
     }
 }

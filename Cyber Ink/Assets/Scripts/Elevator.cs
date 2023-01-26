@@ -11,7 +11,7 @@ public class Elevator : MonoBehaviour
     public SpriteRenderer elevator;
 
     public float speed = 3f;
-    public bool isElevatorDown;
+    private bool isElevatorDown;
 
     // Update is called once per frame
     void Update()
@@ -24,11 +24,11 @@ public class Elevator : MonoBehaviour
     {
         if (Vector2.Distance(player.position, elevatorSwitch.position) < 1f && Input.GetKeyDown(KeyCode.Z))
         {
-            if (transform.position.y <= downPos.localPosition.y)
+            if (transform.position.y <= downPos.position.y)
             {
                 isElevatorDown = true;
             }
-            else if (transform.position.y >= upperPos.localPosition.y)
+            else if (transform.position.y >= upperPos.position.y)
             {
                 isElevatorDown = false;
             }

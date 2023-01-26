@@ -11,9 +11,9 @@ public class PlayerCombat : MonoBehaviour
     [Header("Attacking")]
     public bool canAttack;
     public Transform attackPoint;
-    public float attackRange = 1f;
+    public Vector3 attackRange;
     //public int attackDamage = 30;
-    public float attackRate = 2f;
+    public float attackRate = 1f;
     private float nextAttackTime = 0f;
 
     // Update is called once per frame
@@ -38,19 +38,20 @@ public class PlayerCombat : MonoBehaviour
 
     public void Attack()
     {
+        attackRange = new Vector3(3f, 2f, 0);
         if (playerMovement.rbSprite.flipX == false) //False flipX = Right side attack
         {
-            attackPoint.localPosition = new Vector2(1.5f, -0.2f);
+            attackPoint.localPosition = new Vector2(2f, 0f);
         }
         else if (playerMovement.rbSprite.flipX == true) //True flipX = Left side attack
         {
-            attackPoint.localPosition = new Vector2(-1.5f, -0.2f);
+            attackPoint.localPosition = new Vector2(-2f, 0f);
         }
         //Play attack animation
         anim.SetTrigger("attack");
 
         //Detect enemies in range of attack
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, enemyLayers);
 
         //Damage enemies
         foreach(Collider2D enemy in hitEnemies)
@@ -65,6 +66,6 @@ public class PlayerCombat : MonoBehaviour
         {
             return;
         }
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawCube(attackPoint.position, attackRange);
     }
 }
