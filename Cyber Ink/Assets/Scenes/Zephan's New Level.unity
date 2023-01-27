@@ -609,6 +609,7 @@ GameObject:
   - component: {fileID: 316477121}
   - component: {fileID: 316477120}
   - component: {fileID: 316477119}
+  - component: {fileID: 316477123}
   m_Layer: 3
   m_Name: Enemy 2
   m_TagString: Untagged
@@ -730,6 +731,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &316477123
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316477117}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f59216029adc0646b2b9491f06a1151, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &393925974
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +806,7 @@ MonoBehaviour:
     m_Bits: 2147483647
   canAttack: 1
   attackPoint: {fileID: 85207554}
-  attackRange: 1
+  attackRange: {x: 0, y: 0, z: 0}
   attackRate: 2
 --- !u!114 &393925977
 MonoBehaviour:
@@ -803,6 +824,7 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   slider: {fileID: 1882479728}
+  slowDamage: 10
   heals: 20
   fallDamage: 20
   trapDamage: 30
@@ -820,6 +842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraControl: {fileID: 43180413}
+  playerCombat: {fileID: 0}
   rbSprite: {fileID: 393925982}
   trail: {fileID: 572574241}
   groundLayer:
@@ -831,6 +854,8 @@ MonoBehaviour:
   deceleration: 13
   velPower: 0.96
   frictionAmount: 0.6
+  slowTimer: 0
+  checkSlow: 0
   jumpForce: 15
   fallGravityMultiplier: 2
   maxFallSpeed: 40
