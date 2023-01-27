@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public bool checkSlow; //Slow Debuff Toggle
 
     [Header("Jump")]
+    public bool canJump = true;
     [SerializeField] private float jumpForce = 15f;
     private float coyoteTimeCounter;
     private float jumpCutMultiplier = 0.5f;
@@ -34,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public float maxFallSpeed = 40f;
     public float coyoteTime = 0.15f;
 
-    private bool canDash = true;
+    [Header("Dash")]
+    public bool canDash = true;
     private bool isDashing;
     private bool isDashingCooldown;
     private float dashingPower = 30f;
@@ -58,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!canMove)
+        if (!canMove && !canJump)
         {
             
         } 
@@ -151,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canMove)
+        if (!canMove && !canJump)
         {
 
         }

@@ -176,6 +176,7 @@ MonoBehaviour:
   upperPos: {fileID: 1462487213}
   elevator: {fileID: 1680970180}
   speed: 3
+  movingElevatorUp: 0
 --- !u!61 &123667585
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -240,8 +241,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1609943769
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 99329b87c11d1ee4f8d328e269a7073b, type: 3}
   m_Color: {r: 0.87090254, g: 1, b: 0, a: 1}
@@ -520,6 +521,7 @@ MonoBehaviour:
   upperPos: {fileID: 521287728}
   elevator: {fileID: 1236310234}
   speed: 3
+  movingElevatorUp: 0
 --- !u!61 &426668398
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -584,8 +586,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1609943769
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 99329b87c11d1ee4f8d328e269a7073b, type: 3}
   m_Color: {r: 0.87090254, g: 1, b: 0, a: 1}
@@ -3447,10 +3449,12 @@ MonoBehaviour:
   frictionAmount: 0.6
   slowTimer: 0
   checkSlow: 0
+  canJump: 1
   jumpForce: 15
   fallGravityMultiplier: 2
   maxFallSpeed: 40
   coyoteTime: 0.15
+  canDash: 1
 --- !u!50 &912119648
 Rigidbody2D:
   serializedVersion: 4
@@ -3468,7 +3472,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 5cdf43349dc50984b89d76816f45c7b6, type: 2}
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -3601,7 +3605,7 @@ MonoBehaviour:
     m_Bits: 128
   canAttack: 1
   attackPoint: {fileID: 715891685}
-  attackRange: 1
+  attackRange: {x: 0, y: 0, z: 0}
   attackRate: 1
 --- !u!114 &912119656
 MonoBehaviour:

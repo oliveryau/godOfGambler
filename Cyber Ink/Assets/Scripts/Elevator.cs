@@ -11,7 +11,7 @@ public class Elevator : MonoBehaviour
     public SpriteRenderer elevator;
 
     public float speed = 3f;
-    private bool isElevatorDown;
+    public bool movingElevatorUp;
 
     // Update is called once per frame
     void Update()
@@ -22,19 +22,17 @@ public class Elevator : MonoBehaviour
 
     private void StartElevator()
     {
-        if (Vector2.Distance(player.position, elevatorSwitch.position) < 1f && Input.GetKeyDown(KeyCode.Z))
+        if (Vector2.Distance(player.position, elevatorSwitch.position) < 1f) //If player stays on elevator, elevator will move up
         {
-            if (transform.position.y <= downPos.position.y)
-            {
-                isElevatorDown = true;
-            }
-            else if (transform.position.y >= upperPos.position.y)
-            {
-                isElevatorDown = false;
-            }
+            movingElevatorUp = true;
         }
 
-        if (isElevatorDown)
+        if (Vector2.Distance(player.position, elevatorSwitch.position) > 1f) //If player leaves elevator, elevator will go back to original state
+        {
+            movingElevatorUp = false;
+        }
+
+        if (movingElevatorUp)
         {
             transform.position = Vector2.MoveTowards(transform.position, upperPos.position, speed * Time.deltaTime);
         }
@@ -54,5 +52,18 @@ public class Elevator : MonoBehaviour
         {
             elevator.color = Color.red;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.position.y > transform.position.y) //Check if player lands on platform from the top
+        {
+            collision.transform.SetParent(transform);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        collision.transform.SetParent(null);
     }
 }

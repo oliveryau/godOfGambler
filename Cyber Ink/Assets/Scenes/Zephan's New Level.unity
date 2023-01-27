@@ -842,7 +842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraControl: {fileID: 43180413}
-  playerCombat: {fileID: 0}
+  playerCombat: {fileID: 393925976}
   rbSprite: {fileID: 393925982}
   trail: {fileID: 572574241}
   groundLayer:
