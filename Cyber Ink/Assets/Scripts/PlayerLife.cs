@@ -169,20 +169,20 @@ public class PlayerLife : MonoBehaviour
         slider.value = health;
     }
 
-    //public void Damage (int amount)
-    //{
-    //    if (amount < 0)
-    //    {
-    //        throw new System.ArgumentOutOfRangeException("No negative damage");
-    //    }
-    //    currentHealth -= amount;
-    //    SetHealth(currentHealth);
+    public void TakeDamage(int amount)
+    {
+        if (amount < 0)
+        {
+            throw new System.ArgumentOutOfRangeException("No negative damage");
+        }
+        currentHealth -= amount;
+        SetHealth(currentHealth);
 
-    //    if (currentHealth <= 0)
-    //    {
-    //        Die();
-    //    }
-    //}
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
     //public void Heal(int amount)
     //{
