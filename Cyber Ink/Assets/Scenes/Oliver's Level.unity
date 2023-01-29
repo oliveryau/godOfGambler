@@ -3447,8 +3447,8 @@ MonoBehaviour:
   deceleration: 13
   velPower: 0.96
   frictionAmount: 0.6
-  slowTimer: 0
   checkSlow: 0
+  slowTimer: 0
   canJump: 1
   jumpForce: 15
   fallGravityMultiplier: 2
@@ -3578,14 +3578,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnPoint: {fileID: 1067229683}
+  gameOverScreen: {fileID: 1284914911}
+  slider: {fileID: 1848631902}
   currentHealth: 100
   maxHealth: 100
-  slider: {fileID: 1848631902}
-  slowDamage: 10
   heals: 20
   fallDamage: 20
-  trapDamage: 30
-  gameOverScreen: {fileID: 1284914911}
+  slowDamage: 10
+  trapDamage: 20
+  enemyDamage: 30
 --- !u!114 &912119654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3602,7 +3603,7 @@ MonoBehaviour:
   playerMovement: {fileID: 912119646}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   canAttack: 1
   attackPoint: {fileID: 715891685}
   attackRange: {x: 0, y: 0, z: 0}
@@ -4576,8 +4577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3247e0fa7df0c94bb286c585700d17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  activationDelay: 2
+  activationDelay: 0.1
   activeTime: 2
 --- !u!95 &1412411291
 Animator:
@@ -4612,7 +4612,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.3075352}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4623,7 +4623,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1, y: 2.61507}
   m_EdgeRadius: 0
 --- !u!212 &1412411293
 SpriteRenderer:
@@ -5326,7 +5326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 53f248b8e2ba3e44e96bc7ac0bdc6373, type: 3}
+  m_Sprite: {fileID: 7293598183456022363, guid: 1ddc9afd21fec77489b1248d18f31b68, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6904,11 +6904,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 4d8c75a4d7dd2a0489270e1058d82128, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0

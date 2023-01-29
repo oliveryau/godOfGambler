@@ -22,8 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float deceleration = 13f;
     [SerializeField] private float velPower = 1f;
     [SerializeField] private float frictionAmount = 0.6f;
-    public float slowTimer; //Slow Debuff Timer
     public bool checkSlow; //Slow Debuff Toggle
+    public float slowTimer; //Slow Debuff Timer
 
     [Header("Jump")]
     public bool canJump = true;
@@ -267,8 +267,6 @@ public class PlayerMovement : MonoBehaviour
         {
             playerCombat.attackPoint.localPosition = new Vector2(-4f, 0f);
         }
-        //Play attack animation
-        //anim.SetTrigger("attack");
 
         //Detect enemies in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(playerCombat.attackPoint.position, playerCombat.attackRange, playerCombat.enemyLayers);

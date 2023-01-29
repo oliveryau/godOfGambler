@@ -10,24 +10,20 @@ public class PlayerLife : MonoBehaviour
     private Animator anim; //Trigger animation
     private PlayerMovement playerMovement;
     public GameObject respawnPoint;
+    public GameObject gameOverScreen; //Game over screen
 
     [Header("Player Health")]
+    public Slider slider;
     public int currentHealth = 100;
     public int maxHealth = 100;
-    public Slider slider;
 
     [Header("Health Edits")]
-    public int slowDamage = 10;
     public int heals = 20;
     public int fallDamage = 20;
-    public int trapDamage = 30;
+    public int slowDamage = 10;
+    public int trapDamage = 20;
+    public int enemyDamage = 30;
 
-    //public float timeRemaining = 120f;
-    //public bool timeRun = false;
-    //public Text timeText;
-    //public Text redTimeText; //final few seconds warning
-
-    public GameObject gameOverScreen; //Game over screen
 
     private void Awake()
     {
@@ -39,7 +35,6 @@ public class PlayerLife : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
-        //timeRun = true;
         currentHealth = maxHealth;
         SetMaxHealth(maxHealth);
     }
@@ -50,11 +45,6 @@ public class PlayerLife : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.A))
         //{
         //    Damage(10);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    Heal(10);
         //}
 
         if (playerMovement.checkSlow) //Slow debuff timer
@@ -74,33 +64,12 @@ public class PlayerLife : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-            currentHealth -= trapDamage;
-            if (currentHealth <= 0)
-            {
-                Die();
-                SetHealth(currentHealth);
-            }
-            else
-            {
-                SetHealth(currentHealth);
-                StartCoroutine(GetHurt());
-            }
+            TrapDamage();
         }
 
         if (collision.gameObject.CompareTag("Slow Trap"))
         {
-            currentHealth -= slowDamage;
-            playerMovement.checkSlow = true;
-            if (currentHealth <= 0)
-            {
-                Die();
-                SetHealth(currentHealth);
-            }
-            else
-            {
-                SetHealth(currentHealth);
-                StartCoroutine(GetHurt());
-            }
+            SlowDamage();
         }
     }
 
@@ -118,32 +87,12 @@ public class PlayerLife : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Respawn"))
         {
-            currentHealth -= fallDamage;
-            if (currentHealth <= 0)
-            {
-                Die();
-                SetHealth(currentHealth);
-            }
-            else
-            {
-                SetHealth(currentHealth);
-                StartCoroutine(GetHurt());
-            }
+            FallDamage();
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            currentHealth -= trapDamage; // should we have different damage for enemy?
-            if (currentHealth <= 0)
-            {
-                Die();
-                SetHealth(currentHealth);
-            }
-            else
-            {
-                SetHealth(currentHealth);
-                StartCoroutine(GetHurt());
-            }
+            EnemyDamage();
         }
     }
 
@@ -155,7 +104,7 @@ public class PlayerLife : MonoBehaviour
         yield return new WaitForSeconds(3);
         anim.SetLayerWeight(1, 0); //Animator layer 0(base), weight 0(invisible)
         Physics2D.IgnoreLayerCollision(7, 8, false);
-        Physics2D.IgnoreLayerCollision(3, 8,false);
+        Physics2D.IgnoreLayerCollision(3, 8, false);
     }
 
     public void SetMaxHealth(int health)
@@ -169,37 +118,66 @@ public class PlayerLife : MonoBehaviour
         slider.value = health;
     }
 
-    public void TakeDamage(int amount)
+    public void FallDamage()
     {
-        if (amount < 0)
-        {
-            throw new System.ArgumentOutOfRangeException("No negative damage");
-        }
-        currentHealth -= amount;
-        SetHealth(currentHealth);
-
+        currentHealth -= fallDamage;
         if (currentHealth <= 0)
         {
             Die();
+            SetHealth(currentHealth);
+        }
+        else
+        {
+            SetHealth(currentHealth);
+            StartCoroutine(GetHurt());
         }
     }
 
-    //public void Heal(int amount)
-    //{
-    //    if (amount < 0)
-    //    {
-    //        throw new System.ArgumentOutOfRangeException("No negative healing");
-    //    }
+    public void SlowDamage()
+    {
+        currentHealth -= slowDamage;
+        playerMovement.checkSlow = true;
+        if (currentHealth <= 0)
+        {
+            Die();
+            SetHealth(currentHealth);
+        }
+        else
+        {
+            SetHealth(currentHealth);
+            StartCoroutine(GetHurt());
+        }
+    }
 
-    //    if (currentHealth + amount > maxHealth)
-    //    {
-    //        currentHealth = maxHealth;
-    //    }
-    //    else
-    //    {
-    //        currentHealth += amount;
-    //    }
-    //}
+    public void TrapDamage()
+    {
+        currentHealth -= trapDamage;
+        if (currentHealth <= 0)
+        {
+            Die();
+            SetHealth(currentHealth);
+        }
+        else
+        {
+            SetHealth(currentHealth);
+            StartCoroutine(GetHurt());
+        }
+    }
+
+    public void EnemyDamage()
+    {
+        currentHealth -= enemyDamage; // should we have different damage for enemy?
+        if (currentHealth <= 0)
+        {
+            Die();
+            SetHealth(currentHealth);
+        }
+        else
+        {
+            SetHealth(currentHealth);
+            StartCoroutine(GetHurt());
+        }
+    }
 
     private void Die()
     {
