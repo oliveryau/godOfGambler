@@ -22,12 +22,12 @@ public class Elevator : MonoBehaviour
 
     private void StartElevator()
     {
-        if (Vector2.Distance(player.position, elevatorSwitch.position) < 1f) //If player stays on elevator, elevator will move up
+        if (Vector2.Distance(player.position, elevatorSwitch.position) < 0.5f) //If player stays on elevator, elevator will move up
         {
             movingElevatorUp = true;
         }
 
-        if (Vector2.Distance(player.position, elevatorSwitch.position) > 1f) //If player leaves elevator, elevator will go back to original state
+        if (Vector2.Distance(player.position, elevatorSwitch.position) > 0.5f) //If player leaves elevator, elevator will go back to original state
         {
             movingElevatorUp = false;
         }

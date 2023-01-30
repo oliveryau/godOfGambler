@@ -60,6 +60,24 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float _damage)
+    {
+        currentHealth = Mathf.Clamp(currentHealth - (int)_damage, 0, maxHealth);
+        if (currentHealth > 0)
+        {
+            //player hurt
+            SetHealth(currentHealth);
+            StartCoroutine(GetHurt());
+        }
+        else
+        {
+            //player die
+            Die();
+            SetHealth(currentHealth);
+        }
+    }
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Trap"))
@@ -88,6 +106,7 @@ public class PlayerLife : MonoBehaviour
         if (collision.gameObject.CompareTag("Respawn"))
         {
             FallDamage();
+            Debug.Log("Hi");
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
