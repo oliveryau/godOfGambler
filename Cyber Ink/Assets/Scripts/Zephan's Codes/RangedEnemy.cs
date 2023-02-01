@@ -100,8 +100,8 @@ public class RangedEnemy : MonoBehaviour
     private void RangedAttack()
     {
         cooldownTimer = 0;
-        fireballs[0].transform.position = firepoint.position;
-        fireballs[0].GetComponent<EnemyProjectile>().ActivateProjectile();
+        fireballs[FindFireballs()].transform.position = firepoint.position;
+        fireballs[FindFireballs()].GetComponent<EnemyProjectile>().ActivateProjectile(transform.position.x);
     }
 
     private int FindFireballs()
@@ -159,6 +159,31 @@ public class RangedEnemy : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 0);
             movingRight = true;
         }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+
+        if (collider.CompareTag("Player") && ChasingPlayer == true)
+        {
+
+            if (movingRight == true)
+            {
+                transform.eulerAngles = new Vector3(0, -180, 0);
+                movingRight = false;
+                MoveToPlayer();
+            }
+
+            else
+            {
+
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                movingRight = true;
+                MoveToPlayer();
+            }
+        }
+
 
     }
 }

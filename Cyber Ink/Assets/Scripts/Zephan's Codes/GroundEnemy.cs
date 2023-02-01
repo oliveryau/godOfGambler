@@ -182,6 +182,31 @@ public class GroundEnemy : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+
+        if (collider.CompareTag("Player") && ChasingPlayer == true)
+        {
+
+            if (movingRight == true)
+            {
+                transform.eulerAngles = new Vector3(0, -180, 0);
+                movingRight = false;
+                MoveToPlayer();
+            }
+
+            else
+            {
+
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                movingRight = true;
+                MoveToPlayer();
+            }
+        }
+
+
+    }
+
     //private IEnumerator Dash()
     //{
     //    canDash = false;
@@ -215,32 +240,9 @@ public class GroundEnemy : MonoBehaviour
     //    yield return new WaitForSeconds(dashingCooldown);
     //    isDashingCooldown = false;
     //}
-    
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-
-        if (collider.CompareTag("Player") && ChasingPlayer == true)
-        {
-           
-            if (movingRight == true)
-            {
-                transform.eulerAngles = new Vector3(0, -180, 0);
-                movingRight = false;
-                MoveToPlayer();
-            }
-
-            else
-            {
-
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                movingRight = true;
-                MoveToPlayer();
-            }
-        }
 
 
-    }
+
     // to stop the enemy when player is within range need to add new attackrange gameobject
     //private void OnCollisionEnter2D(Collision2D collision)
     //{
@@ -281,15 +283,15 @@ public class GroundEnemy : MonoBehaviour
     //    }
     //}
 
-    
 
 
- 
 
 
-    
 
-   
+
+
+
+
 
 
 
