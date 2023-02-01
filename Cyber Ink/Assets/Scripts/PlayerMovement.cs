@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
-    [SerializeField] private TrailRenderer trail;
     [SerializeField] private LayerMask groundLayer;
     private Animator anim; //Trigger animation
 
@@ -242,39 +241,15 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = direction.normalized * dashingPower;
         anim.SetTrigger("attack");
-        Attack();
+        playerCombat.Attack();
         StartCoroutine(cameraControl.ScreenShake());
-        trail.emitting = true;
         Physics2D.IgnoreLayerCollision(7, 8);
         yield return new WaitForSeconds(dashingTime);
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        trail.emitting = false;
         rb.gravityScale = dashGravity;
         isDashing = false;
         Physics2D.IgnoreLayerCollision(7, 8, false);
         yield return new WaitForSeconds(dashingCooldown);
         isDashingCooldown = false;
-    }
-
-    public void Attack()
-    {
-        playerCombat.attackRange = new Vector3(8f, 2f, 0f);
-        if (rbSprite.flipX == false) //False flipX = Right side attack
-        {
-            playerCombat.attackPoint.localPosition = new Vector2(4f, 0f);
-        }
-        else if (rbSprite.flipX == true) //True flipX = Left side attack
-        {
-            playerCombat.attackPoint.localPosition = new Vector2(-4f, 0f);
-        }
-
-        //Detect enemies in range of attack
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(playerCombat.attackPoint.position, playerCombat.attackRange, playerCombat.enemyLayers);
-
-        //Damage enemies
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            Debug.Log("Attacking");
-        }
     }
 }

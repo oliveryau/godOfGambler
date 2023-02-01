@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         playerMovement.canMove = false;
-        playerCombat.canAttack = false;
+        //playerCombat.canAttack = false;
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
         //script.rbSprite.flipX = false;
@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         playerMovement.canMove = true;
-        playerCombat.canAttack = true;
+        //playerCombat.canAttack = true;
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
     }

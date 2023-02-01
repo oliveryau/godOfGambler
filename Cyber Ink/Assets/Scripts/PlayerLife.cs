@@ -14,15 +14,15 @@ public class PlayerLife : MonoBehaviour
 
     [Header("Player Health")]
     public Slider slider;
-    public int currentHealth = 100;
-    public int maxHealth = 100;
+    public float currentHealth = 100f;
+    public float maxHealth = 100f;
 
     [Header("Health Edits")]
-    public int heals = 20;
-    public int fallDamage = 20;
-    public int slowDamage = 10;
-    public int trapDamage = 20;
-    public int enemyDamage = 30;
+    public float heal = 0.5f;
+    public float fallDamage = 20f;
+    public float slowDamage = 10f;
+    public float trapDamage = 20f;
+    public float enemyDamage = 30f;
 
 
     private void Awake()
@@ -41,11 +41,15 @@ public class PlayerLife : MonoBehaviour
 
     private void Update()
     {
-        //Test if attack/healing is working
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    Damage(10);
-        //}
+        if (currentHealth < maxHealth)
+        {
+            currentHealth += heal * Time.deltaTime;
+            SetHealth(currentHealth);
+        }
+        else if (currentHealth >= maxHealth)
+        {
+            SetMaxHealth(maxHealth);
+        }
 
         if (playerMovement.checkSlow) //Slow debuff timer
         {
@@ -93,16 +97,6 @@ public class PlayerLife : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Heal"))
-        {
-            if (currentHealth < maxHealth)
-            {
-                Destroy(collision.gameObject);
-                currentHealth += heals;
-                SetHealth(currentHealth);
-            }
-        }
-
         if (collision.gameObject.CompareTag("Respawn"))
         {
             FallDamage();
@@ -115,7 +109,7 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    IEnumerator GetHurt() //can use for hearts too
+    private IEnumerator GetHurt() //can use for hearts too
     {
         Physics2D.IgnoreLayerCollision(7, 8);
         Physics2D.IgnoreLayerCollision(3, 8);
@@ -126,13 +120,13 @@ public class PlayerLife : MonoBehaviour
         Physics2D.IgnoreLayerCollision(3, 8, false);
     }
 
-    public void SetMaxHealth(int health)
+    public void SetMaxHealth(float health)
     {
         slider.maxValue = health; //Max value of healthbar = currentHealth which is 100
         slider.value = health; //Making sure the slider starts at maxHealth
     }
 
-    public void SetHealth(int health)
+    public void SetHealth(float health)
     {
         slider.value = health;
     }

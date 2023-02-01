@@ -10,7 +10,7 @@ public class Elevator : MonoBehaviour
     public Transform upperPos;
     public SpriteRenderer elevator;
 
-    public float speed = 3f;
+    public float speed = 5f;
     public bool movingElevatorUp;
 
     // Update is called once per frame
