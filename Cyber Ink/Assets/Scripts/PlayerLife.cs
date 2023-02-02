@@ -6,16 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Animator anim; //Trigger animation
     private PlayerMovement playerMovement;
+    private Rigidbody2D rb;
+    private Animator anim;
     public GameObject respawnPoint;
     public GameObject gameOverScreen; //Game over screen
 
     [Header("Player Health")]
-    public Slider slider;
+    public Image healthBar;
     public float currentHealth = 100f;
     public float maxHealth = 100f;
+    private float lerpSpeed;
 
     [Header("Health Edits")]
     public float heal = 0.5f;
@@ -36,20 +37,23 @@ public class PlayerLife : MonoBehaviour
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
         currentHealth = maxHealth;
-        SetMaxHealth(maxHealth);
     }
 
     private void Update()
     {
-        if (currentHealth < maxHealth)
+        if (currentHealth < maxHealth) //Health regen
         {
             currentHealth += heal * Time.deltaTime;
-            SetHealth(currentHealth);
         }
-        else if (currentHealth >= maxHealth)
+
+        if (currentHealth >= maxHealth) //Set max health
         {
-            SetMaxHealth(maxHealth);
+            currentHealth = maxHealth;
         }
+
+        lerpSpeed = 3f * Time.deltaTime;
+        SetHealth();
+        HealthBarColor();
 
         if (playerMovement.checkSlow) //Slow debuff timer
         {
@@ -70,14 +74,14 @@ public class PlayerLife : MonoBehaviour
         if (currentHealth > 0)
         {
             //player hurt
-            SetHealth(currentHealth);
+            SetHealth();
             StartCoroutine(GetHurt());
         }
         else
         {
             //player die
             Die();
-            SetHealth(currentHealth);
+            SetHealth();
         }
     }
 
@@ -114,21 +118,21 @@ public class PlayerLife : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 8);
         Physics2D.IgnoreLayerCollision(3, 8);
         anim.SetLayerWeight(1, 1); //Animator layer 1(gethurt animation), weight 1(visible)
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         anim.SetLayerWeight(1, 0); //Animator layer 0(base), weight 0(invisible)
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
     }
 
-    public void SetMaxHealth(float health)
+    public void SetHealth()
     {
-        slider.maxValue = health; //Max value of healthbar = currentHealth which is 100
-        slider.value = health; //Making sure the slider starts at maxHealth
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, lerpSpeed);
     }
 
-    public void SetHealth(float health)
+    private void HealthBarColor()
     {
-        slider.value = health;
+        Color healthColor = Color.Lerp(Color.red, Color.cyan, (currentHealth / maxHealth));
+        healthBar.color = healthColor;
     }
 
     public void FallDamage()
@@ -137,11 +141,11 @@ public class PlayerLife : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-            SetHealth(currentHealth);
+            SetHealth();
         }
         else
         {
-            SetHealth(currentHealth);
+            SetHealth();
             StartCoroutine(GetHurt());
         }
     }
@@ -153,11 +157,11 @@ public class PlayerLife : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-            SetHealth(currentHealth);
+            SetHealth();
         }
         else
         {
-            SetHealth(currentHealth);
+            SetHealth();
             StartCoroutine(GetHurt());
         }
     }
@@ -168,26 +172,26 @@ public class PlayerLife : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-            SetHealth(currentHealth);
+            SetHealth();
         }
         else
         {
-            SetHealth(currentHealth);
+            SetHealth();
             StartCoroutine(GetHurt());
         }
     }
 
     public void EnemyDamage()
     {
-        currentHealth -= enemyDamage; // should we have different damage for enemy?
+        currentHealth -= enemyDamage;
         if (currentHealth <= 0)
         {
             Die();
-            SetHealth(currentHealth);
+            SetHealth();
         }
         else
         {
-            SetHealth(currentHealth);
+            SetHealth();
             StartCoroutine(GetHurt());
         }
     }

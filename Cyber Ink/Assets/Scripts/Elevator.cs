@@ -6,12 +6,12 @@ public class Elevator : MonoBehaviour
 {
     public Transform player;
     public Transform elevatorSwitch;
-    public Transform downPos;
-    public Transform upperPos;
-    public SpriteRenderer elevator;
+    public Transform startPosition;
+    public Transform endPosition;
+    public SpriteRenderer elevatorSprite;
 
     public float speed = 5f;
-    public bool movingElevatorUp;
+    public bool movingElevator;
 
     // Update is called once per frame
     void Update()
@@ -24,33 +24,33 @@ public class Elevator : MonoBehaviour
     {
         if (Vector2.Distance(player.position, elevatorSwitch.position) < 0.5f) //If player stays on elevator, elevator will move up
         {
-            movingElevatorUp = true;
+            movingElevator = true;
         }
 
         if (Vector2.Distance(player.position, elevatorSwitch.position) > 0.5f) //If player leaves elevator, elevator will go back to original state
         {
-            movingElevatorUp = false;
+            movingElevator = false;
         }
 
-        if (movingElevatorUp)
+        if (movingElevator)
         {
-            transform.position = Vector2.MoveTowards(transform.position, upperPos.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, endPosition.position, speed * Time.deltaTime);
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, downPos.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, startPosition.position, speed * Time.deltaTime);
         }
     }
 
     private void DisplayColor()
     {
-        if (transform.position.y <= downPos.position.y || transform.position.y >= upperPos.position.y)
+        if (transform.position.y <= startPosition.position.y || transform.position.y >= endPosition.position.y)
         {
-            elevator.color = Color.green;
+            elevatorSprite.color = Color.green;
         }
         else
         {
-            elevator.color = Color.red;
+            elevatorSprite.color = Color.red;
         }
     }
 
