@@ -10,7 +10,7 @@ public class Elevator : MonoBehaviour
     public Transform endPosition;
     public SpriteRenderer elevatorSprite;
 
-    public float speed = 5f;
+    public float speed = 4f;
     public bool movingElevator;
 
     // Update is called once per frame
@@ -22,12 +22,12 @@ public class Elevator : MonoBehaviour
 
     private void StartElevator()
     {
-        if (Vector2.Distance(player.position, elevatorSwitch.position) < 0.5f) //If player stays on elevator, elevator will move up
+        if (Vector2.Distance(player.position, elevatorSwitch.position) < 1f) //If player stays on elevator, elevator will move up
         {
             movingElevator = true;
         }
 
-        if (Vector2.Distance(player.position, elevatorSwitch.position) > 0.5f) //If player leaves elevator, elevator will go back to original state
+        if (Vector2.Distance(player.position, elevatorSwitch.position) > 1f) //If player leaves elevator, elevator will go back to original state
         {
             movingElevator = false;
         }
@@ -44,7 +44,7 @@ public class Elevator : MonoBehaviour
 
     private void DisplayColor()
     {
-        if (transform.position.y <= startPosition.position.y || transform.position.y >= endPosition.position.y)
+        if (transform.position.y >= startPosition.position.y || transform.position.y <= endPosition.position.y)
         {
             elevatorSprite.color = Color.green;
         }

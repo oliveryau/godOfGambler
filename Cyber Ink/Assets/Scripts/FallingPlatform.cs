@@ -16,13 +16,13 @@ public class FallingPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlatformManager.Instance.StartCoroutine("SpawnPlatform", new Vector2(transform.position.x, transform.position.y));
-            Invoke("DropPlatform", 0.5f);
-            Destroy(gameObject, 2f);
+            Invoke("DropPlatform", 1f);
+            //Destroy(gameObject, 2f);
         }
     }
 
     private void DropPlatform()
     {
-        rb.isKinematic = false;
+        Destroy(gameObject);
     }
 }

@@ -59,7 +59,7 @@ public class PlayerLife : MonoBehaviour
         {
             playerMovement.moveSpeed = 3f;
             playerMovement.slowTimer += Time.deltaTime;
-            if (playerMovement.slowTimer >= 3) //3 second debuff
+            if (playerMovement.slowTimer >= 1.5f) //3 second debuff
             {
                 playerMovement.moveSpeed = 11f;
                 playerMovement.slowTimer = 0f;
@@ -104,7 +104,6 @@ public class PlayerLife : MonoBehaviour
         if (collision.gameObject.CompareTag("Respawn"))
         {
             FallDamage();
-            Debug.Log("Hi");
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
