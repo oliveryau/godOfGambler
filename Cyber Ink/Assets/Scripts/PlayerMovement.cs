@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpCutMultiplier = 0.5f;
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 2f;
-    public float maxFallSpeed = 40f;
+    public float maxFallSpeed = 30f;
     public float coyoteTime = 0.15f;
 
     [Header("Dash")]
