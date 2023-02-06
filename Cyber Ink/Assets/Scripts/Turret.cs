@@ -7,7 +7,7 @@ public class Turret : MonoBehaviour
     //[SerializeField] private int damage = 20;
 
     [Header("Timers")]
-    [SerializeField] private float activationDelay = 0.1f;
+    [SerializeField] private float activationDelay = 1f;
     [SerializeField] private float activeTime = 2f;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
@@ -42,16 +42,17 @@ public class Turret : MonoBehaviour
     {
         //turn sprite red to notify player that turret is triggered
         triggered = true;
-        spriteRenderer.color = Color.red;
+        spriteRenderer.color = Color.yellow;
 
         //wait for delay, activate trap, turn on animation, return colour
         yield return new WaitForSeconds(activationDelay);
-        spriteRenderer.color = Color.white;
+        spriteRenderer.color = Color.red;
         active = true;
         anim.SetBool("activated", true);
 
         //wait until activeTime seconds, deactivate trap and reset all variables and animator
         yield return new WaitForSeconds(activeTime);
+        spriteRenderer.color = Color.white;
         active = false;
         triggered = false;
         anim.SetBool("activated", false);
