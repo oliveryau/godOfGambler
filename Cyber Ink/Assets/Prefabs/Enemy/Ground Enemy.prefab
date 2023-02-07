@@ -81,7 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013812058205062701}
   - component: {fileID: 2013812058205062700}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Front Raycast
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -261,7 +261,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &2013812058622332215
@@ -308,10 +308,10 @@ MonoBehaviour:
     m_Bits: 256
   rearDetection: {fileID: 2013812059064655470}
   agroRange: 2
-  attackCooldown: 0.5
-  colliderDistance: 1.2
-  range: 2
-  damage: 2
+  attackCooldown: 1
+  colliderDistance: 1
+  range: 1.3
+  damage: 20
 --- !u!95 &2013812058622332209
 Animator:
   serializedVersion: 5

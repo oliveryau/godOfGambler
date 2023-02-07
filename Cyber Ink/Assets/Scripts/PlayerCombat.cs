@@ -49,13 +49,13 @@ public class PlayerCombat : MonoBehaviour
         }
 
         //Detect enemies in range of attack
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, enemyLayers);
+        //Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, enemyLayers);
 
-        //Damage enemies
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            Debug.Log("Attacking");
-        }
+        ////Damage enemies
+        //foreach (Collider2D enemy in hitEnemies)
+        //{
+        //    Debug.Log("Attacking");
+        //}
     }
 
     private void OnDrawGizmosSelected()

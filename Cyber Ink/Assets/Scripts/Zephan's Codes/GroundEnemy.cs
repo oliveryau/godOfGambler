@@ -55,7 +55,7 @@ public class GroundEnemy : MonoBehaviour
 
     private Animator anim;
     private PlayerLife playerHealth;
-
+    private PlayerMovement playerMovement;
 
 
     //[Header("Dash")]
@@ -88,7 +88,7 @@ public class GroundEnemy : MonoBehaviour
         if (colliderType.IsTouchingLayers(LayerMask.GetMask("Waypoint Collider")))
         {
             FlipEnemy();
-            Debug.Log("collided");
+            //Debug.Log("collided");
         }
         else if (PlayerInSight())
         {
@@ -127,7 +127,7 @@ public class GroundEnemy : MonoBehaviour
     private void DamagePlayer()
     {
         //If player is in range, damage
-        if (PlayerInSight())    
+        if (PlayerInSight() && playerMovement.checkDash() == false)    
         {
             playerHealth.TakeDamage(damage);
         }

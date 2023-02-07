@@ -15,7 +15,7 @@ public class PlatformManager : MonoBehaviour
         }
         else if (Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 0.5f);
         }
     }
 
@@ -27,6 +27,10 @@ public class PlatformManager : MonoBehaviour
         Instantiate(platformPrefab, new Vector2(39.5f, 3f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(49.5f, 9f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(62f, -20f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(172.5f, -47f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(184.5f, -44f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(174.5f, -41f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(174.5f, -38f), platformPrefab.transform.rotation);
     }
 
     public IEnumerator SpawnPlatform(Vector2 spawnPosition)

@@ -22,6 +22,6 @@ public class FallingPlatform : MonoBehaviour
 
     private void DropPlatform()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, 0.5f);
     }
 }
