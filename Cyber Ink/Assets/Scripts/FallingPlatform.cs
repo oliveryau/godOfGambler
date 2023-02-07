@@ -16,12 +16,12 @@ public class FallingPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlatformManager.Instance.StartCoroutine("SpawnPlatform", new Vector2(transform.position.x, transform.position.y));
-            Invoke("DropPlatform", 0.5f);
+            Invoke("DropPlatform", 1f);
         }
     }
 
     private void DropPlatform()
     {
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject);
     }
 }

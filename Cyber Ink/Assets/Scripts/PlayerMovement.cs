@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashingCooldown;
     private float dashingPower = 30f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.1f;
+    private float dashingCooldown = 0.3f;
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
