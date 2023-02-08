@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public bool canMove = true;
-    public float moveSpeed = 11f;
+    public float moveSpeed = 10f;
     private float moveInput; //Horizontal Movement
     [SerializeField] private float acceleration = 13f;
     [SerializeField] private float deceleration = 13f;
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Jump")) //Jump with GetButtonDown in Input Manager
+            if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Vertical")) //Jump with GetButtonDown in Input Manager
             {
                 if (coyoteTimeCounter > 0f)
                 {
@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonUp("Jump"))
+            if (Input.GetButtonUp("Jump") || Input.GetButtonUp("Vertical"))
             {
                 if (rb.velocity.y > 0f)
                 {
@@ -136,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.gravityScale = originalGravity;
             }
 
-            if (Input.GetKeyDown(KeyCode.S) && canDash)
+            if (Input.GetKeyDown(KeyCode.E) && canDash)
             {
                 StartCoroutine(Dash());
             }

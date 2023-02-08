@@ -3131,8 +3131,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.3
-      value: 0.3
+      time: 0.1
+      value: 0.1
       inSlope: 0.03288691
       outSlope: 0.03288691
       tangentMode: 0
@@ -3142,8 +3142,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.42857146
-      outSlope: -0.42857146
+      inSlope: -0.11111112
+      outSlope: -0.11111112
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -6776,7 +6776,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 5cdf43349dc50984b89d76816f45c7b6, type: 2}
+  m_Material: {fileID: 6200000, guid: d5e75c89b5398f54fad7bf1cd2c0e112, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -19202,9 +19202,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   canMove: 1
-  moveSpeed: 11
+  moveSpeed: 9
   acceleration: 13
-  deceleration: 13
+  deceleration: 100
   velPower: 0.96
   frictionAmount: 0.6
   checkSlow: 0
@@ -19297,7 +19297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912119645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 34.5, y: 10.95, z: 0}
+  m_LocalPosition: {x: 1.25, y: 3.4499998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
