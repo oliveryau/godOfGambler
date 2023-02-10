@@ -1,40 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     public PlayerMovement playerMovement;
-    public PlayerCombat playerCombat;
-    public GameObject pauseScreen;
+    public Image healthBar;
 
-    private void Start()
+    public GameObject pauseScreen;
+    public bool isPaused = false;
+
+    private void Update()
     {
-        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
-        PlayerCombat playerCombat = GetComponent<PlayerCombat>();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
     }
 
     public void PauseGame()
     {
-        playerMovement.canMove = false;
-        //playerCombat.canAttack = false;
-        Time.timeScale = 0;
         pauseScreen.SetActive(true);
-        //script.rbSprite.flipX = false;
+        healthBar.enabled = false;
+        Time.timeScale = 0f;
+        playerMovement.canMove = false;
+        playerMovement.canJump = false;
+        isPaused = true;
     }
 
     public void ResumeGame()
     {
-        playerMovement.canMove = true;
-        //playerCombat.canAttack = true;
-        Time.timeScale = 1;
         pauseScreen.SetActive(false);
+        healthBar.enabled = true;
+        Time.timeScale = 1f;
+        playerMovement.canMove = true;
+        playerMovement.canJump = true;
+        isPaused = false;
     }
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
-        Time.timeScale = 1;
+        SceneManager.LoadScene("Start");
+        Time.timeScale = 1f;
+        playerMovement.canMove = true;
+        playerMovement.canJump = true;
+        isPaused = false;
     }
 }

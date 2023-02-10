@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private CameraControl cameraControl;
-    [SerializeField] private PlayerCombat playerCombat;
     private Rigidbody2D rb;
     private BoxCollider2D rbColl; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
@@ -15,23 +14,24 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public bool canMove = true;
-    public float moveSpeed = 10f;
+    public float moveSpeed = 11f;
     private float moveInput; //Horizontal Movement
-    [SerializeField] private float acceleration = 13f;
-    [SerializeField] private float deceleration = 13f;
+    [SerializeField] private float acceleration = 15f;
+    [SerializeField] private float deceleration = 30f;
     [SerializeField] private float velPower = 1f;
-    [SerializeField] private float frictionAmount = 0.6f;
+    [SerializeField] private float frictionAmount = 1f;
     public bool checkSlow; //Slow Debuff Toggle
     public float slowTimer; //Slow Debuff Timer
 
     [Header("Jump")]
     public bool canJump = true;
     [SerializeField] private float jumpForce = 15f;
+    private bool isJumping;
     private float coyoteTimeCounter;
     private float jumpCutMultiplier = 0.5f;
     private float originalGravity = 3f;
-    public float fallGravityMultiplier = 2f;
-    public float maxFallSpeed = 30f;
+    public float fallGravityMultiplier = 1.5f;
+    public float maxFallSpeed = 35f;
     public float coyoteTime = 0.15f;
 
     [Header("Dash")]
@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashingCooldown;
     private float dashingPower = 30f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.3f;
+    private float dashingCooldown = 0.5f;
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -61,8 +61,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!canMove && !canJump)
         {
-            
-        } 
+
+        }
         else
         {
             //Prevent player from doing any other action while dashing
@@ -107,16 +107,16 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Jump") || Input.GetButtonDown("Vertical")) //Jump with GetButtonDown in Input Manager
+            if (Input.GetButtonDown("Jump") && !isJumping)
             {
                 if (coyoteTimeCounter > 0f)
                 {
-                    //rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                     rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                    isJumping = true;
                 }
             }
 
-            if (Input.GetButtonUp("Jump") || Input.GetButtonUp("Vertical"))
+            if (Input.GetButtonUp("Jump"))
             {
                 if (rb.velocity.y > 0f)
                 {
@@ -136,9 +136,12 @@ public class PlayerMovement : MonoBehaviour
                 rb.gravityScale = originalGravity;
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && canDash)
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.K))
             {
-                StartCoroutine(Dash());
+                if (canDash)
+                {
+                    StartCoroutine(Dash());
+                }
             }
 
             if (IsGrounded() && !isDashingCooldown)
@@ -183,6 +186,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            isJumping = false;
+        }
+    }
+
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
@@ -246,8 +258,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity = direction.normalized * dashingPower;
-        anim.SetTrigger("attack");
-        playerCombat.Attack();
+        anim.SetTrigger("dash");
         StartCoroutine(cameraControl.ScreenShake());
         Physics2D.IgnoreLayerCollision(7, 8);
         Physics2D.IgnoreLayerCollision(3, 8);

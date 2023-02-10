@@ -4,24 +4,12 @@ using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Destroy(gameObject, 0.5f);
             PlatformManager.Instance.StartCoroutine("SpawnPlatform", new Vector2(transform.position.x, transform.position.y));
-            Invoke("DropPlatform", 1f);
         }
-    }
-
-    private void DropPlatform()
-    {
-        Destroy(gameObject);
     }
 }

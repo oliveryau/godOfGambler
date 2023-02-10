@@ -6,14 +6,13 @@ TagManager:
   tags:
   - Trap
   - Enemy
-  - Heal
   - Wall
-  - Attack
   - Teleporter
   - Checkpoint
   - Back Collider
   - Terrain
   - Slow Trap
+  - Falling Object
   layers:
   - Default
   - TransparentFX

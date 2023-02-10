@@ -6,11 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    public Rigidbody2D rb;
     private PlayerMovement playerMovement;
-    private Rigidbody2D rb;
     private Animator anim;
-    public GameObject respawnPoint;
-    public GameObject gameOverScreen; //Game over screen
 
     [Header("Player Health")]
     public Image healthBar;
@@ -25,7 +23,6 @@ public class PlayerLife : MonoBehaviour
     public float trapDamage = 10f;
     public float enemyDamage = 20f;
 
-
     private void Awake()
     {
         GameObject.FindGameObjectWithTag("Respawn");
@@ -33,7 +30,6 @@ public class PlayerLife : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
         currentHealth = maxHealth;
@@ -41,9 +37,12 @@ public class PlayerLife : MonoBehaviour
 
     private void Update()
     {
-        if (currentHealth < maxHealth) //Health regen
+        if (currentHealth > 0)
         {
-            currentHealth += heal * Time.deltaTime;
+            if (currentHealth < maxHealth) //Health regen
+            {
+                currentHealth += heal * Time.deltaTime;
+            }
         }
 
         if (currentHealth >= maxHealth) //Set max health
@@ -85,17 +84,11 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Trap"))
+        if (collision.gameObject.CompareTag("Falling Object"))
         {
             TrapDamage();
-        }
-
-        if (collision.gameObject.CompareTag("Slow Trap"))
-        {
-            SlowDamage();
         }
     }
 
@@ -105,7 +98,14 @@ public class PlayerLife : MonoBehaviour
         {
             FallDamage();
         }
-
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            TrapDamage();
+        }
+        if (collision.gameObject.CompareTag("Slow Trap"))
+        {
+            SlowDamage();
+        }
         if (collision.gameObject.CompareTag("Enemy"))
         {
             EnemyDamage();
@@ -199,6 +199,5 @@ public class PlayerLife : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Static; //Make player rb unable to move
         anim.SetTrigger("death"); //Animation state/condition
-        gameOverScreen.SetActive(true);
     }
 }

@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 792761921750613}
   m_Layer: 6
   m_Name: Elevator
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

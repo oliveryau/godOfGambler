@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class Checkpoints : MonoBehaviour
 {
-    private Respawn respawn;
-    // Start is called before the first frame update
+    private PlayerRespawn playerRespawn;
 
-    private void Awake()
+    private void Start()
     {
-        respawn = GameObject.FindGameObjectWithTag("Respawn").GetComponent<Respawn>();
+        playerRespawn = GameObject.Find("Player").GetComponent<PlayerRespawn>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            respawn.respawnPoint = this.gameObject;
+            playerRespawn.respawnPoint = transform.position;
         }
     }
 }
