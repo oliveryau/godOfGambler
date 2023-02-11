@@ -37,10 +37,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     public bool canDash = true;
     public bool isDashing;
+    public Image dashCooldownImage;
     private bool isDashingCooldown;
     private float dashingPower = 30f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 0.5f;
+    private float dashingCooldown = 5f;
+    private bool isCooldown = false;
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -53,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         Physics2D.IgnoreLayerCollision(8, 9);
         Physics2D.IgnoreLayerCollision(12, 8);
-
+        dashCooldownImage.fillAmount = 0;
     }
 
     // Update is called once per frame
@@ -141,10 +143,25 @@ public class PlayerMovement : MonoBehaviour
                 if (canDash)
                 {
                     StartCoroutine(Dash());
+                    if (isCooldown == false)
+                    {
+                        isCooldown = true;
+                        dashCooldownImage.fillAmount = 1;
+                    }
                 }
             }
 
-            if (IsGrounded() && !isDashingCooldown)
+            if (isCooldown)
+            {
+                dashCooldownImage.fillAmount -= 1 / dashingCooldown * Time.deltaTime;
+                if (dashCooldownImage.fillAmount <= 0)
+                {
+                    dashCooldownImage.fillAmount = 0;
+                    isCooldown = false;
+                }
+            }
+
+            if (!isDashingCooldown) //&& IsGrounded()
             {
                 canDash = true;
             }
@@ -234,9 +251,10 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = dashGravity;
         isDashing = false;
         Physics2D.IgnoreLayerCollision(7, 8, false);
-        yield return new WaitForSeconds(dashingCooldown);
-        isDashingCooldown = false;
         Physics2D.IgnoreLayerCollision(3, 8, false);
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+        isDashingCooldown = false;
     }
     private void UpdateAnimation()
     {

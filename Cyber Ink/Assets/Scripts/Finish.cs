@@ -5,14 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
+    public LevelFade levelFade;
     public GameObject missingKeyScreen;
     public GameObject key;
-
-    private void Start()
-    {
-        playerMovement = GetComponent<PlayerMovement>();
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -38,7 +33,8 @@ public class Finish : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Zephan's New Level");
+            StartCoroutine(levelFade.LoadingScene());
+            SceneManager.LoadScene("Start");
         }
     }
 

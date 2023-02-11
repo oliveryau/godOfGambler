@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
 {
     public PlayerMovement playerMovement;
     public Image healthBar;
+    public Image dashCooldownImage;
     public TextMeshProUGUI keyText;
 
     public GameObject pauseScreen;
@@ -33,6 +34,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseScreen.SetActive(true);
         healthBar.enabled = false;
+        dashCooldownImage.enabled = false;
         keyText.enabled = false;
         Time.timeScale = 0f;
         playerMovement.canMove = false;
@@ -44,6 +46,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseScreen.SetActive(false);
         healthBar.enabled = true;
+        dashCooldownImage.enabled = true;
         keyText.enabled = true;
         Time.timeScale = 1f;
         playerMovement.canMove = true;

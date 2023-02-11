@@ -67,22 +67,6 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float _damage)
-    {
-        currentHealth = Mathf.Clamp(currentHealth - (int)_damage, 0, maxHealth);
-        if (currentHealth > 0)
-        {
-            //player hurt
-            SetHealth();
-            StartCoroutine(GetHurt());
-        }
-        else
-        {
-            //player die
-            Die();
-            SetHealth();
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -101,6 +85,23 @@ public class PlayerLife : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             EnemyDamage();
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth = Mathf.Clamp(currentHealth - (int)damage, 0, maxHealth);
+        if (currentHealth > 0)
+        {
+            //player hurt
+            SetHealth();
+            StartCoroutine(GetHurt());
+        }
+        else
+        {
+            //player die
+            Die();
+            SetHealth();
         }
     }
 
