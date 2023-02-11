@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
     public PlayerMovement playerMovement;
     public Image healthBar;
+    public TextMeshProUGUI keyText;
 
     public GameObject pauseScreen;
     public bool isPaused = false;
@@ -31,6 +33,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseScreen.SetActive(true);
         healthBar.enabled = false;
+        keyText.enabled = false;
         Time.timeScale = 0f;
         playerMovement.canMove = false;
         playerMovement.canJump = false;
@@ -41,6 +44,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseScreen.SetActive(false);
         healthBar.enabled = true;
+        keyText.enabled = true;
         Time.timeScale = 1f;
         playerMovement.canMove = true;
         playerMovement.canJump = true;

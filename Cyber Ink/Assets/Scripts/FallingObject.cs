@@ -5,40 +5,37 @@ using UnityEngine.UI;
 
 public class FallingObject : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    public Transform startPosition;
+    public Transform endPosition;
 
-    private void Start()
+    public bool dropObject;
+    public float dropSpeed;
+    public float elevateSpeed;
+
+    private void Update()
     {
-        rb = GetComponent<Rigidbody2D>();
+        SwitchFallingObject();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void SwitchFallingObject()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (transform.position == startPosition.position)
         {
-            rb.isKinematic = false;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
+            dropObject = true;
         }
 
-        if (collision.gameObject.CompareTag("Terrain"))
+        if (transform.position == endPosition.position)
         {
-            rb.bodyType = RigidbodyType2D.Static; //makes rb static after hitting terrain
-            DisableAllColliders();
+            dropObject = false;
         }
-    }
 
-    public void DisableAllColliders()
-    {
-        foreach (BoxCollider2D collider in GetComponents<BoxCollider2D>())
+        if (dropObject)
         {
-            collider.enabled = false;
+            transform.position = Vector2.MoveTowards(transform.position, endPosition.position, dropSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, startPosition.position, elevateSpeed * Time.deltaTime);
         }
     }
 }

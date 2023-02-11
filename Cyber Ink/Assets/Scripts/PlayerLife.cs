@@ -17,11 +17,11 @@ public class PlayerLife : MonoBehaviour
     private float lerpSpeed;
 
     [Header("Health Edits")]
-    public float heal = 1f;
-    public float fallDamage = 10f;
-    public float slowDamage = 10f;
-    public float trapDamage = 10f;
-    public float enemyDamage = 20f;
+    public float heal = 1.5f;
+    public float fallDamage = 20f; //out of bounds
+    public float slowDamage = 20f; //slow trap
+    public float trapDamage = 30f; //laser and falling object
+    public float enemyDamage = 40f; //all walking enemies
 
     private void Awake()
     {
@@ -84,21 +84,13 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Falling Object"))
-        {
-            TrapDamage();
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Respawn"))
         {
             FallDamage();
         }
-        if (collision.gameObject.CompareTag("Trap"))
+        if (collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("Falling Object"))
         {
             TrapDamage();
         }
@@ -130,7 +122,7 @@ public class PlayerLife : MonoBehaviour
 
     private void HealthBarColor()
     {
-        Color healthColor = Color.Lerp(Color.red, Color.cyan, (currentHealth / maxHealth));
+        Color healthColor = Color.Lerp(Color.gray, Color.cyan, (currentHealth / maxHealth));
         healthBar.color = healthColor;
     }
 

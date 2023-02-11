@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 2.unity
     guid: d49b53c9090a43f42ba2fd86f365e06c
+  - enabled: 1
+    path: Assets/Scenes/Zephan's New Level.unity
+    guid: 801d5b47101f58e46a9a1a035f0f36f2
   m_configObjects: {}

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameOverMenu : MonoBehaviour
 {
     public PlayerMovement playerMovement;
     public PlayerLife playerLife;
-    private PlayerRespawn playerRespawn;
-
+    public TextMeshProUGUI keyText;
     public Image healthBar;
-
     public GameObject gameOverScreen;
+
+    private PlayerRespawn playerRespawn;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class GameOverMenu : MonoBehaviour
         {
             gameOverScreen.SetActive(true);
             healthBar.enabled = false;
+            keyText.enabled = false;
         }
     }
 
@@ -34,6 +36,7 @@ public class GameOverMenu : MonoBehaviour
         playerLife.currentHealth = 100f;
         playerLife.rb.bodyType = RigidbodyType2D.Dynamic;
         healthBar.enabled = true;
+        keyText.enabled = true;
         gameOverScreen.SetActive(false);
     }
 
@@ -41,6 +44,5 @@ public class GameOverMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Start");
         gameOverScreen.SetActive(false);
-        //healthBar.enabled = true;
     }
 }

@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Trap
   - Enemy
   - Wall
   - Teleporter
@@ -13,6 +12,8 @@ TagManager:
   - Terrain
   - Slow Trap
   - Falling Object
+  - Laser
+  - Key
   layers:
   - Default
   - TransparentFX

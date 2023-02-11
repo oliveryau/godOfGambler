@@ -200,44 +200,11 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
-    private void UpdateAnimation()
-    {
-        movementState state;
-
-        if (moveInput > 0f) //Running - Right/positive direction
-        {
-            state = movementState.running; //movementState line, go to run
-            rbSprite.flipX = false; //Flip back to turn right when going forward
-        }
-        else if (moveInput < 0f) //Left/negative direction
-        {
-            state = movementState.running;
-            rbSprite.flipX = true; //Turn left when going backwards
-        }
-        else
-        {
-            state = movementState.idle;
-        }
-
-        // Jump and fall here after movement as jump takes higher priority over run
-        if (rb.velocity.y > .1f) //Jump
-        {
-            state = movementState.jumping;
-        }
-        else if (rb.velocity.y < -.1f) //Fall
-        {
-            state = movementState.falling;
-        }
-
-        anim.SetInteger("state", (int)state); //Animation states at movementState line
-    }
-
     public bool checkDash()
     {
         isDashing = true;
         return isDashing;
     }
-
 
     public IEnumerator Dash()
     {
@@ -270,5 +237,36 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         isDashingCooldown = false;
         Physics2D.IgnoreLayerCollision(3, 8, false);
+    }
+    private void UpdateAnimation()
+    {
+        movementState state;
+
+        if (moveInput > 0f) //Running - Right/positive direction
+        {
+            state = movementState.running; //movementState line, go to run
+            rbSprite.flipX = false; //Flip back to turn right when going forward
+        }
+        else if (moveInput < 0f) //Left/negative direction
+        {
+            state = movementState.running;
+            rbSprite.flipX = true; //Turn left when going backwards
+        }
+        else
+        {
+            state = movementState.idle;
+        }
+
+        // Jump and fall here after movement as jump takes higher priority over run
+        if (rb.velocity.y > .1f) //Jump
+        {
+            state = movementState.jumping;
+        }
+        else if (rb.velocity.y < -.1f) //Fall
+        {
+            state = movementState.falling;
+        }
+
+        anim.SetInteger("state", (int)state); //Animation states at movementState line
     }
 }
