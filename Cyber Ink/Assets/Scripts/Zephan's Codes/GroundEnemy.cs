@@ -108,7 +108,7 @@ public class GroundEnemy : MonoBehaviour
         //}
         else if (CanSeePlayer(agroRange) == true)
         {
-            Debug.Log("chasing");
+            //Debug.Log("chasing");
             ChasingPlayer = true;
             MoveToPlayer();
         }

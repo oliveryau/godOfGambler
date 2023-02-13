@@ -17,11 +17,11 @@ public class PlayerLife : MonoBehaviour
     private float lerpSpeed;
 
     [Header("Health Edits")]
-    public float heal = 1.5f;
-    public float fallDamage = 20f; //out of bounds
-    public float slowDamage = 20f; //slow trap
-    public float trapDamage = 30f; //laser and falling object
-    public float enemyDamage = 40f; //all walking enemies
+    public float heal = 2f;
+    public float fallDamage = 30f; //out of bounds
+    public float slowDamage = 30f; //slow trap
+    public float trapDamage = 40f; //laser and falling object
+    public float enemyDamage = 50f; //all walking enemies
 
     private void Awake()
     {

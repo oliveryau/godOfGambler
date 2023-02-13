@@ -57,7 +57,7 @@ public class RangedEnemy : MonoBehaviour
     void Update()
     {
         cooldownTimer += Time.deltaTime;
-        float distanceToplayer;
+        //float distanceToplayer;
         //RaycastHit2D front = Physics2D.Linecast(transform.position, player.transform.position);
 
         if (colliderType.IsTouchingLayers(LayerMask.GetMask("Waypoint Collider")))

@@ -13,13 +13,11 @@ public class KeyCollector : MonoBehaviour
     [Header("Key UI")]
     public TextMeshProUGUI keyText;
     public int keyCount;
-    //private bool getKey;
 
     private void Start()
     {
-        keyText.SetText("Key: " + keyCount + " / 1");
+        keyText.SetText("Keys Collected: " + keyCount + " / 3");
         keyCount = 0;
-        //getKey = false;
     }
 
     private void Update()
@@ -45,7 +43,7 @@ public class KeyCollector : MonoBehaviour
         if (Vector2.Distance(transform.position, firstKey.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
         {
             ++keyCount;
-            keyText.SetText("Key: " + keyCount + " / 3");
+            keyText.SetText("Keys Collected: " + keyCount + " / 3");
             Destroy(firstKey);
         }
     }
@@ -55,7 +53,7 @@ public class KeyCollector : MonoBehaviour
         if (Vector2.Distance(transform.position, secondKey.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
         {
             ++keyCount;
-            keyText.SetText("Key: " + keyCount + " / 3");
+            keyText.SetText("Keys Collected: " + keyCount + " / 3");
             Destroy(secondKey);
         }
     }
@@ -65,7 +63,7 @@ public class KeyCollector : MonoBehaviour
         if (Vector2.Distance(transform.position, thirdKey.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
         {
             ++keyCount;
-            keyText.SetText("Key: " + keyCount + " / 3");
+            keyText.SetText("Keys Collected: " + keyCount + " / 3");
             Destroy(thirdKey);
         }
     }

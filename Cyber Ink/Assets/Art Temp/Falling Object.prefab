@@ -154,5 +154,5 @@ MonoBehaviour:
   startPosition: {fileID: 0}
   endPosition: {fileID: 0}
   dropObject: 0
-  dropSpeed: 40
-  elevateSpeed: 2
+  dropSpeed: 0
+  elevateSpeed: 0

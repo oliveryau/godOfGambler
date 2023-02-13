@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public bool canMove = true;
-    public float moveSpeed = 11f;
+    public float moveSpeed = 10f;
     private float moveInput; //Horizontal Movement
     [SerializeField] private float acceleration = 15f;
     [SerializeField] private float deceleration = 30f;
@@ -31,15 +31,15 @@ public class PlayerMovement : MonoBehaviour
     private float jumpCutMultiplier = 0.5f;
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 1.5f;
-    public float maxFallSpeed = 35f;
-    public float coyoteTime = 0.15f;
+    public float maxFallSpeed = 40f;
+    public float coyoteTime = 0.2f;
 
     [Header("Dash")]
     public bool canDash = true;
     public bool isDashing;
     public Image dashCooldownImage;
     private bool isDashingCooldown;
-    private float dashingPower = 30f;
+    private float dashingPower = 25f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 3f;
     private bool isCooldown = false;

@@ -8,9 +8,9 @@ public class FallingObject : MonoBehaviour
     public Transform startPosition;
     public Transform endPosition;
 
-    public bool dropObject;
     public float dropSpeed;
     public float elevateSpeed;
+    private bool dropObject;
 
     private void Update()
     {
