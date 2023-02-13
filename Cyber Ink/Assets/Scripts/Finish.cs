@@ -7,7 +7,11 @@ public class Finish : MonoBehaviour
 {
     public LevelFade levelFade;
     public GameObject missingKeyScreen;
-    public GameObject key;
+
+    [Header("Keys")]
+    public GameObject firstKey;
+    public GameObject secondKey;
+    public GameObject thirdKey;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,7 +31,7 @@ public class Finish : MonoBehaviour
 
     public void CheckLevelComplete()
     {
-        if (key != null)
+        if (firstKey != null || secondKey != null || thirdKey != null)
         {
             missingKeyScreen.SetActive(true);
         }

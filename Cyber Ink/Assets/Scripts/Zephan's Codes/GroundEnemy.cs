@@ -39,7 +39,9 @@ public class GroundEnemy : MonoBehaviour
 
     [Header("Player Detection")]
     [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private BoxCollider2D playerDetection;
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private Transform castPoint;
     public Collider2D rearDetection;
     public float agroRange;
     private bool movingRight = true;
@@ -84,31 +86,32 @@ public class GroundEnemy : MonoBehaviour
         cooldownTimer += Time.deltaTime;
         //float distanceToplayer;
         //RaycastHit2D front = Physics2D.Linecast(transform.position, player.transform.position);
-
+        //RaycastHit2D front = Physics2D.Raycast(transform.position, Vector2.right, agroRange);
         if (colliderType.IsTouchingLayers(LayerMask.GetMask("Waypoint Collider")))
         {
             FlipEnemy();
             //Debug.Log("collided");
         }
-        else if (PlayerInSight())
-        {
-            ChasingPlayer = true;
-            MoveToPlayer();
-            if (cooldownTimer >= attackCooldown)
-            {
-                //Attack
-                cooldownTimer = 0;
-                anim.SetTrigger("attack");
-                DamagePlayer();
-            }
-        }
-
-        //}
-        //else if (front.collider.tag == "Player")
+        //else if (PlayerInSight())
         //{
         //    ChasingPlayer = true;
         //    MoveToPlayer();
+        //    //if (cooldownTimer >= attackCooldown)
+        //    //{
+        //    //    //Attack
+        //    //    cooldownTimer = 0;
+        //    //    anim.SetTrigger("attack");
+        //    //    DamagePlayer();
+        //    //}
         //}
+
+        //}
+        else if (CanSeePlayer(agroRange) == true)
+        {
+            Debug.Log("chasing");
+            ChasingPlayer = true;
+            MoveToPlayer();
+        }
         else
         {
             speed = storeSpeed;
@@ -116,46 +119,71 @@ public class GroundEnemy : MonoBehaviour
         }
 
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.cyan;
+    //    Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+    //        new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+    //}
 
-
-    private void DamagePlayer()
+    bool CanSeePlayer(float distance)
     {
-        //If player is in range, damage
-        if (PlayerInSight() && playerMovement.checkDash() == false)    
+        bool val = false;
+        float castDist = distance;
+        Vector2 endPos = castPoint.position + Vector3.right * distance;
+        RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Player"));
+        if(hit.collider != null)
         {
-            playerHealth.TakeDamage(damage);
+            if(hit.collider.gameObject.CompareTag("Player"))
+            {
+                // chase the enemy
+                val = true;
+                
+            }
+
+            else
+            {
+                val = false;
+            }
+            Debug.DrawLine(castPoint.position, endPos, Color.blue);
         }
-    }
-    private bool PlayerInSight()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
-            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
 
-        if (hit.collider != null)
-            playerHealth = hit.transform.GetComponent<PlayerLife>();
-
-        return hit.collider != null;
+        return val;
     }
+
+    //private void DamagePlayer()
+    //{
+    //    //If player is in range, damage
+    //    if (PlayerInSight() && playerMovement.checkDash() == false)    
+    //    {
+    //        playerHealth.TakeDamage(damage);
+    //    }
+    //}
+    //private bool PlayerInSight()
+    //{
+    //    RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+    //        new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0, Vector2.left, 0, playerLayer);
+
+    //    if (hit.collider != null)
+    //        playerHealth = hit.transform.GetComponent<PlayerLife>();
+
+    //    return hit.collider != null;
+       
+    //}
 
 
     private void MoveToPlayer()
     {
-        //transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        if(transform.position.x < player.transform.position.x)
-        {
-            myRigidbody.velocity = new Vector2(speed * Time.deltaTime, 0);
-        }
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        //if(transform.position.x < player.transform.position.x)
+        //{
+        //    myRigidbody.velocity = new Vector2(speed * Time.deltaTime, 0);
+        //}
 
-        else 
-        {
-            myRigidbody.velocity = new Vector2(-speed * Time.deltaTime, 0);
-        }
+        //else 
+        //{
+        //    myRigidbody.velocity = new Vector2(-speed * Time.deltaTime, 0);
+        //}
     }
 
     private void Patrol()
@@ -207,6 +235,7 @@ public class GroundEnemy : MonoBehaviour
 
     }
 
+    
     //private IEnumerator Dash()
     //{
     //    canDash = false;
