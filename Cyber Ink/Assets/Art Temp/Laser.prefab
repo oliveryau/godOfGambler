@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1435120926632381231}
   - component: {fileID: 4595974505869334254}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3663050059546820798}
   - component: {fileID: 448722715423086590}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle (1)
   m_TagString: Laser
   m_Icon: {fileID: 0}

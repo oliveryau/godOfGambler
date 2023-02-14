@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformManager : MonoBehaviour
+public class FallPlatformManager : MonoBehaviour
 {
-    public static PlatformManager Instance = null;
+    public static FallPlatformManager Instance = null;
     [SerializeField] private GameObject platformPrefab;
 
     private void Awake()
@@ -22,14 +22,14 @@ public class PlatformManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(platformPrefab, new Vector2(107.5f, 4.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(161f, 13.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(169f, 13.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(107.5f, 3.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(167.5f, 14.5f), platformPrefab.transform.rotation);
+        //Instantiate(platformPrefab, new Vector2(167.5f, 14.5f), platformPrefab.transform.rotation);
     }
 
     public IEnumerator SpawnPlatform(Vector2 spawnPosition)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Instantiate(platformPrefab, spawnPosition, platformPrefab.transform.rotation);
     }
 }

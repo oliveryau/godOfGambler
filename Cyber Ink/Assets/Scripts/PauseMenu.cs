@@ -7,17 +7,18 @@ using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
+    public PlayerLife playerLife;
     public PlayerMovement playerMovement;
     public Image healthBar;
     public Image dashCooldownImage;
-    public TextMeshProUGUI keyText;
+    public GameObject keyText;
 
     public GameObject pauseScreen;
     public bool isPaused = false;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0)
         {
             if (isPaused)
             {
@@ -35,7 +36,7 @@ public class PauseMenu : MonoBehaviour
         pauseScreen.SetActive(true);
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
-        keyText.enabled = false;
+        keyText.SetActive(false);
         Time.timeScale = 0f;
         playerMovement.canMove = false;
         playerMovement.canJump = false;
@@ -47,7 +48,7 @@ public class PauseMenu : MonoBehaviour
         pauseScreen.SetActive(false);
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
-        keyText.enabled = true;
+        keyText.SetActive(true);
         Time.timeScale = 1f;
         playerMovement.canMove = true;
         playerMovement.canJump = true;

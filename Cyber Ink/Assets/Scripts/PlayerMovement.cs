@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDashing;
     public Image dashCooldownImage;
     private bool isDashingCooldown;
-    private float dashingPower = 25f;
+    private float dashingPower = 30f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 3f;
     private bool isCooldown = false;

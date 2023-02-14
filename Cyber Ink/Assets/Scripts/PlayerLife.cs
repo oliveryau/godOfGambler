@@ -20,7 +20,7 @@ public class PlayerLife : MonoBehaviour
     public float heal = 2f;
     public float fallDamage = 30f; //out of bounds
     public float slowDamage = 30f; //slow trap
-    public float trapDamage = 40f; //laser and falling object
+    public float trapDamage = 50f; //laser and falling object
     public float enemyDamage = 50f; //all walking enemies
 
     private void Awake()

@@ -12,7 +12,7 @@ public class GameOverMenu : MonoBehaviour
     public LevelFade levelFade;
     public Image healthBar;
     public Image dashCooldownImage;
-    public TextMeshProUGUI keyText;
+    public GameObject keyText;
     public GameObject gameOverScreen;
 
     private PlayerRespawn playerRespawn;
@@ -36,9 +36,11 @@ public class GameOverMenu : MonoBehaviour
         playerRespawn.RespawnNow();
         playerLife.currentHealth = 100f;
         playerLife.rb.bodyType = RigidbodyType2D.Dynamic;
+        playerMovement.canMove = true;
+        playerMovement.canJump = true;
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
-        keyText.enabled = true;
+        keyText.SetActive(true);
         gameOverScreen.SetActive(false);
     }
 
@@ -51,10 +53,12 @@ public class GameOverMenu : MonoBehaviour
 
     public IEnumerator DelayMenu()
     {
+        playerMovement.canMove = false;
+        playerMovement.canJump = false;
         yield return new WaitForSeconds(2);
         gameOverScreen.SetActive(true);
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
-        keyText.enabled = false;
+        keyText.SetActive(false);
     }
 }
