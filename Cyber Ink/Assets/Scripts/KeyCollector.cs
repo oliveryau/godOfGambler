@@ -7,21 +7,23 @@ using TMPro;
 public class KeyCollector : MonoBehaviour
 {
     public PlayerMovement playerMovement;
-    public Image healthBar;
-    public Image dashCooldownImage;
-    public GameObject keyPanel;
 
     [Header("Keys")]
     public GameObject firstKey;
-    public KeyDialogue firstDialogue;
+    public DialogueKey firstDialogue;
     public GameObject secondKey;
-    public KeyDialogue secondDialogue;
+    public DialogueKey secondDialogue;
     public GameObject thirdKey;
-    public KeyDialogue thirdDialogue;
+    public DialogueKey thirdDialogue;
 
     [Header("Key UI")]
     public TextMeshProUGUI keyText;
     public int keyCount;
+
+    [Header("Other UI")]
+    public Image healthBar;
+    public Image dashCooldownImage;
+    public GameObject keyPanel;
 
     private void Start()
     {

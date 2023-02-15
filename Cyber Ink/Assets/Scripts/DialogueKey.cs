@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class KeyDialogue : MonoBehaviour
+public class DialogueKey : MonoBehaviour
 {
     public KeyCollector keyCollector;
 
+    [Header("Triggers")]
     public GameObject dialoguePanel;
     public TextMeshProUGUI mainText;
+
+    [Header("Dialogue")]
     public string[] lines;
     public float textSpeed;
 

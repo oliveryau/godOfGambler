@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDashing;
     public Image dashCooldownImage;
     private bool isDashingCooldown;
-    private float dashingPower = 30f;
+    private float dashingPower = 25f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 3f;
     private bool isCooldown = false;
@@ -217,16 +217,17 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.BoxCast(rbColl.bounds.center, rbColl.bounds.size, 0f, Vector2.down, .1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
-    public bool checkDash()
-    {
-        isDashing = true;
-        return isDashing;
-    }
+    //public bool checkDash()
+    //{
+    //    isDashing = true;
+    //    return isDashing;
+    //}
 
     public IEnumerator Dash()
     {
         canDash = false;
-        checkDash();
+        isDashing = true;
+        //checkDash();
         isDashingCooldown = true;
         float dashGravity = rb.gravityScale;
         rb.gravityScale = 0f;

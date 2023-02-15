@@ -9,16 +9,25 @@ public class PauseMenu : MonoBehaviour
 {
     public PlayerLife playerLife;
     public PlayerMovement playerMovement;
+
+    [Header("Pause")]
+    public GameObject pauseScreen;
+    public bool isPaused = false;
+
+    [Header("UI")]
     public Image healthBar;
     public Image dashCooldownImage;
     public GameObject keyText;
 
-    public GameObject pauseScreen;
-    public bool isPaused = false;
+    [Header("Dialogue Pause Settings")]
+    public GameObject firstDialogue;
+    public GameObject secondDialogue;
+    public GameObject thirdDialogue;
+    public bool isDialogueActive;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0)
+        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0 && isDialogueActive == false)
         {
             if (isPaused)
             {
@@ -28,6 +37,20 @@ public class PauseMenu : MonoBehaviour
             {
                 PauseGame();
             }
+        }
+
+        CheckActiveDialogue();
+    }
+
+    public void CheckActiveDialogue()
+    {
+        if (firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf)
+        {
+            isDialogueActive = true;
+        }
+        else
+        {
+            isDialogueActive = false;
         }
     }
 

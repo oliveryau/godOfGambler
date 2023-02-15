@@ -136,7 +136,7 @@ MonoBehaviour:
     m_Bits: 256
   castPoint: {fileID: 2208142543103339983}
   rearDetection: {fileID: 959950025911767127}
-  agroRange: 5
+  agroRange: 2
   attackCooldown: 1
   colliderDistance: 0
   range: 0

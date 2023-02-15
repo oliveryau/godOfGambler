@@ -10,6 +10,8 @@ public class GameOverMenu : MonoBehaviour
     public PlayerMovement playerMovement;
     public PlayerLife playerLife;
     public LevelFade levelFade;
+
+    [Header("UI")]
     public Image healthBar;
     public Image dashCooldownImage;
     public GameObject keyText;

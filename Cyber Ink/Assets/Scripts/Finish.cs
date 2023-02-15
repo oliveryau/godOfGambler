@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour
 {
+    [Header("UX/UI")]
     public LevelFade levelFade;
     public GameObject missingKeyScreen;
 
