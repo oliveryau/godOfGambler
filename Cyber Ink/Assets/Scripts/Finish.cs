@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour
@@ -14,37 +15,58 @@ public class Finish : MonoBehaviour
     public GameObject secondKey;
     public GameObject thirdKey;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    [Header("Others")]
+    public GameObject player;
+
+    private void Update()
     {
-        if (collision.gameObject.name == "Player")
+        CheckLevelComplete();
+
+        if (missingKeyScreen.activeSelf)
         {
-            CheckLevelComplete();
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                missingKeyScreen.SetActive(false);
+            }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "Player")
-        {
-            CheckLevelCompleteExit();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.name == "Player")
+    //    {
+    //        CheckLevelComplete();
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.name == "Player")
+    //    {
+    //        CheckLevelCompleteExit();
+    //    }
+    //}
 
     public void CheckLevelComplete()
     {
-        if (firstKey != null || secondKey != null || thirdKey != null)
+        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
         {
-            missingKeyScreen.SetActive(true);
+            if (firstKey != null || secondKey != null || thirdKey != null)
+            {
+                missingKeyScreen.SetActive(true);
+            }
+            else
+            {
+                StartCoroutine(levelFade.LoadingScene());
+                SceneManager.LoadScene("Start");
+            }
         }
-        else
-        {
-            StartCoroutine(levelFade.LoadingScene());
-            SceneManager.LoadScene("Start");
-        }
+        
+
     }
 
-    public void CheckLevelCompleteExit()
-    {
-        missingKeyScreen.SetActive(false);
-    }
+    //public void CheckLevelCompleteExit()
+    //{
+    //    missingKeyScreen.SetActive(false);
+    //}
 }

@@ -11,9 +11,10 @@ public class PlayerMovement : MonoBehaviour
     public SpriteRenderer rbSprite; //Flip left when moving back
     [SerializeField] private LayerMask groundLayer;
     private Animator anim; //Trigger animation
+    public PlayerLife playerLife;
 
     [Header("Movement")]
-    public bool canMove = true;
+    public bool canMove;
     public float moveSpeed = 10f;
     private float moveInput; //Horizontal Movement
     [SerializeField] private float acceleration = 15f;
@@ -24,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float slowTimer; //Slow Debuff Timer
 
     [Header("Jump")]
-    public bool canJump = true;
+    public bool canJump;
     [SerializeField] private float jumpForce = 15f;
     private bool isJumping;
     private float coyoteTimeCounter;
@@ -35,14 +36,24 @@ public class PlayerMovement : MonoBehaviour
     public float coyoteTime = 0.2f;
 
     [Header("Dash")]
-    public bool canDash = true;
+    public bool canDash;
+    public bool ableToDash = true;
     public bool isDashing;
     public Image dashCooldownImage;
     private bool isDashingCooldown;
     private float dashingPower = 25f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 3f;
+    private float dashingCooldown = 2f;
     private bool isCooldown = false;
+
+    [Header("Miscellaneous Settings")]
+    public GameObject pausePanel;
+    public GameObject controlsPanel;
+    public GameObject missingKeyPanel;
+    public GameObject startDialogue;
+    public GameObject firstDialogue;
+    public GameObject secondDialogue;
+    public GameObject thirdDialogue;
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -61,7 +72,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (!canMove && !canJump)
+        if (pausePanel.activeSelf || controlsPanel.activeSelf || missingKeyPanel.activeSelf || startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf || playerLife.currentHealth <= 0)
+        {
+            canMove = false;
+            canJump = false;
+            canDash = false;
+        }
+        else
+        {
+            canMove = true;
+            canJump = true;
+            canDash = true;
+        }
+
+        if (!canMove && !canJump && !canDash)
         {
 
         }
@@ -140,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Return))
             {
-                if (canDash)
+                if (ableToDash)
                 {
                     StartCoroutine(Dash());
                     if (isCooldown == false)
@@ -163,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (!isDashingCooldown) //&& IsGrounded()
             {
-                canDash = true;
+                ableToDash = true;
             }
 
             UpdateAnimation();
@@ -172,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canMove && !canJump)
+        if (!canMove && !canJump && !canDash)
         {
 
         }
@@ -225,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator Dash()
     {
-        canDash = false;
+        ableToDash = false;
         isDashing = true;
         //checkDash();
         isDashingCooldown = true;
@@ -254,7 +278,7 @@ public class PlayerMovement : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
         yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
+        ableToDash = true;
         isDashingCooldown = false;
     }
     private void UpdateAnimation()

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerLife : MonoBehaviour
 {
     public Rigidbody2D rb;
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
     private Animator anim;
 
     [Header("Player Health")]
@@ -31,7 +31,6 @@ public class PlayerLife : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        playerMovement = GetComponent<PlayerMovement>();
         currentHealth = maxHealth;
     }
 
@@ -56,11 +55,11 @@ public class PlayerLife : MonoBehaviour
 
         if (playerMovement.checkSlow) //Slow debuff timer
         {
-            playerMovement.moveSpeed = 3f;
+            playerMovement.moveSpeed = 6f;
             playerMovement.slowTimer += Time.deltaTime;
-            if (playerMovement.slowTimer >= 1.5f) //3 second debuff
+            if (playerMovement.slowTimer >= 1.5f) //1.5 second debuff
             {
-                playerMovement.moveSpeed = 11f;
+                playerMovement.moveSpeed = 10f;
                 playerMovement.slowTimer = 0f;
                 playerMovement.checkSlow = false;
             }

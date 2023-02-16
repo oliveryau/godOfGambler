@@ -8,10 +8,10 @@ using TMPro;
 public class PauseMenu : MonoBehaviour
 {
     public PlayerLife playerLife;
-    public PlayerMovement playerMovement;
 
     [Header("Pause")]
     public GameObject pauseScreen;
+    public GameObject controlsScreen;
     public bool isPaused = false;
 
     [Header("UI")]
@@ -20,16 +20,18 @@ public class PauseMenu : MonoBehaviour
     public GameObject keyText;
 
     [Header("Dialogue Pause Settings")]
+    public GameObject missingKeyPanel;
+    public GameObject startDialogue;
     public GameObject firstDialogue;
     public GameObject secondDialogue;
     public GameObject thirdDialogue;
-    public bool isDialogueActive;
+    public bool isPanelActive;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0 && isDialogueActive == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0 && isPanelActive == false)
         {
-            if (isPaused)
+            if (isPaused && pauseScreen.activeSelf)
             {
                 ResumeGame();
             }
@@ -44,46 +46,69 @@ public class PauseMenu : MonoBehaviour
 
     public void CheckActiveDialogue()
     {
-        if (firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf)
+        if (missingKeyPanel.activeSelf || startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf)
         {
-            isDialogueActive = true;
+            isPanelActive = true;
         }
         else
         {
-            isDialogueActive = false;
+            isPanelActive = false;
+        }
+
+        if (isPanelActive == true)
+        {
+            healthBar.enabled = false;
+            dashCooldownImage.enabled = false;
+            keyText.SetActive(false);
+        }
+        else if (isPanelActive == false && playerLife.currentHealth > 0 && isPaused == false) //Special setting
+        {
+            healthBar.enabled = true;
+            dashCooldownImage.enabled = true;
+            keyText.SetActive(true);
         }
     }
 
     public void PauseGame()
     {
         pauseScreen.SetActive(true);
+        controlsScreen.SetActive(false);
+        isPaused = true;
+
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
         keyText.SetActive(false);
         Time.timeScale = 0f;
-        playerMovement.canMove = false;
-        playerMovement.canJump = false;
-        isPaused = true;
     }
 
     public void ResumeGame()
     {
         pauseScreen.SetActive(false);
+        isPaused = false;
+
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
         keyText.SetActive(true);
         Time.timeScale = 1f;
-        playerMovement.canMove = true;
-        playerMovement.canJump = true;
-        isPaused = false;
+    }
+
+    public void GoToControls()
+    {
+        pauseScreen.SetActive(false);
+        controlsScreen.SetActive(true);
+    }
+
+    public void BackToPause()
+    {
+        controlsScreen.SetActive(false);
+        pauseScreen.SetActive(true);
     }
 
     public void GoToMenu()
     {
+        isPaused = false;
+
         SceneManager.LoadScene("Start");
         Time.timeScale = 1f;
-        playerMovement.canMove = true;
-        playerMovement.canJump = true;
-        isPaused = false;
     }
 }

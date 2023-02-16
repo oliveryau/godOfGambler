@@ -7,7 +7,6 @@ using TMPro;
 
 public class GameOverMenu : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
     public PlayerLife playerLife;
     public LevelFade levelFade;
 
@@ -38,8 +37,6 @@ public class GameOverMenu : MonoBehaviour
         playerRespawn.RespawnNow();
         playerLife.currentHealth = 100f;
         playerLife.rb.bodyType = RigidbodyType2D.Dynamic;
-        playerMovement.canMove = true;
-        playerMovement.canJump = true;
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
         keyText.SetActive(true);
@@ -49,14 +46,12 @@ public class GameOverMenu : MonoBehaviour
     public void GoToMenu()
     {
         StartCoroutine(levelFade.LoadingScene());
-        SceneManager.LoadScene("Start");
         gameOverScreen.SetActive(false);
+        SceneManager.LoadScene("Start");
     }
 
     public IEnumerator DelayMenu()
     {
-        playerMovement.canMove = false;
-        playerMovement.canJump = false;
         yield return new WaitForSeconds(2);
         gameOverScreen.SetActive(true);
         healthBar.enabled = false;
