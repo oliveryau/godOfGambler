@@ -23,8 +23,11 @@ public class FallPlatformManager : MonoBehaviour
     void Start()
     {
         Instantiate(platformPrefab, new Vector2(166f, 13f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(107.5f, 4f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(107.25f, 5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(121.5f, -36f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(168f, -45.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(163.5f, -45.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(145.5f, -58f), platformPrefab.transform.rotation);
     }
 
     public IEnumerator SpawnPlatform(Vector2 spawnPosition)

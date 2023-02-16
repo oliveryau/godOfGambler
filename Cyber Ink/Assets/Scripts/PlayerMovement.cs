@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.gravityScale = originalGravity;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Return))
             {
                 if (canDash)
                 {
