@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpCutMultiplier = 0.5f;
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 1.5f;
-    public float maxFallSpeed = 40f;
+    public float maxFallSpeed = 10f;
     public float coyoteTime = 0.2f;
 
     [Header("Dash")]
@@ -49,11 +49,11 @@ public class PlayerMovement : MonoBehaviour
     [Header("Miscellaneous Settings")]
     public GameObject pausePanel;
     public GameObject controlsPanel;
-    public GameObject missingKeyPanel;
     public GameObject startDialogue;
     public GameObject firstDialogue;
     public GameObject secondDialogue;
     public GameObject thirdDialogue;
+    public GameObject teleportErrorDialogue;
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -72,7 +72,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pausePanel.activeSelf || controlsPanel.activeSelf || missingKeyPanel.activeSelf || startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf || playerLife.currentHealth <= 0)
+        if (pausePanel.activeSelf || controlsPanel.activeSelf || startDialogue.activeSelf || 
+            firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf ||
+            teleportErrorDialogue.activeSelf || playerLife.currentHealth <= 0)
         {
             canMove = false;
             canJump = false;
@@ -269,8 +271,8 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = direction.normalized * dashingPower;
         anim.SetTrigger("dash");
         StartCoroutine(cameraControl.ScreenShake());
-        Physics2D.IgnoreLayerCollision(7, 8);
-        Physics2D.IgnoreLayerCollision(3, 8);
+        Physics2D.IgnoreLayerCollision(7, 8, true);
+        Physics2D.IgnoreLayerCollision(3, 8, true);
         yield return new WaitForSeconds(dashingTime);
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         rb.gravityScale = dashGravity;

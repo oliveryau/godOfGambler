@@ -20,16 +20,16 @@ public class PauseMenu : MonoBehaviour
     public GameObject keyText;
 
     [Header("Dialogue Pause Settings")]
-    public GameObject missingKeyPanel;
     public GameObject startDialogue;
     public GameObject firstDialogue;
     public GameObject secondDialogue;
     public GameObject thirdDialogue;
-    public bool isPanelActive;
+    public GameObject teleportErrorDialogue;
+    public bool isDialogueActive;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0 && isPanelActive == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0 && isDialogueActive == false)
         {
             if (isPaused && pauseScreen.activeSelf)
             {
@@ -46,22 +46,22 @@ public class PauseMenu : MonoBehaviour
 
     public void CheckActiveDialogue()
     {
-        if (missingKeyPanel.activeSelf || startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf)
+        if (startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf || teleportErrorDialogue.activeSelf)
         {
-            isPanelActive = true;
+            isDialogueActive = true;
         }
         else
         {
-            isPanelActive = false;
+            isDialogueActive = false;
         }
 
-        if (isPanelActive == true)
+        if (isDialogueActive == true)
         {
             healthBar.enabled = false;
             dashCooldownImage.enabled = false;
             keyText.SetActive(false);
         }
-        else if (isPanelActive == false && playerLife.currentHealth > 0 && isPaused == false) //Special setting
+        else if (isDialogueActive == false && playerLife.currentHealth > 0 && isPaused == false) //Special setting
         {
             healthBar.enabled = true;
             dashCooldownImage.enabled = true;

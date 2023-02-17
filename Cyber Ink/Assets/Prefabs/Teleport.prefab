@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1931799501141615359}
   - component: {fileID: 1931799501141615354}
   - component: {fileID: 1931799501141615353}
-  - component: {fileID: 1931799501141615355}
   - component: {fileID: 1412604446464549171}
+  - component: {fileID: 1630952060012277645}
   m_Layer: 2
   m_Name: Teleport
   m_TagString: Teleporter
@@ -114,19 +114,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1931799501141615355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1931799501141615358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d0b687c41911544e9e9a7814e6ac730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destination: {fileID: 0}
 --- !u!114 &1412604446464549171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +127,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactIcon: {fileID: 2649914484638534989}
+--- !u!114 &1630952060012277645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931799501141615358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8f101860925694ca3fc7f3d7d60c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portal: {fileID: 0}
 --- !u!1 &2623982106723491975
 GameObject:
   m_ObjectHideFlags: 0
