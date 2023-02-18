@@ -8,10 +8,9 @@ public class PlayerMovement : MonoBehaviour
     public PlayerLife playerLife;
     [SerializeField] private CameraControl cameraControl;
     private Rigidbody2D rb;
-    //private BoxCollider2D rbCollider; //GroundCheckTransform for rb
+    private BoxCollider2D rbCollider; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
     private Animator anim; //Trigger animation
-    public GameObject light;
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Movement")]
@@ -28,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     public bool canJump;
     [SerializeField] private float jumpForce = 15f;
-    //public bool isJumping;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
     public float jumpBufferTime = 0.2f;
@@ -37,12 +35,11 @@ public class PlayerMovement : MonoBehaviour
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 1.5f;
     public float maxFallSpeed = 10f;
-    public Transform groundCheck;
-    public bool grounded;
+    //public Transform groundCheck;
 
     [Header("Dash")]
-    public bool canDash;
-    public bool ableToDash = true;
+    public bool canDash; //in general
+    public bool ableToDash = true; //for in game dashing
     public bool isDashing;
     public Image dashCooldownImage;
     private bool isDashingCooldown;
@@ -66,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //rbCollider = GetComponent<BoxCollider2D>();
+        rbCollider = GetComponent<BoxCollider2D>();
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         Physics2D.IgnoreLayerCollision(8, 9);
@@ -204,16 +201,6 @@ public class PlayerMovement : MonoBehaviour
                 ableToDash = true;
             }
 
-            if (rbSprite.flipX == true)
-            {
-                //Flip light
-                light.transform.localPosition = new Vector2(0.5f, 0f);
-            }
-            else if (rbSprite.flipX == false)
-            {
-                light.transform.localPosition = new Vector2(-0.5f, 0f);
-            }
-
             UpdateAnimation();
         }
     }
@@ -252,19 +239,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Terrain"))
-    //    {
-    //        isJumping = false;
-    //    }
-    //}
-
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
-        return grounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(1, 0.3f), 0f, groundLayer);
-
-        //return Physics2D.BoxCast(rbCollider.bounds.center, rbCollider.bounds.size, 0f, Vector2.down, 0.1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
+        //return Physics2D.OverlapBox(groundCheck.position, new Vector2(1, 0.3f), 0f, groundLayer);
+        return Physics2D.BoxCast(rbCollider.bounds.center, rbCollider.bounds.size, 0f, Vector2.down, 0.1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
     //public bool checkDash()
