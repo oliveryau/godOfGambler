@@ -24,9 +24,8 @@ public class FallPlatformManager : MonoBehaviour
     {
         Instantiate(platformPrefab, new Vector2(166f, 13f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(107.25f, 5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(168f, -45.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(163.5f, -45.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(147f, -55f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(167.75f, -46.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(163.5f, -46.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(86f, -67.5f), platformPrefab.transform.rotation);
     }
 
