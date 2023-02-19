@@ -8,6 +8,8 @@ public class Finish : MonoBehaviour
 {
     [Header("UX/UI")]
     public LevelFade levelFade;
+    public Animator musicAnim;
+    public float waitTime;
 
     [Header("Keys")]
     public GameObject firstKey;
@@ -26,8 +28,15 @@ public class Finish : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(levelFade.LoadingScene());
-            SceneManager.LoadScene("Start");
+            StartCoroutine(MusicFadeChangeScene());
         }
+    }
+
+    private IEnumerator MusicFadeChangeScene()
+    {
+        musicAnim.SetTrigger("fadeOut");
+        StartCoroutine(levelFade.LoadingScene());
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene("Start"); //Change to level 3
     }
 }
