@@ -14,9 +14,6 @@ TagManager:
   - Falling Object
   - Laser
   - Interact
-  - First Key
-  - Second Key
-  - Third Key
   - Key
   layers:
   - Default
