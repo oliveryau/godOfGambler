@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")]
     public bool canJump;
+    public bool isJumping;
     [SerializeField] private float jumpForce = 15f;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -35,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 1.5f;
     public float maxFallSpeed = 10f;
-    //public Transform groundCheck;
 
     [Header("Dash")]
     public bool canDash; //in general
@@ -108,10 +108,12 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 coyoteTimeCounter = coyoteTime;
+                //jumpBufferCounter = jumpBufferTime;
             }
             else
             {
                 coyoteTimeCounter -= Time.deltaTime;
+                //jumpBufferCounter -= Time.deltaTime;
             }
 
             //Friction
@@ -137,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump")) //Input.GetButtonDown("Jump")
             {
                 jumpBufferCounter = jumpBufferTime;
             }
@@ -146,12 +148,11 @@ public class PlayerMovement : MonoBehaviour
                 jumpBufferCounter -= Time.deltaTime;
             }
 
-            if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f) // Input(GetButtonDown("Jump")) && !isJumping || &&IsGrounded()
+            if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
             {
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
                 jumpBufferCounter = 0f;
-                //isJumping = true;
             }
 
             if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -241,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
-        //return Physics2D.OverlapBox(groundCheck.position, new Vector2(1, 0.3f), 0f, groundLayer);
+        isJumping = false;
         return Physics2D.BoxCast(rbCollider.bounds.center, rbCollider.bounds.size, 0f, Vector2.down, 0.1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
@@ -316,4 +317,40 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetInteger("state", (int)state); //Animation states at movementState line
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("First Key"))
+    //    {
+    //        cameraControl.movingTowardsFirstKey = true;
+    //    }
+
+    //    if (collision.gameObject.CompareTag("Second Key"))
+    //    {
+    //        cameraControl.movingTowardsSecondKey = true;
+    //    }
+
+    //    if (collision.gameObject.CompareTag("Third Key"))
+    //    {
+    //        cameraControl.movingTowardsThirdKey = true;
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("First Key"))
+    //    {
+    //        cameraControl.movingTowardsFirstKey = false;
+    //    }
+
+    //    if (collision.gameObject.CompareTag("Second Key"))
+    //    {
+    //        cameraControl.movingTowardsSecondKey = false;
+    //    }
+
+    //    if (collision.gameObject.CompareTag("Third Key"))
+    //    {
+    //        cameraControl.movingTowardsThirdKey = false;
+    //    }
+    //}
 }

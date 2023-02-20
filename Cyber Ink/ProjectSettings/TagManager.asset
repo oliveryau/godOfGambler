@@ -13,8 +13,11 @@ TagManager:
   - Slow Trap
   - Falling Object
   - Laser
-  - Key
   - Interact
+  - First Key
+  - Second Key
+  - Third Key
+  - Key
   layers:
   - Default
   - TransparentFX

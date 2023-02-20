@@ -53,7 +53,7 @@ public class PlayerLife : MonoBehaviour
         SetHealth();
         HealthBarColor();
 
-        if (playerMovement.checkSlow) //Slow debuff timer
+        if (playerMovement.checkSlow == true) //Slow debuff timer
         {
             playerMovement.moveSpeed = 6f;
             playerMovement.slowTimer += Time.deltaTime;
