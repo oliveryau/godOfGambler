@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")]
     public bool canJump;
-    public bool isJumping;
     [SerializeField] private float jumpForce = 15f;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -108,12 +107,10 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 coyoteTimeCounter = coyoteTime;
-                //jumpBufferCounter = jumpBufferTime;
             }
             else
             {
                 coyoteTimeCounter -= Time.deltaTime;
-                //jumpBufferCounter -= Time.deltaTime;
             }
 
             //Friction
@@ -139,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Jump")) //Input.GetButtonDown("Jump")
+            if (Input.GetButtonDown("Jump"))
             {
                 jumpBufferCounter = jumpBufferTime;
             }
@@ -242,7 +239,6 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
-        isJumping = false;
         return Physics2D.BoxCast(rbCollider.bounds.center, rbCollider.bounds.size, 0f, Vector2.down, 0.1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
     }
 
