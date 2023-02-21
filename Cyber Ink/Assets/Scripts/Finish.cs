@@ -15,21 +15,48 @@ public class Finish : MonoBehaviour
     public GameObject firstKey;
     public GameObject secondKey;
     public GameObject thirdKey;
+    public Dialogue finishConditionDialogue;
 
     [Header("Others")]
     public GameObject player;
+    public Image healthBar;
+    public Image dashCooldownImage;
+    public GameObject keyPanel;
 
     private void Update()
     {
-        CheckLevelComplete();
+        FinishCheck();
     }
 
-    public void CheckLevelComplete()
+    public void FinishCheck()
     {
         if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(MusicFadeChangeScene());
+            if (firstKey != null)
+            {
+                MissingKey();
+            }
+            else if (secondKey != null)
+            {
+                MissingKey();
+            }
+            else if (thirdKey != null)
+            {
+                MissingKey();
+            }
+            else
+            {
+                StartCoroutine(MusicFadeChangeScene());
+            }
         }
+    }
+
+    private void MissingKey()
+    {
+        healthBar.enabled = false;
+        dashCooldownImage.enabled = false;
+        keyPanel.SetActive(false);
+        finishConditionDialogue.StartDialogue();
     }
 
     private IEnumerator MusicFadeChangeScene()

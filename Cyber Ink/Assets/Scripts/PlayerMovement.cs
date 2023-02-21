@@ -15,8 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public bool canMove;
+    public float moveInput; //Horizontal Movement
     public float moveSpeed = 10f;
-    private float moveInput; //Horizontal Movement
     [SerializeField] private float acceleration = 15f;
     [SerializeField] private float deceleration = 30f;
     [SerializeField] private float velPower = 1f;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")]
     public bool canJump;
+    public bool isJumping;
     [SerializeField] private float jumpForce = 15f;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -54,7 +55,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject firstDialogue;
     public GameObject secondDialogue;
     public GameObject thirdDialogue;
-    public GameObject teleportErrorDialogue;
+    public GameObject teleportConditionDialogue;
+    public GameObject finishConditionDialogue;
 
     private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -75,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (pausePanel.activeSelf || controlsPanel.activeSelf || startDialogue.activeSelf || 
             firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf ||
-            teleportErrorDialogue.activeSelf || playerLife.currentHealth <= 0)
+            teleportConditionDialogue.activeSelf || finishConditionDialogue.activeSelf || playerLife.currentHealth <= 0)
         {
             canMove = false;
             canJump = false;
@@ -145,11 +147,13 @@ public class PlayerMovement : MonoBehaviour
                 jumpBufferCounter -= Time.deltaTime;
             }
 
-            if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
+            if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f && !isJumping)
             {
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
                 jumpBufferCounter = 0f;
+
+                StartCoroutine(JumpCooldown());
             }
 
             if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -171,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.gravityScale = originalGravity;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
             {
                 if (ableToDash)
                 {
@@ -240,6 +244,13 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded() //Check whether is grounded to prevent infinite jumps
     {
         return Physics2D.BoxCast(rbCollider.bounds.center, rbCollider.bounds.size, 0f, Vector2.down, 0.1f, groundLayer); //center, size, angle, direction, distance, layer - Returns boolean by itself
+    }
+
+    private IEnumerator JumpCooldown()
+    {
+        isJumping = true;
+        yield return new WaitForSeconds(0.4f);
+        isJumping = false;
     }
 
     //public bool checkDash()
@@ -313,40 +324,4 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetInteger("state", (int)state); //Animation states at movementState line
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("First Key"))
-    //    {
-    //        cameraControl.movingTowardsFirstKey = true;
-    //    }
-
-    //    if (collision.gameObject.CompareTag("Second Key"))
-    //    {
-    //        cameraControl.movingTowardsSecondKey = true;
-    //    }
-
-    //    if (collision.gameObject.CompareTag("Third Key"))
-    //    {
-    //        cameraControl.movingTowardsThirdKey = true;
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("First Key"))
-    //    {
-    //        cameraControl.movingTowardsFirstKey = false;
-    //    }
-
-    //    if (collision.gameObject.CompareTag("Second Key"))
-    //    {
-    //        cameraControl.movingTowardsSecondKey = false;
-    //    }
-
-    //    if (collision.gameObject.CompareTag("Third Key"))
-    //    {
-    //        cameraControl.movingTowardsThirdKey = false;
-    //    }
-    //}
 }

@@ -7,9 +7,10 @@ public class Teleportation : MonoBehaviour
     [Header("Game Objects")]
     public GameObject portal;
     public GameObject respectiveKey;
+    public PlayerRespawn playerRespawn;
 
     [Header("Dialogue")]
-    public Dialogue teleportErrorDialogue;
+    public Dialogue teleportConditionDialogue;
     private GameObject player;
 
     // Start is called before the first frame update
@@ -30,11 +31,12 @@ public class Teleportation : MonoBehaviour
         {
             if (respectiveKey != null)
             {
-                teleportErrorDialogue.StartDialogue();
+                teleportConditionDialogue.StartDialogue();
             }
             else
             {
                 player.transform.position = portal.transform.position;
+                playerRespawn.respawnPoint = new Vector2(100f, -27f);
             }
         }
     }

@@ -24,7 +24,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject firstDialogue;
     public GameObject secondDialogue;
     public GameObject thirdDialogue;
-    public GameObject teleportErrorDialogue;
+    public GameObject teleportConditionDialogue;
+    public GameObject finishConditionDialogue;
     public bool isDialogueActive;
 
     private void Update()
@@ -46,7 +47,8 @@ public class PauseMenu : MonoBehaviour
 
     public void CheckActiveDialogue()
     {
-        if (startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf || teleportErrorDialogue.activeSelf)
+        if (startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || 
+            thirdDialogue.activeSelf || teleportConditionDialogue.activeSelf || finishConditionDialogue.activeSelf)
         {
             isDialogueActive = true;
         }

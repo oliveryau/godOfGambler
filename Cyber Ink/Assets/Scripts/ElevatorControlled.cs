@@ -4,17 +4,36 @@ using UnityEngine;
 
 public class ElevatorControlled : MonoBehaviour
 {
+    [Header("Positions")]
+    //public bool onElevator;
     public Transform startPosition;
     public Transform endPosition;
 
+    [Header("Speed")]
     public float toSpeed;
     public float backSpeed;
     private bool movingElevator;
+
+    //[Header("Others")]
+    //public Rigidbody2D rb;
+    //public PlayerMovement playerMovement;
 
     // Update is called once per frame
     void Update()
     {
         StartElevator();
+
+        //if (onElevator == true)
+        //{
+        //    if (playerMovement.moveInput != 0f || playerMovement.isDashing == true)
+        //    {
+        //        rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
+        //    }
+        //    else
+        //    {
+        //        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+        //    }
+        //}
     }
 
     private void StartElevator()
@@ -35,6 +54,7 @@ public class ElevatorControlled : MonoBehaviour
         {
             movingElevator = true;
             collision.transform.SetParent(transform);
+            //onElevator = true;
         }
     }
 
@@ -42,5 +62,7 @@ public class ElevatorControlled : MonoBehaviour
     {
         movingElevator = false;
         collision.transform.SetParent(null);
+        //onElevator = false;
+        //rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
     }
 }

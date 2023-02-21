@@ -63,7 +63,7 @@ public class RangedEnemy : MonoBehaviour
         if (colliderType.IsTouchingLayers(LayerMask.GetMask("Waypoint Collider")))
         {
             FlipEnemy();
-            Debug.Log("collided");
+            //Debug.Log("collided");
         }
         else if (PlayerInSight())
         {

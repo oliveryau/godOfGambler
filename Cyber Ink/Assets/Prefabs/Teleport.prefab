@@ -142,7 +142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portal: {fileID: 0}
   respectiveKey: {fileID: 0}
-  teleportErrorDialogue: {fileID: 0}
+  playerRespawn: {fileID: 0}
+  teleportConditionDialogue: {fileID: 0}
 --- !u!1 &2623982106723491975
 GameObject:
   m_ObjectHideFlags: 0

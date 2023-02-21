@@ -13,7 +13,7 @@ public class Dialogue : MonoBehaviour
     public string[] lines;
     public float textSpeed;
 
-    private int index;
+    public int index;
 
     // Update is called once per frame
     void Update()

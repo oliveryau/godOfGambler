@@ -243,10 +243,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelFade: {fileID: 0}
+  musicAnim: {fileID: 0}
+  waitTime: 0
   firstKey: {fileID: 0}
   secondKey: {fileID: 0}
   thirdKey: {fileID: 0}
+  finishConditionDialogue: {fileID: 0}
   player: {fileID: 0}
+  healthBar: {fileID: 0}
+  dashCooldownImage: {fileID: 0}
+  keyPanel: {fileID: 0}
 --- !u!1 &2431977841196217835
 GameObject:
   m_ObjectHideFlags: 0

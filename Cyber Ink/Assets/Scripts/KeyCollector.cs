@@ -55,9 +55,6 @@ public class KeyCollector : MonoBehaviour
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
         keyPanel.SetActive(true);
-        playerMovement.canMove = true;
-        playerMovement.canJump = true;
-        playerMovement.canDash = true;
     }
 
     private void FirstKeyDialogue()
@@ -67,9 +64,6 @@ public class KeyCollector : MonoBehaviour
             healthBar.enabled = false;
             dashCooldownImage.enabled = false;
             keyPanel.SetActive(false);
-            playerMovement.canMove = false;
-            playerMovement.canJump = false;
-            playerMovement.canDash = false;
             firstDialogue.StartDialogue();
             Destroy(firstKey);
         }
@@ -83,9 +77,6 @@ public class KeyCollector : MonoBehaviour
             healthBar.enabled = false;
             dashCooldownImage.enabled = false;
             keyPanel.SetActive(false);
-            playerMovement.canMove = false;
-            playerMovement.canJump = false;
-            playerMovement.canDash = false;
             secondDialogue.StartDialogue();
             Destroy(secondKey);
         }
@@ -98,9 +89,6 @@ public class KeyCollector : MonoBehaviour
             healthBar.enabled = false;
             dashCooldownImage.enabled = false;
             keyPanel.SetActive(false);
-            playerMovement.canMove = false;
-            playerMovement.canJump = false;
-            playerMovement.canDash = false;
             thirdDialogue.StartDialogue();
             Destroy(thirdKey);
         }
