@@ -15,9 +15,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public bool canMove;
-    public float moveInput; //Horizontal Movement
+    private float moveInput; //Horizontal Movement
     public float moveSpeed = 10f;
-    [SerializeField] private float acceleration = 15f;
+    [SerializeField] private float acceleration = 30f;
     [SerializeField] private float deceleration = 30f;
     [SerializeField] private float velPower = 1f;
     [SerializeField] private float frictionAmount = 1f;

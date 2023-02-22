@@ -5,7 +5,6 @@ using UnityEngine;
 public class ElevatorUncontrolled : MonoBehaviour
 {
     [Header("Positions")]
-    //public bool onElevator;
     public Transform startPosition;
     public Transform endPosition;
 
@@ -13,26 +12,10 @@ public class ElevatorUncontrolled : MonoBehaviour
     public float speed;
     private bool moveToEndPos;
 
-    //[Header("Others")]
-    //public Rigidbody2D rb;
-    //public PlayerMovement playerMovement;
-
     // Update is called once per frame
     void Update()
     {
         StartElevator();
-
-        //if (onElevator == true)
-        //{
-        //    if (playerMovement.moveInput != 0f || playerMovement.isDashing == true)
-        //    {
-        //        rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
-        //    }
-        //    else
-        //    {
-        //        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-        //    }
-        //}
     }
 
     private void StartElevator()
@@ -62,14 +45,11 @@ public class ElevatorUncontrolled : MonoBehaviour
         if (collision.transform.position.y > transform.position.y) //Check if player lands on platform from the top
         {
             collision.transform.SetParent(transform);
-            //onElevator = true;
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         collision.transform.SetParent(null);
-        //onElevator = false;
-        //rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
     }
 }

@@ -25,7 +25,7 @@ public class GameOverMenu : MonoBehaviour
 
     private void Update()
     {
-        if (playerLife.currentHealth < 0)
+        if (playerLife.currentHealth <= 0)
         {
             StartCoroutine(DelayMenu());
         }
@@ -52,7 +52,7 @@ public class GameOverMenu : MonoBehaviour
 
     public IEnumerator DelayMenu()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         gameOverScreen.SetActive(true);
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;

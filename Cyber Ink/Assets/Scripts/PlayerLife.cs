@@ -99,8 +99,8 @@ public class PlayerLife : MonoBehaviour
         else
         {
             //player die
-            Die();
             SetHealth();
+            Die();
         }
     }
 
