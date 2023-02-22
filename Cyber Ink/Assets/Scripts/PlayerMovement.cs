@@ -10,19 +10,23 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D rbCollider; //GroundCheckTransform for rb
     public SpriteRenderer rbSprite; //Flip left when moving back
-    private Animator anim; //Trigger animation
+    public Animator anim; //Trigger animation
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Movement")]
     public bool canMove;
     private float moveInput; //Horizontal Movement
     public float moveSpeed = 10f;
-    [SerializeField] private float acceleration = 30f;
-    [SerializeField] private float deceleration = 30f;
+    [SerializeField] private float acceleration = 13f;
+    [SerializeField] private float deceleration = 13f;
     [SerializeField] private float velPower = 1f;
     [SerializeField] private float frictionAmount = 1f;
     public bool checkSlow; //Slow Debuff Toggle
     public float slowTimer; //Slow Debuff Timer
+    public float knockbackForce = 5f;
+    public float knockbackCounter;
+    public float knockbackTotalTime = 0.2f;
+    public bool knockFromRight;
 
     [Header("Jump")]
     public bool canJump;
@@ -35,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpCutMultiplier = 0.5f;
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 1.5f;
-    public float maxFallSpeed = 10f;
+    public float maxFallSpeed = 30f;
 
     [Header("Dash")]
     public bool canDash; //in general
@@ -45,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashingCooldown;
     private float dashingPower = 25f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 2f;
+    private float dashingCooldown = 1.5f;
     private bool isCooldown = false;
 
     [Header("Miscellaneous Settings")]
@@ -58,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject teleportConditionDialogue;
     public GameObject finishConditionDialogue;
 
-    private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
+    public enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
     // Start is called before the first frame update
     private void Start()
@@ -220,23 +224,40 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
 
-            //Calculate direction player moves in and the desired velocity
-            float targetSpeed = moveInput * moveSpeed;
-            //Calculate difference between current velocity and desired velocity
-            float speedDif = targetSpeed - rb.velocity.x;
-            //Change acceleration rate depending on situation
-            float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
-            //Applies acceleration to speed difference, raises to a set power so acceleration increases with higher speeds
-            //Finally multiplies by sign to reapply direction
-            float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
-            //Applies force to rigidbody, multiplying by Vector2.right so it only affects X axis
-            if (moveInput < 0f)
+            if (knockbackCounter <= 0f)
             {
-                rb.AddForce(-movement * Vector2.left, ForceMode2D.Force);
+                //Calculate direction player moves in and the desired velocity
+                float targetSpeed = moveInput * moveSpeed;
+                //Calculate difference between current velocity and desired velocity
+                float speedDif = targetSpeed - rb.velocity.x;
+                //Change acceleration rate depending on situation
+                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? (50 * acceleration / moveSpeed) : (50 * deceleration / moveSpeed);
+                //Applies acceleration to speed difference, raises to a set power so acceleration increases with higher speeds
+                //Finally multiplies by sign to reapply direction
+                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+                //Applies force to rigidbody, multiplying by Vector2.right so it only affects X axis
+                if (moveInput < 0f)
+                {
+                    rb.AddForce(-movement * Vector2.left, ForceMode2D.Force);
+                }
+                else
+                {
+                    rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
+                }
             }
             else
             {
-                rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
+                if (knockFromRight == true)
+                {
+                    rb.velocity = new Vector2(knockbackForce, knockbackForce);
+                }
+
+                if (knockFromRight == false)
+                {
+                    rb.velocity = new Vector2(-knockbackForce, knockbackForce);
+                }
+
+                knockbackCounter -= Time.deltaTime;
             }
         }
     }
@@ -293,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
         ableToDash = true;
         isDashingCooldown = false;
     }
-    private void UpdateAnimation()
+    public void UpdateAnimation()
     {
         movementState state;
 

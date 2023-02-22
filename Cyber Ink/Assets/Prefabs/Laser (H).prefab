@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8047802104424790389}
   - component: {fileID: 8047802104424790390}
   m_Layer: 7
-  m_Name: Laser (Horizontal)
+  m_Name: Laser (H)
   m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

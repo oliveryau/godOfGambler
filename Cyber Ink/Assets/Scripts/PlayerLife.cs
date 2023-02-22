@@ -73,16 +73,39 @@ public class PlayerLife : MonoBehaviour
         {
             FallDamage();
         }
+
         if (collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("Falling Object"))
         {
+            playerMovement.knockbackCounter = playerMovement.knockbackTotalTime;
+            if (collision.transform.position.x <= transform.position.x)
+            {
+                playerMovement.knockFromRight = true;
+            }
+            if (collision.transform.position.x >= transform.position.x)
+            {
+                playerMovement.knockFromRight = false;
+            }
+
             TrapDamage();
         }
+
         if (collision.gameObject.CompareTag("Slow Trap"))
         {
             SlowDamage();
         }
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            playerMovement.knockbackCounter = playerMovement.knockbackTotalTime;
+            if (collision.transform.position.x <= transform.position.x)
+            {
+                playerMovement.knockFromRight = true;
+            }
+            if (collision.transform.position.x >= transform.position.x)
+            {
+                playerMovement.knockFromRight = false;
+            }
+
             EnemyDamage();
         }
     }

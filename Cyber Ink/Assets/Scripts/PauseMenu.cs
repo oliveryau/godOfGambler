@@ -94,6 +94,14 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    public void RetryGame()
+    {
+        isPaused = false;
+
+        SceneManager.LoadScene("Level 2");
+        Time.timeScale = 1f;
+    }
+
     public void GoToControls()
     {
         pauseScreen.SetActive(false);

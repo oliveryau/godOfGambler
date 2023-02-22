@@ -7,6 +7,7 @@ using TMPro;
 
 public class GameOverMenu : MonoBehaviour
 {
+    public PlayerMovement playerMovement;
     public PlayerLife playerLife;
     public LevelFade levelFade;
 
@@ -37,6 +38,7 @@ public class GameOverMenu : MonoBehaviour
         playerRespawn.RespawnNow();
         playerLife.currentHealth = 100f;
         playerLife.rb.bodyType = RigidbodyType2D.Dynamic;
+        playerMovement.UpdateAnimation();
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
         keyText.SetActive(true);
