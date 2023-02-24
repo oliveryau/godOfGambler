@@ -10,7 +10,7 @@ public class Teleportation : MonoBehaviour
     public PlayerRespawn playerRespawn;
 
     [Header("Dialogue")]
-    public Dialogue teleportConditionDialogue;
+    public Dialogue dialogue;
     private GameObject player;
 
     // Start is called before the first frame update
@@ -27,11 +27,11 @@ public class Teleportation : MonoBehaviour
 
     public void CheckTeleport()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
+        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && dialogue.activeDialogue == false)
         {
             if (respectiveKey != null)
             {
-                teleportConditionDialogue.StartDialogue();
+                dialogue.StartDialogue();
             }
             else
             {

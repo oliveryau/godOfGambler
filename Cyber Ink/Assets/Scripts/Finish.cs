@@ -6,47 +6,37 @@ using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour
 {
-    [Header("UX/UI")]
-    public LevelFade levelFade;
-    public Animator musicAnim;
-    public float waitTime;
+    public GameObject player;
+    public Dialogue dialogue;
+    public SceneManagement sceneManagement;
 
     [Header("Keys")]
-    public GameObject firstKey;
-    public GameObject secondKey;
-    public GameObject thirdKey;
-    public Dialogue finishConditionDialogue;
+    public KeySystem keySystem;
 
     [Header("Others")]
-    public GameObject player;
     public Image healthBar;
     public Image dashCooldownImage;
     public GameObject keyPanel;
 
     private void Update()
     {
-        FinishCheck();
+        if (sceneManagement.scene.name == "Level 2")
+        {
+            LevelTwoKeyCheck();
+        }
     }
 
-    public void FinishCheck()
+    public void LevelTwoKeyCheck()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E))
+        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && dialogue.activeDialogue == false)
         {
-            if (firstKey != null)
-            {
-                MissingKey();
-            }
-            else if (secondKey != null)
-            {
-                MissingKey();
-            }
-            else if (thirdKey != null)
+            if (keySystem.keyCount != 2)
             {
                 MissingKey();
             }
             else
             {
-                StartCoroutine(MusicFadeChangeScene());
+                StartCoroutine(sceneManagement.MusicFadeChangeScene());
             }
         }
     }
@@ -56,14 +46,6 @@ public class Finish : MonoBehaviour
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
         keyPanel.SetActive(false);
-        finishConditionDialogue.StartDialogue();
-    }
-
-    private IEnumerator MusicFadeChangeScene()
-    {
-        musicAnim.SetTrigger("fadeOut");
-        StartCoroutine(levelFade.LoadingScene());
-        yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene("Start"); //Change to level 3
+        dialogue.StartDialogue();
     }
 }

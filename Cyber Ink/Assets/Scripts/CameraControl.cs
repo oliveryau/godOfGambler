@@ -12,7 +12,7 @@ public class CameraControl : MonoBehaviour
 
     [Header("Screen Shake Effect")]
     public AnimationCurve curve;
-    public float duration = 0.15f;
+    public float duration = 0.2f;
 
     private void Update()
     {

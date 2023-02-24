@@ -8,6 +8,7 @@ using TMPro;
 public class PauseMenu : MonoBehaviour
 {
     public PlayerLife playerLife;
+    public SceneManagement sceneManagement;
 
     [Header("Pause")]
     public GameObject pauseScreen;
@@ -24,8 +25,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject firstDialogue;
     public GameObject secondDialogue;
     public GameObject thirdDialogue;
-    public GameObject teleportConditionDialogue;
-    public GameObject finishConditionDialogue;
+    public GameObject fourthDialogue;
     public bool isDialogueActive;
 
     private void Update()
@@ -48,7 +48,7 @@ public class PauseMenu : MonoBehaviour
     public void CheckActiveDialogue()
     {
         if (startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || 
-            thirdDialogue.activeSelf || teleportConditionDialogue.activeSelf || finishConditionDialogue.activeSelf)
+             thirdDialogue.activeSelf || fourthDialogue.activeSelf)
         {
             isDialogueActive = true;
         }
@@ -98,7 +98,7 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
 
-        SceneManager.LoadScene("Level 2");
+        StartCoroutine(sceneManagement.MusicFadeSameScene());
         Time.timeScale = 1f;
     }
 
@@ -118,7 +118,7 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
 
-        SceneManager.LoadScene("Start");
+        StartCoroutine(sceneManagement.MusicFadeChangeScene());
         Time.timeScale = 1f;
     }
 }

@@ -1802,8 +1802,8 @@ GameObject:
   - component: {fileID: 1991754033}
   - component: {fileID: 1991754032}
   - component: {fileID: 1991754031}
+  - component: {fileID: 1991754037}
   - component: {fileID: 1991754035}
-  - component: {fileID: 1991754036}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1908,10 +1908,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   credits: {fileID: 1884990410}
-  levelFade: {fileID: 1991754036}
-  musicAnim: {fileID: 2073401048}
-  waitTime: 1.5
---- !u!114 &1991754036
+  sceneManagement: {fileID: 1991754037}
+--- !u!114 &1991754037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1920,11 +1918,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991754030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7961c3daa43ee447923538c322e1f7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 40a85c91d7adc1640848e2e083fbb57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scene:
+    m_Handle: 0
   anim: {fileID: 1856441855}
   fadePanel: {fileID: 1695026059}
+  musicAnim: {fileID: 2073401048}
+  waitTime: 1
 --- !u!1 &2073401045
 GameObject:
   m_ObjectHideFlags: 0

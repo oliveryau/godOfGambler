@@ -242,13 +242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040c0b89ed10ddd44b188fddb6516b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelFade: {fileID: 0}
-  musicAnim: {fileID: 0}
-  waitTime: 0
+  sceneManagement: {fileID: 0}
   firstKey: {fileID: 0}
   secondKey: {fileID: 0}
-  thirdKey: {fileID: 0}
-  finishConditionDialogue: {fileID: 0}
+  dialogue: {fileID: 0}
   player: {fileID: 0}
   healthBar: {fileID: 0}
   dashCooldownImage: {fileID: 0}
@@ -319,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Interact (E)
+  m_text: Interact (Enter)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 745f831953b961a42835b4cdb4fce373, type: 2}
   m_sharedMaterial: {fileID: -3946074822179775281, guid: 745f831953b961a42835b4cdb4fce373, type: 2}

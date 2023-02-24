@@ -7,9 +7,8 @@ using TMPro;
 
 public class GameOverMenu : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
     public PlayerLife playerLife;
-    public LevelFade levelFade;
+    public SceneManagement sceneManagement;
 
     [Header("UI")]
     public Image healthBar;
@@ -31,27 +30,6 @@ public class GameOverMenu : MonoBehaviour
             StartCoroutine(DelayMenu());
         }
     }
-
-    public void RetryGame()
-    {
-        StopAllCoroutines();
-        playerRespawn.RespawnNow();
-        playerLife.currentHealth = 100f;
-        playerLife.rb.bodyType = RigidbodyType2D.Dynamic;
-        playerMovement.UpdateAnimation();
-        healthBar.enabled = true;
-        dashCooldownImage.enabled = true;
-        keyText.SetActive(true);
-        gameOverScreen.SetActive(false);
-    }
-
-    public void GoToMenu()
-    {
-        StartCoroutine(levelFade.LoadingScene());
-        gameOverScreen.SetActive(false);
-        SceneManager.LoadScene("Start");
-    }
-
     public IEnumerator DelayMenu()
     {
         yield return new WaitForSeconds(1.5f);
@@ -59,5 +37,26 @@ public class GameOverMenu : MonoBehaviour
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
         keyText.SetActive(false);
+        Time.timeScale = 0f;
+    }
+
+    public void RetryGame()
+    {
+        StopAllCoroutines();
+        playerLife.currentHealth = 100f;
+        playerLife.rb.bodyType = RigidbodyType2D.Dynamic;
+        playerRespawn.RespawnNow();
+        healthBar.enabled = true;
+        dashCooldownImage.enabled = true;
+        keyText.SetActive(true);
+        gameOverScreen.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void GoToMenu()
+    {
+        StopAllCoroutines();
+        StartCoroutine(sceneManagement.MusicFadeChangeScene());
+        Time.timeScale = 1f;
     }
 }

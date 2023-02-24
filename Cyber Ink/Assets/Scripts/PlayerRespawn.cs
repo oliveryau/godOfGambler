@@ -6,7 +6,6 @@ public class PlayerRespawn : MonoBehaviour
 {
     public Vector2 respawnPoint;
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Respawn"))

@@ -6,22 +6,11 @@ using UnityEngine.SceneManagement;
 public class StartMenu : MonoBehaviour
 {
     public GameObject credits;
-
-    [Header("UX/UI")]
-    public LevelFade levelFade;
-    public Animator musicAnim;
-    public float waitTime;
+    public SceneManagement sceneManagement;
 
     public void StartGame()
     {
-        StartCoroutine(MusicFadeChangeScene());
-    }
-    private IEnumerator MusicFadeChangeScene()
-    {
-        musicAnim.SetTrigger("fadeOut");
-        StartCoroutine(levelFade.LoadingScene());
-        yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene("Level 2");
+        StartCoroutine(sceneManagement.MusicFadeChangeScene());
     }
 
     public void Credits()

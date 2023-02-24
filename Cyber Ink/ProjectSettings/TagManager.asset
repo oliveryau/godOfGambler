@@ -16,6 +16,7 @@ TagManager:
   - Interact
   - Key
   - Terrain Wall
+  - Laser (H)
   layers:
   - Default
   - TransparentFX

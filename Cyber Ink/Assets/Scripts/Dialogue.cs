@@ -12,8 +12,8 @@ public class Dialogue : MonoBehaviour
     [Header("Dialogue")]
     public string[] lines;
     public float textSpeed;
-
     public int index;
+    public bool activeDialogue;
 
     // Update is called once per frame
     void Update()
@@ -34,6 +34,7 @@ public class Dialogue : MonoBehaviour
 
     public void StartDialogue()
     {
+        activeDialogue = true;
         dialoguePanel.SetActive(true);
         mainText.text = string.Empty;
         index = 0;
@@ -59,6 +60,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
+            activeDialogue = false;
             gameObject.SetActive(false);
         }
     }

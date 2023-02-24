@@ -6,32 +6,35 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     public PlayerLife playerLife;
-    [SerializeField] private CameraControl cameraControl;
-    private Rigidbody2D rb;
-    private BoxCollider2D rbCollider; //GroundCheckTransform for rb
+    public CameraControl cameraControl;
     public SpriteRenderer rbSprite; //Flip left when moving back
     public Animator anim; //Trigger animation
-    [SerializeField] private LayerMask groundLayer;
+    public LayerMask groundLayer;
+    private Rigidbody2D rb;
+    private BoxCollider2D rbCollider; //GroundCheckTransform for rb
 
     [Header("Movement")]
     public bool canMove;
     private float moveInput; //Horizontal Movement
     public float moveSpeed = 10f;
-    [SerializeField] private float acceleration = 13f;
-    [SerializeField] private float deceleration = 13f;
-    [SerializeField] private float velPower = 1f;
-    [SerializeField] private float frictionAmount = 1f;
+    public float acceleration = 13f;
+    public float deceleration = 13f;
+    public float velPower = 1f;
+    public float frictionAmount = 1f;
     public bool checkSlow; //Slow Debuff Toggle
     public float slowTimer; //Slow Debuff Timer
-    public float knockbackForce = 5f;
-    public float knockbackCounter;
-    public float knockbackTotalTime = 0.2f;
-    public bool knockFromRight;
+    public float knockForceX;
+    public float knockForceY;
+    public float knockForceYVertical;
+    public float knockCounter;
+    public float knockTotalTime;
+    public bool knockRight;
+    public bool knockTop;
 
     [Header("Jump")]
     public bool canJump;
     public bool isJumping;
-    [SerializeField] private float jumpForce = 15f;
+    public float jumpForce = 15f;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
     public float jumpBufferTime = 0.2f;
@@ -45,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canDash; //in general
     public bool ableToDash = true; //for in game dashing
     public bool isDashing;
-    public Image dashCooldownImage;
+    public Image dashCooldownIcon;
     private bool isDashingCooldown;
     private float dashingPower = 25f;
     private float dashingTime = 0.2f;
@@ -59,8 +62,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject firstDialogue;
     public GameObject secondDialogue;
     public GameObject thirdDialogue;
-    public GameObject teleportConditionDialogue;
-    public GameObject finishConditionDialogue;
+    public GameObject fourthDialogue;
 
     public enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -73,15 +75,15 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         Physics2D.IgnoreLayerCollision(8, 9);
         Physics2D.IgnoreLayerCollision(12, 8);
-        dashCooldownImage.fillAmount = 0;
+        dashCooldownIcon.fillAmount = 0;
     }
 
     // Update is called once per frame
     private void Update()
     {
         if (pausePanel.activeSelf || controlsPanel.activeSelf || startDialogue.activeSelf || 
-            firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf ||
-            teleportConditionDialogue.activeSelf || finishConditionDialogue.activeSelf || playerLife.currentHealth <= 0)
+            firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf || 
+            fourthDialogue.activeSelf || playerLife.currentHealth <= 0)
         {
             canMove = false;
             canJump = false;
@@ -187,17 +189,17 @@ public class PlayerMovement : MonoBehaviour
                     if (isCooldown == false)
                     {
                         isCooldown = true;
-                        dashCooldownImage.fillAmount = 1;
+                        dashCooldownIcon.fillAmount = 1;
                     }
                 }
             }
 
             if (isCooldown)
             {
-                dashCooldownImage.fillAmount -= 1 / dashingCooldown * Time.deltaTime;
-                if (dashCooldownImage.fillAmount <= 0)
+                dashCooldownIcon.fillAmount -= 1 / dashingCooldown * Time.deltaTime;
+                if (dashCooldownIcon.fillAmount <= 0)
                 {
-                    dashCooldownImage.fillAmount = 0;
+                    dashCooldownIcon.fillAmount = 0;
                     isCooldown = false;
                 }
             }
@@ -224,7 +226,7 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
 
-            if (knockbackCounter <= 0f)
+            if (knockCounter <= 0f)
             {
                 //Calculate direction player moves in and the desired velocity
                 float targetSpeed = moveInput * moveSpeed;
@@ -247,17 +249,32 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (knockFromRight == true)
+                if (knockRight == true)
                 {
-                    rb.velocity = new Vector2(knockbackForce, knockbackForce);
+                    rb.velocity = new Vector2(knockForceX, knockForceY);
+                }
+                else if (knockRight == false)
+                {
+                    rb.velocity = new Vector2(-knockForceX, knockForceY);
+                }
+                else if (knockTop == true && knockRight == true)
+                {
+                    rb.velocity = new Vector2(knockForceX, knockForceYVertical);
+                }
+                else if (knockTop == true && knockRight == false)
+                {
+                    rb.velocity = new Vector2(-knockForceX, knockForceYVertical);
+                }
+                else if (knockTop == false && knockRight == true)
+                {
+                    rb.velocity = new Vector2(knockForceX, -knockForceYVertical);
+                }
+                else if (knockTop == false && knockRight == false)
+                {
+                    rb.velocity = new Vector2(-knockForceX, -knockForceYVertical);
                 }
 
-                if (knockFromRight == false)
-                {
-                    rb.velocity = new Vector2(-knockbackForce, knockbackForce);
-                }
-
-                knockbackCounter -= Time.deltaTime;
+                knockCounter -= Time.deltaTime;
             }
         }
     }
