@@ -17,7 +17,7 @@ public class PlayerLife : MonoBehaviour
     private float lerpSpeed;
 
     [Header("Health Edits")]
-    public float heal = 5f;
+    public float heal = 7f;
     public float fallDamage = 30f; //out of bounds
     public float slowDamage = 30f; //slow trap
     public float trapDamage = 50f; //laser and falling object
@@ -55,18 +55,6 @@ public class PlayerLife : MonoBehaviour
         lerpSpeed = 3f * Time.deltaTime;
         SetHealth();
         HealthBarColor();
-
-        if (playerMovement.checkSlow == true) //Slow debuff timer
-        {
-            playerMovement.moveSpeed = 6f;
-            playerMovement.slowTimer += Time.deltaTime;
-            if (playerMovement.slowTimer >= 1.5f) //1.5 second debuff
-            {
-                playerMovement.moveSpeed = 10f;
-                playerMovement.slowTimer = 0f;
-                playerMovement.checkSlow = false;
-            }
-        }
     }
 
     private IEnumerator GetHurt() //can use for hearts too
@@ -194,11 +182,11 @@ public class PlayerLife : MonoBehaviour
             playerMovement.knockCounter = playerMovement.knockTotalTime;
             if (collision.transform.position.x <= transform.position.x)
             {
-                playerMovement.knockRight = true;
+                playerMovement.knockedRight = true;
             }
             if (collision.transform.position.x >= transform.position.x)
             {
-                playerMovement.knockRight = false;
+                playerMovement.knockedRight = false;
             }
 
             TrapDamage();
@@ -206,32 +194,28 @@ public class PlayerLife : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Laser (H)"))
         {
-            //Knockback + more vertical
+            //Knockback + More vertical height
             playerMovement.knockCounter = playerMovement.knockTotalTime;
             if (collision.transform.position.y <= transform.position.y)
             {
                 if (collision.transform.position.x <= transform.position.x)
                 {
-                    playerMovement.knockTop = true;
-                    playerMovement.knockRight = true;
+                    playerMovement.knockedTopRight = true;
                 }
                 if (collision.transform.position.x >= transform.position.x)
                 {
-                    playerMovement.knockTop = true;
-                    playerMovement.knockRight = false;
+                    playerMovement.knockedTopRight = false;
                 }
             }
             if (collision.transform.position.y >= transform.position.y)
             {
                 if (collision.transform.position.x <= transform.position.x)
                 {
-                    playerMovement.knockTop = false;
-                    playerMovement.knockRight = true;
+                    playerMovement.knockedBottomRight = true;
                 }
                 if (collision.transform.position.x >= transform.position.x)
                 {
-                    playerMovement.knockTop = false;
-                    playerMovement.knockRight = false;
+                    playerMovement.knockedBottomRight = false;
                 }
             }
 
@@ -244,11 +228,11 @@ public class PlayerLife : MonoBehaviour
             playerMovement.knockCounter = playerMovement.knockTotalTime;
             if (collision.transform.position.x <= transform.position.x)
             {
-                playerMovement.knockRight = true;
+                playerMovement.knockedRight = true;
             }
             if (collision.transform.position.x >= transform.position.x)
             {
-                playerMovement.knockRight = false;
+                playerMovement.knockedRight = false;
             }
 
             EnemyDamage();

@@ -21,15 +21,6 @@ public class PlayerMovement : MonoBehaviour
     public float deceleration = 13f;
     public float velPower = 1f;
     public float frictionAmount = 1f;
-    public bool checkSlow; //Slow Debuff Toggle
-    public float slowTimer; //Slow Debuff Timer
-    public float knockForceX;
-    public float knockForceY;
-    public float knockForceYVertical;
-    public float knockCounter;
-    public float knockTotalTime;
-    public bool knockRight;
-    public bool knockTop;
 
     [Header("Jump")]
     public bool canJump;
@@ -47,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     public bool canDash; //in general
     public bool ableToDash = true; //for in game dashing
-    public bool isDashing;
+    private bool isDashing;
     public Image dashCooldownIcon;
     private bool isDashingCooldown;
     private float dashingPower = 25f;
@@ -55,7 +46,21 @@ public class PlayerMovement : MonoBehaviour
     private float dashingCooldown = 1.5f;
     private bool isCooldown = false;
 
-    [Header("Miscellaneous Settings")]
+    [Header("Debuffs")]
+    public bool checkSlow; //Slow Debuff Toggle
+    public float slowTimer; //Slow Debuff Timer
+    public float knockForceX;
+    public float knockForceY;
+    public float knockCounter;
+    public float knockTotalTime;
+    private bool knockedHorizontal;
+    public bool knockedRight;
+    private bool knockedVerticalUp;
+    public bool knockedTopRight;
+    private bool knockedVerticalDown;
+    public bool knockedBottomRight;
+
+    [Header("Other Settings")]
     public GameObject pausePanel;
     public GameObject controlsPanel;
     public GameObject startDialogue;
@@ -209,6 +214,8 @@ public class PlayerMovement : MonoBehaviour
                 ableToDash = true;
             }
 
+            CheckSlowed();
+
             UpdateAnimation();
         }
     }
@@ -249,32 +256,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (knockRight == true)
-                {
-                    rb.velocity = new Vector2(knockForceX, knockForceY);
-                }
-                else if (knockRight == false)
-                {
-                    rb.velocity = new Vector2(-knockForceX, knockForceY);
-                }
-                else if (knockTop == true && knockRight == true)
-                {
-                    rb.velocity = new Vector2(knockForceX, knockForceYVertical);
-                }
-                else if (knockTop == true && knockRight == false)
-                {
-                    rb.velocity = new Vector2(-knockForceX, knockForceYVertical);
-                }
-                else if (knockTop == false && knockRight == true)
-                {
-                    rb.velocity = new Vector2(knockForceX, -knockForceYVertical);
-                }
-                else if (knockTop == false && knockRight == false)
-                {
-                    rb.velocity = new Vector2(-knockForceX, -knockForceYVertical);
-                }
-
-                knockCounter -= Time.deltaTime;
+                CheckKnockback();
             }
         }
     }
@@ -331,6 +313,63 @@ public class PlayerMovement : MonoBehaviour
         ableToDash = true;
         isDashingCooldown = false;
     }
+
+    public void CheckSlowed()
+    {
+        if (checkSlow == true) //Slow debuff timer
+        {
+            moveSpeed = 5f;
+            slowTimer += Time.deltaTime;
+            if (slowTimer >= 1.5f) //1.5 second debuff similar to gethurt
+            {
+                moveSpeed = 10f;
+                slowTimer = 0f;
+                checkSlow = false;
+            }
+        }
+    }
+
+    public void CheckKnockback()
+    {
+        if (knockedHorizontal == true)
+        {
+            if (knockedRight == true)
+            {
+                rb.velocity = new Vector2(knockForceX, 0);
+            }
+            else if (knockedRight == false)
+            {
+                rb.velocity = new Vector2(-knockForceX, 0);
+            }
+        }
+
+        if (knockedVerticalUp == true)
+        {
+            if (knockedTopRight == true)
+            {
+                rb.velocity = new Vector2(knockForceX, knockForceY);
+            }
+            else if (knockedTopRight == false)
+            {
+                rb.velocity = new Vector2(-knockForceX, knockForceY);
+            }
+        }
+
+        if (knockedVerticalDown == true)
+        { 
+            if (knockedBottomRight == true)
+            {
+                rb.velocity = new Vector2(knockForceX, -knockForceY);
+            }
+            else if (knockedBottomRight == false)
+            {
+                rb.velocity = new Vector2(-knockForceX, -knockForceY);
+            }
+        }
+
+        knockCounter -= Time.deltaTime;
+    }
+
     public void UpdateAnimation()
     {
         movementState state;
@@ -361,5 +400,31 @@ public class PlayerMovement : MonoBehaviour
         }
 
         anim.SetInteger("state", (int)state); //Animation states at movementState line
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("Falling Object") || collision.gameObject.CompareTag("Enemy"))
+        {
+            knockedHorizontal = true;
+            knockedVerticalUp = false;
+            knockedVerticalDown = false;
+        }
+
+        if (collision.gameObject.CompareTag("Laser (H)"))
+        {
+            if (collision.transform.position.y <= transform.position.y)
+            {
+                knockedHorizontal = false;
+                knockedVerticalUp = true;
+                knockedVerticalDown = false;
+            }
+            else if (collision.transform.position.y >= transform.position.y)
+            {
+                knockedHorizontal = false;
+                knockedVerticalUp = false;
+                knockedVerticalDown = true;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerRespawn : MonoBehaviour
 {
+    public PlayerLife playerLife;
     public Vector2 respawnPoint;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -15,6 +16,13 @@ public class PlayerRespawn : MonoBehaviour
     }
     public void RespawnNow()
     {
-        transform.position = respawnPoint;
+        if (playerLife.currentHealth > 0)
+        {
+            transform.position = respawnPoint;
+        }
+        else
+        {
+            return;
+        }
     }
 }
