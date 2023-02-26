@@ -7,8 +7,8 @@ using TMPro;
 
 public class GameOverMenu : MonoBehaviour
 {
-    public PlayerLife playerLife;
     public SceneManagement sceneManagement;
+    public PlayerLife playerLife;
 
     [Header("UI")]
     public Image healthBar;

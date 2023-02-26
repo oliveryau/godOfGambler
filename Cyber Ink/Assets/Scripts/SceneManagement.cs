@@ -8,7 +8,7 @@ public class SceneManagement : MonoBehaviour
     public Scene scene;
 
     [Header("Fade Animation")]
-    public Animator anim;
+    public Animator fadeAnim;
     public GameObject fadePanel;
 
     [Header("Music Transition")]
@@ -26,7 +26,7 @@ public class SceneManagement : MonoBehaviour
 
     public IEnumerator MusicFadeSameScene() //For retry
     {
-        anim.SetTrigger("fadeOut");
+        fadeAnim.SetTrigger("fadeOut");
         musicAnim.SetTrigger("fadeOut");
         yield return new WaitForSeconds(waitTime);
 
@@ -42,7 +42,7 @@ public class SceneManagement : MonoBehaviour
 
     public IEnumerator MusicFadeChangeScene() //For returning to main menu
     {
-        anim.SetTrigger("fadeOut");
+        fadeAnim.SetTrigger("fadeOut");
         musicAnim.SetTrigger("fadeOut");
         yield return new WaitForSeconds(waitTime);
 

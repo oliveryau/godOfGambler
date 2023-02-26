@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     public PlayerLife playerLife;
-    public CameraControl cameraControl;
     public SpriteRenderer rbSprite; //Flip left when moving back
     public Animator anim; //Trigger animation
     public LayerMask groundLayer;
@@ -34,12 +33,13 @@ public class PlayerMovement : MonoBehaviour
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 1.5f;
     public float maxFallSpeed = 30f;
+    private bool externalForce;
 
     [Header("Dash")]
     public bool canDash; //in general
     public bool ableToDash = true; //for in game dashing
-    private bool isDashing;
     public Image dashCooldownIcon;
+    private bool isDashing;
     private bool isDashingCooldown;
     private float dashingPower = 25f;
     private float dashingTime = 0.2f;
@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public float knockForceY;
     public float knockCounter;
     public float knockTotalTime;
-    private bool knockedHorizontal;
+    private bool knockedHorizontal; //All traps except horizontal lasers
     public bool knockedRight;
     private bool knockedVerticalUp;
     public bool knockedTopRight;
@@ -61,13 +61,8 @@ public class PlayerMovement : MonoBehaviour
     public bool knockedBottomRight;
 
     [Header("Other Settings")]
-    public GameObject pausePanel;
-    public GameObject controlsPanel;
-    public GameObject startDialogue;
-    public GameObject firstDialogue;
-    public GameObject secondDialogue;
-    public GameObject thirdDialogue;
-    public GameObject fourthDialogue;
+    public CameraControl cameraControl;
+    public PauseMenu pauseMenu;
 
     public enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
@@ -86,9 +81,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pausePanel.activeSelf || controlsPanel.activeSelf || startDialogue.activeSelf || 
-            firstDialogue.activeSelf || secondDialogue.activeSelf || thirdDialogue.activeSelf || 
-            fourthDialogue.activeSelf || playerLife.currentHealth <= 0)
+        if (pauseMenu.isDialogueActive == true)
         {
             canMove = false;
             canJump = false;
@@ -235,23 +228,26 @@ public class PlayerMovement : MonoBehaviour
 
             if (knockCounter <= 0f)
             {
-                //Calculate direction player moves in and the desired velocity
-                float targetSpeed = moveInput * moveSpeed;
-                //Calculate difference between current velocity and desired velocity
-                float speedDif = targetSpeed - rb.velocity.x;
-                //Change acceleration rate depending on situation
-                float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? (50 * acceleration / moveSpeed) : (50 * deceleration / moveSpeed);
-                //Applies acceleration to speed difference, raises to a set power so acceleration increases with higher speeds
-                //Finally multiplies by sign to reapply direction
-                float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
-                //Applies force to rigidbody, multiplying by Vector2.right so it only affects X axis
-                if (moveInput < 0f)
+                if (!externalForce)
                 {
-                    rb.AddForce(-movement * Vector2.left, ForceMode2D.Force);
-                }
-                else
-                {
-                    rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
+                    //Calculate direction player moves in and the desired velocity
+                    float targetSpeed = moveInput * moveSpeed;
+                    //Calculate difference between current velocity and desired velocity
+                    float speedDif = targetSpeed - rb.velocity.x;
+                    //Change acceleration rate depending on situation
+                    float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? (50 * acceleration / moveSpeed) : (50 * deceleration / moveSpeed);
+                    //Applies acceleration to speed difference, raises to a set power so acceleration increases with higher speeds
+                    //Finally multiplies by sign to reapply direction
+                    float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+                    //Applies force to rigidbody, multiplying by Vector2.right so it only affects X axis
+                    if (moveInput < 0f)
+                    {
+                        rb.AddForce(-movement * Vector2.left, ForceMode2D.Force);
+                    }
+                    else
+                    {
+                        rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
+                    }
                 }
             }
             else
@@ -273,20 +269,19 @@ public class PlayerMovement : MonoBehaviour
         isJumping = false;
     }
 
-    //public bool checkDash()
-    //{
-    //    isDashing = true;
-    //    return isDashing;
-    //}
+    public void SetExternalForce(bool value)
+    {
+        externalForce = value;
+    }
 
     public IEnumerator Dash()
     {
         ableToDash = false;
         isDashing = true;
-        //checkDash();
         isDashingCooldown = true;
         float dashGravity = rb.gravityScale;
         rb.gravityScale = 0f;
+        externalForce = false; // for jump pads
 
         Vector2 direction = new Vector2(moveInput, 0f);
         if (rbSprite.flipX == true)
@@ -318,7 +313,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (checkSlow == true) //Slow debuff timer
         {
-            moveSpeed = 5f;
+            moveSpeed = 6f;
             slowTimer += Time.deltaTime;
             if (slowTimer >= 1.5f) //1.5 second debuff similar to gethurt
             {

@@ -17,11 +17,11 @@ public class PlayerLife : MonoBehaviour
     private float lerpSpeed;
 
     [Header("Health Edits")]
-    public float heal = 7f;
-    public float fallDamage = 30f; //out of bounds
-    public float slowDamage = 30f; //slow trap
-    public float trapDamage = 50f; //laser and falling object
-    public float enemyDamage = 50f; //all walking enemies
+    public float heal;
+    public float fallDamage; //out of bounds
+    public float slowDamage; //slow trap
+    public float trapDamage; //laser and falling object
+    public float enemyDamage; //all walking enemies
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class PlayerLife : MonoBehaviour
         {
             if (currentHealth < maxHealth) //Health regen
             {
-                if (rb.velocity == Vector2.zero)
+                if (rb.velocity.x == 0f)
                 {
                     currentHealth += heal * Time.deltaTime;
                 }

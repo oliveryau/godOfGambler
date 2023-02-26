@@ -5,24 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
-    public GameObject credits;
     public SceneManagement sceneManagement;
+
+    [Header("Credits")]
+    public GameObject creditsScreen;
 
     public void StartGame()
     {
         StartCoroutine(sceneManagement.MusicFadeChangeScene());
     }
 
-    public void Credits()
+    public void StartCredits()
     {
-        StartCoroutine(CreditsAnimation());
+        creditsScreen.SetActive(true);
     }
 
-    private IEnumerator CreditsAnimation()
+    public void ExitCredits()
     {
-        credits.SetActive(true);
-        yield return new WaitForSeconds(15);
-        credits.SetActive(false);
+        creditsScreen.SetActive(false);
     }
 
     public void ExitGame()

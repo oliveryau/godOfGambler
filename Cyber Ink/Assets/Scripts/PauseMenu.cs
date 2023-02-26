@@ -21,12 +21,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject keyText;
 
     [Header("Dialogue Pause Settings")]
-    public GameObject startDialogue;
-    public GameObject firstDialogue;
-    public GameObject secondDialogue;
-    public GameObject thirdDialogue;
-    public GameObject fourthDialogue;
     public bool isDialogueActive;
+    public GameObject[] dialogues = new GameObject[] { };
 
     private void Update()
     {
@@ -42,19 +38,22 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        CheckActiveDialogue();
+        CheckDialogueActive();
     }
 
-    public void CheckActiveDialogue()
+    public void CheckDialogueActive()
     {
-        if (startDialogue.activeSelf || firstDialogue.activeSelf || secondDialogue.activeSelf || 
-             thirdDialogue.activeSelf || fourthDialogue.activeSelf)
+        for (int i = 0; i < dialogues.Length; ++i)
         {
-            isDialogueActive = true;
-        }
-        else
-        {
-            isDialogueActive = false;
+            if (dialogues[i].activeSelf)
+            {
+                isDialogueActive = true;
+                break;
+            }
+            else
+            {
+                isDialogueActive = false;
+            }
         }
 
         if (isDialogueActive == true)
