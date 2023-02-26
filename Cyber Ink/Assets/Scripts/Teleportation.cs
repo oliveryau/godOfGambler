@@ -36,7 +36,7 @@ public class Teleportation : MonoBehaviour
             else
             {
                 player.transform.position = portal.transform.position;
-                playerRespawn.respawnPoint = new Vector2(32f, 0f);
+                playerRespawn.respawnPoint = new Vector2(18f, 0f);
             }
         }
     }

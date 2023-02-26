@@ -47,6 +47,16 @@ public class FallPlatformManager : MonoBehaviour
         Instantiate(platformPrefab, new Vector2(326.5f, -8.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(333.5f, -11.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(340.5f, -15.5f), platformPrefab.transform.rotation);
+
+        //Checkpoint 5 - 6
+        Instantiate(platformPrefab, new Vector2(396.5f, -11.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(403.5f, -14.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(418.5f, -14.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(425.5f, -17.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(432.5f, -20.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(473.5f, -20.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(480.5f, -20.5f), platformPrefab.transform.rotation);
+
     }
 
     public IEnumerator SpawnPlatform(Vector2 spawnPosition)
