@@ -11580,7 +11580,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'A, S, Left, Right
+  m_text: 'A, D, Left, Right
 
 
     W, Up, Space
