@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pauseMenu.isDialogueActive == true)
+        if (pauseMenu.isDialogueActive == true || playerLife.currentHealth <= 0)
         {
             canMove = false;
             canJump = false;
