@@ -8,6 +8,7 @@ public class KeySystem : MonoBehaviour
 {
     public SceneManagement sceneManagement;
     public PlayerMovement playerMovement;
+    public PauseMenu pauseMenu;
 
     [Header("Key UI")]
     public TextMeshProUGUI keyText;
@@ -43,7 +44,7 @@ public class KeySystem : MonoBehaviour
         {
             if (keys[i] != null)
             {
-                if (Vector2.Distance(transform.position, keys[i].transform.position) < 1f && Input.GetKeyDown(KeyCode.Return))
+                if (Vector2.Distance(transform.position, keys[i].transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && pauseMenu.isPaused == false)
                 {
                     dialogue.StartDialogue();
                     Destroy(keys[i]);

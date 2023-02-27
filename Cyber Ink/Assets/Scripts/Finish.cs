@@ -8,7 +8,9 @@ public class Finish : MonoBehaviour
 {
     public SceneManagement sceneManagement;
     public GameObject player;
-    public Dialogue dialogue;
+    public Dialogue successDialogue;
+    public Dialogue failDialogue;
+    public PauseMenu pauseMenu;
 
     [Header("Finish Condition")]
     public KeySystem keySystem;
@@ -28,15 +30,18 @@ public class Finish : MonoBehaviour
 
     public void LevelTwoKeyCheck()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && dialogue.activeDialogue == false)
+        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && pauseMenu.isPaused == false)
         {
-            if (keySystem.keyCount != keySystem.maxKeys)
+            if (failDialogue.activeDialogue == false || successDialogue.activeDialogue == false)
             {
-                MissingKey();
-            }
-            else
-            {
-                StartCoroutine(sceneManagement.MusicFadeChangeScene());
+                if (keySystem.keyCount != keySystem.maxKeys)
+                {
+                    MissingKey();
+                }
+                else
+                {
+                    StartCoroutine(FinishingLevel());
+                }
             }
         }
     }
@@ -46,6 +51,13 @@ public class Finish : MonoBehaviour
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
         keyPanel.SetActive(false);
-        dialogue.StartDialogue();
+        failDialogue.StartDialogue();
+    }
+
+    private IEnumerator FinishingLevel()
+    {
+        successDialogue.StartDialogue();
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(sceneManagement.MusicFadeChangeScene());
     }
 }

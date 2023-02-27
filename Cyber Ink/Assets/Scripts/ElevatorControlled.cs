@@ -13,6 +13,9 @@ public class ElevatorControlled : MonoBehaviour
     public float backSpeed;
     private bool movingElevator;
 
+    [Header("Others")]
+    public PlayerMovement playerMovement;
+
     // Update is called once per frame
     void Update()
     {
@@ -33,10 +36,11 @@ public class ElevatorControlled : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.position.y > transform.position.y) //Check if player lands on platform from the top
+        if (collision.gameObject.CompareTag("Player") && collision.transform.position.y > transform.position.y) //Check if player lands on platform from the top
         {
             movingElevator = true;
             collision.transform.SetParent(transform);
+            playerMovement.rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
         }
     }
 
@@ -44,5 +48,6 @@ public class ElevatorControlled : MonoBehaviour
     {
         movingElevator = false;
         collision.transform.SetParent(null);
+        playerMovement.rb.interpolation = RigidbodyInterpolation2D.Interpolate;
     }
 }

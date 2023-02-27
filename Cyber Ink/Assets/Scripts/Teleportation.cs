@@ -8,6 +8,7 @@ public class Teleportation : MonoBehaviour
     public GameObject portal;
     public GameObject teleportCondition;
     public PlayerRespawn playerRespawn;
+    public PauseMenu pauseMenu;
 
     [Header("Dialogue")]
     public Dialogue dialogue;
@@ -27,7 +28,7 @@ public class Teleportation : MonoBehaviour
 
     public void CheckTeleport()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && dialogue.activeDialogue == false)
+        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && dialogue.activeDialogue == false && pauseMenu.isPaused == false)
         {
             if (teleportCondition != null)
             {

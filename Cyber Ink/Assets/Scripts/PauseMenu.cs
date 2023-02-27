@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseScreen;
     public GameObject controlsScreen;
     public bool isPaused = false;
+    public bool noFocus = false;
 
     [Header("UI")]
     public Image healthBar;
@@ -26,19 +27,37 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0 && isDialogueActive == false)
+        if (noFocus == true) //Out of the game
         {
-            if (isPaused && pauseScreen.activeSelf)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+            PauseGame();
         }
+        else //Back to the game
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && playerLife.currentHealth > 0)
+            {
+                if (isPaused && pauseScreen.activeSelf)
+                {
+                    ResumeGame();
+                }
+                else
+                {
+                    PauseGame();
+                }
+            }
+            CheckDialogueActive();
+        }
+    }
 
-        CheckDialogueActive();
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if(!hasFocus)
+        {
+            noFocus = true;
+        }
+        else
+        {
+            noFocus = false;
+        }
     }
 
     public void CheckDialogueActive()

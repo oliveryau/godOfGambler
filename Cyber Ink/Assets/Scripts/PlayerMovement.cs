@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     public PlayerLife playerLife;
+    public Rigidbody2D rb;
     public SpriteRenderer rbSprite; //Flip left when moving back
     public Animator anim; //Trigger animation
     public LayerMask groundLayer;
-    private Rigidbody2D rb;
     private BoxCollider2D rbCollider; //GroundCheckTransform for rb
 
     [Header("Movement")]
@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
         rbCollider = GetComponent<BoxCollider2D>();
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();

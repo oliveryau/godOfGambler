@@ -8,6 +8,7 @@ public class Dialogue : MonoBehaviour
     [Header("Triggers")]
     public GameObject dialoguePanel;
     public TextMeshProUGUI mainText;
+    public PauseMenu pauseMenu;
 
     [Header("Dialogue")]
     public string[] lines;
@@ -19,16 +20,19 @@ public class Dialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
         {
-            if (mainText.text == lines[index])
+            if (pauseMenu.isPaused == false)
             {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                mainText.text = lines[index];
+                if (mainText.text == lines[index])
+                {
+                    NextLine();
+                }
+                else
+                {
+                    StopAllCoroutines();
+                    mainText.text = lines[index];
+                }
             }
         }
     }

@@ -12,6 +12,9 @@ public class ElevatorUncontrolled : MonoBehaviour
     public float speed;
     private bool moveToEndPos;
 
+    [Header("Others")]
+    public PlayerMovement playerMovement;
+
     // Update is called once per frame
     void Update()
     {
@@ -42,14 +45,16 @@ public class ElevatorUncontrolled : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.position.y > transform.position.y) //Check if player lands on platform from the top
+        if (collision.gameObject.CompareTag("Player") && collision.transform.position.y > transform.position.y) //Check if player lands on platform from the top
         {
             collision.transform.SetParent(transform);
+            playerMovement.rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         collision.transform.SetParent(null);
+        playerMovement.rb.interpolation = RigidbodyInterpolation2D.Interpolate;
     }
 }
