@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private float originalGravity = 3f;
     public float fallGravityMultiplier = 1.5f;
     public float maxFallSpeed = 30f;
-    private bool externalForce;
+    public bool externalForce;
 
     [Header("Dash")]
     public bool canDash; //in general

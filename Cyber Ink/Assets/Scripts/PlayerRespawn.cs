@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerRespawn : MonoBehaviour
 {
     public PlayerLife playerLife;
+    public PlayerMovement playerMovement;
     public Vector2 respawnPoint;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,6 +19,7 @@ public class PlayerRespawn : MonoBehaviour
     {
         if (playerLife.currentHealth > 0)
         {
+            playerMovement.externalForce = false;
             transform.position = respawnPoint;
         }
         else
