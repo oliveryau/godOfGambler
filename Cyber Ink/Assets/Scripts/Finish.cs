@@ -30,18 +30,20 @@ public class Finish : MonoBehaviour
 
     public void LevelTwoKeyCheck()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && pauseMenu.isPaused == false)
+        if (keySystem.keyCount != keySystem.maxKeys)
         {
-            if (failDialogue.activeDialogue == false || successDialogue.activeDialogue == false)
+            if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && 
+                pauseMenu.isPaused == false && failDialogue.activeDialogue == false)
             {
-                if (keySystem.keyCount != keySystem.maxKeys)
-                {
-                    MissingKey();
-                }
-                else
-                {
-                    StartCoroutine(FinishingLevel());
-                }
+                MissingKey();
+            }
+        }
+        else
+        {
+            if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) &&
+                pauseMenu.isPaused == false && successDialogue.activeDialogue == false)
+            {
+                StartCoroutine(FinishingLevel());
             }
         }
     }
