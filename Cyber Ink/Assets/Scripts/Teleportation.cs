@@ -28,7 +28,7 @@ public class Teleportation : MonoBehaviour
 
     public void CheckTeleport()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.Return) && dialogue.activeDialogue == false && pauseMenu.isPaused == false)
+        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E) && dialogue.activeDialogue == false && pauseMenu.isPaused == false)
         {
             if (teleportCondition != null)
             {

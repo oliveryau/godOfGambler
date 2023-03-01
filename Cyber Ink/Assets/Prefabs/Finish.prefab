@@ -243,10 +243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneManagement: {fileID: 0}
-  firstKey: {fileID: 0}
-  secondKey: {fileID: 0}
-  dialogue: {fileID: 0}
   player: {fileID: 0}
+  successDialogue: {fileID: 0}
+  failDialogue: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  keySystem: {fileID: 0}
   healthBar: {fileID: 0}
   dashCooldownImage: {fileID: 0}
   keyPanel: {fileID: 0}
@@ -316,7 +317,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Interact (Enter)
+  m_text: Interact (E)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 745f831953b961a42835b4cdb4fce373, type: 2}
   m_sharedMaterial: {fileID: -3946074822179775281, guid: 745f831953b961a42835b4cdb4fce373, type: 2}

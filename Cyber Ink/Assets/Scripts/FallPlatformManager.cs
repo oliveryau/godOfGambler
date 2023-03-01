@@ -25,7 +25,7 @@ public class FallPlatformManager : MonoBehaviour
         //Checkpoint 1 - 2
         Instantiate(platformPrefab, new Vector2(48.5f, -9.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(53.5f, -13.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(48.5f, -19.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(48.5f, -20f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(61f, -11.5f), platformPrefab.transform.rotation);
 
         //Checkpoint 2 - 3
@@ -34,13 +34,13 @@ public class FallPlatformManager : MonoBehaviour
         Instantiate(platformPrefab, new Vector2(127f, -10.5f), platformPrefab.transform.rotation);
 
         //Checkpoint 3 - 4
-        Instantiate(platformPrefab, new Vector2(155.5f, -10.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(160.5f, -13.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(156.5f, -10.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(162.5f, -13.5f), platformPrefab.transform.rotation);
 
         //Checkpoint 4 - 5
         Instantiate(platformPrefab, new Vector2(213.5f, -18.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(221.5f, -22.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(235f, -22.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(220.5f, -22.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(233.5f, -23.5f), platformPrefab.transform.rotation);
 
         //Checkpoint 5 - 6
         Instantiate(platformPrefab, new Vector2(266.5f, -15.5f), platformPrefab.transform.rotation);
@@ -50,20 +50,23 @@ public class FallPlatformManager : MonoBehaviour
         Instantiate(platformPrefab, new Vector2(301.5f, -15.5f), platformPrefab.transform.rotation);
 
         //Checkpoint 6 - 7
+        Instantiate(platformPrefab, new Vector2(351.5f, -11.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(358.5f, -11.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(364.5f, -14.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(365.5f, -14.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(379.5f, -14.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(386.5f, -17.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(393.5f, -20.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(407.5f, -20.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(414.5f, -20.5f), platformPrefab.transform.rotation);
+
+        //Checkpoint 7 - 8
         Instantiate(platformPrefab, new Vector2(423.5f, -20.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(447.5f, -20.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(454.5f, -20.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(436.5f, -20.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(445f, -20.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(453.5f, -20.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(461.5f, -20.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(468.5f, -17.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(461.5f, -14.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(481.5f, -17.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(468.5f, -18f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(461.5f, -15.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(476.5f, -18f), platformPrefab.transform.rotation);
     }
 
     public IEnumerator SpawnPlatform(Vector2 spawnPosition)

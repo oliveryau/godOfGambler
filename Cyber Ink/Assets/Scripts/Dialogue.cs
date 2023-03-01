@@ -15,12 +15,15 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
     public bool activeDialogue;
 
+    [Header("Audio")]
+    public AudioSource dialogueAudio;
+
     private int index;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             if (pauseMenu.isPaused == false)
             {
@@ -43,6 +46,7 @@ public class Dialogue : MonoBehaviour
         dialoguePanel.SetActive(true);
         mainText.text = string.Empty;
         index = 0;
+        dialogueAudio.Play();
         StartCoroutine(TypeLine());
     }
 
@@ -61,12 +65,14 @@ public class Dialogue : MonoBehaviour
         {
             index++;
             mainText.text = string.Empty;
+            dialogueAudio.Play();
             StartCoroutine(TypeLine());
         }
         else
         {
             activeDialogue = false;
             gameObject.SetActive(false);
+            dialogueAudio.Stop();
         }
     }
 }

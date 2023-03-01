@@ -73,9 +73,9 @@ public class PlayerMovement : MonoBehaviour
         rbCollider = GetComponent<BoxCollider2D>();
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        dashCooldownIcon.fillAmount = 0;
         Physics2D.IgnoreLayerCollision(8, 9);
         Physics2D.IgnoreLayerCollision(12, 8);
-        dashCooldownIcon.fillAmount = 0;
     }
 
     // Update is called once per frame
@@ -269,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
         isJumping = false;
     }
 
-    public void SetExternalForce(bool value)
+    public void SetExternalForce(bool value) //Knockback
     {
         externalForce = value;
     }
@@ -294,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity = direction.normalized * dashingPower;
-        anim.SetTrigger("dash");
+        anim.SetTrigger("dashing");
         StartCoroutine(cameraControl.ScreenShake());
         Physics2D.IgnoreLayerCollision(7, 8, true);
         Physics2D.IgnoreLayerCollision(3, 8, true);
@@ -313,7 +313,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (checkSlow == true) //Slow debuff timer
         {
-            moveSpeed = 6f;
+            moveSpeed = 5f;
             slowTimer += Time.deltaTime;
             if (slowTimer >= 1.5f) //1.5 second debuff similar to gethurt
             {

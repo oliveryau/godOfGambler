@@ -7,8 +7,8 @@ using TMPro;
 
 public class PauseMenu : MonoBehaviour
 {
-    public PlayerLife playerLife;
     public SceneManagement sceneManagement;
+    public PlayerLife playerLife;
 
     [Header("Pause")]
     public GameObject pauseScreen;
@@ -23,13 +23,20 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Dialogue Pause Settings")]
     public bool isDialogueActive;
+    public AudioSource dialogueAudio;
     public GameObject[] dialogues = new GameObject[] { };
+
+    [Header("Others")]
+    public GameObject gameOverScreen;
 
     private void Update()
     {
         if (noFocus == true) //Out of the game
         {
-            PauseGame();
+            if (!gameOverScreen.activeSelf)
+            {
+                PauseGame();
+            }
         }
         else //Back to the game
         {
@@ -93,6 +100,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseScreen.SetActive(true);
         controlsScreen.SetActive(false);
+        dialogueAudio.Pause();
         isPaused = true;
 
         healthBar.enabled = false;
@@ -104,6 +112,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         pauseScreen.SetActive(false);
+        dialogueAudio.Play();
         isPaused = false;
 
         healthBar.enabled = true;

@@ -107,7 +107,7 @@ public class GroundEnemy : MonoBehaviour
     {
         bool val = false;
         float castDist = distance;
-        Vector2 endPos = castPoint.position + Vector3.right * distance;
+        Vector2 endPos = castPoint.position + castPoint.right * distance;
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Player"));
         if(hit.collider != null)
         {
