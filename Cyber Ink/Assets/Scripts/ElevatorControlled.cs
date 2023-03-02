@@ -9,8 +9,7 @@ public class ElevatorControlled : MonoBehaviour
     public Transform endPosition;
 
     [Header("Speed")]
-    public float toSpeed;
-    public float backSpeed;
+    public float speed;
     private bool movingElevator;
 
     [Header("Others")]
@@ -26,11 +25,11 @@ public class ElevatorControlled : MonoBehaviour
     {
         if (movingElevator)
         {
-            transform.position = Vector2.MoveTowards(transform.position, endPosition.position, toSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, endPosition.position, speed * Time.deltaTime);
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, startPosition.position, backSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, startPosition.position, speed * Time.deltaTime);
         }
     }
 

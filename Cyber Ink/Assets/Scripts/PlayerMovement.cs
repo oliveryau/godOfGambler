@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim; //Trigger animation
     public LayerMask groundLayer;
     private BoxCollider2D rbCollider; //GroundCheckTransform for rb
+    //private TrailRenderer trail;
 
     [Header("Movement")]
     public bool canMove;
@@ -69,10 +70,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        //rb = GetComponent<Rigidbody2D>();
-        rbCollider = GetComponent<BoxCollider2D>();
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        rbCollider = GetComponent<BoxCollider2D>();
+        //trail = GetComponent<TrailRenderer>();
         dashCooldownIcon.fillAmount = 0;
         Physics2D.IgnoreLayerCollision(8, 9);
         Physics2D.IgnoreLayerCollision(12, 8);
@@ -81,17 +82,25 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pauseMenu.isDialogueActive == true || playerLife.currentHealth <= 0)
+        if (pauseMenu.pauseScreen.activeSelf || pauseMenu.controlsScreen.activeSelf || 
+            pauseMenu.isDialogueActive == true || playerLife.currentHealth <= 0)
         {
             canMove = false;
             canJump = false;
             canDash = false;
+
+            anim.enabled = false;
+            if (!isDashing)
+            {
+                rb.velocity = Vector2.zero;
+            }
         }
         else
         {
             canMove = true;
             canJump = true;
             canDash = true;
+            anim.enabled = true;
         }
 
         if (!canMove && !canJump && !canDash)
@@ -295,6 +304,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = direction.normalized * dashingPower;
         anim.SetTrigger("dashing");
+        //trail.emitting = true;
         StartCoroutine(cameraControl.ScreenShake());
         Physics2D.IgnoreLayerCollision(7, 8, true);
         Physics2D.IgnoreLayerCollision(3, 8, true);
@@ -302,6 +312,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         rb.gravityScale = dashGravity;
         isDashing = false;
+        //trail.emitting = false;
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
         yield return new WaitForSeconds(dashingCooldown);

@@ -112,7 +112,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         pauseScreen.SetActive(false);
-        dialogueAudio.Play();
+        dialogueAudio.UnPause();
         isPaused = false;
 
         healthBar.enabled = true;
