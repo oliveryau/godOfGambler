@@ -10,7 +10,14 @@ public class FallingObject : MonoBehaviour
 
     public float dropSpeed;
     public float elevateSpeed;
+
     private bool dropObject;
+    private Animator anim;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -32,6 +39,7 @@ public class FallingObject : MonoBehaviour
         if (dropObject)
         {
             transform.position = Vector2.MoveTowards(transform.position, endPosition.position, dropSpeed * Time.deltaTime);
+            anim.SetTrigger("rage");
         }
         else
         {
