@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public CameraControl cameraControl;
     public PauseMenu pauseMenu;
 
-    public enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
+    private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
 
     // Start is called before the first frame update
     private void Start()

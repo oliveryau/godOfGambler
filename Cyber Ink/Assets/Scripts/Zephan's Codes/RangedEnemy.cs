@@ -78,6 +78,7 @@ public class RangedEnemy : MonoBehaviour
     void Update()
     {
         cooldownTimer += Time.deltaTime;
+
         //float distanceToplayer; 
         //RaycastHit2D front = Physics2D.Linecast(transform.position, player.transform.position); 
         //RaycastHit2D front = Physics2D.Raycast(transform.position, Vector2.right, agroRange); 
@@ -109,8 +110,8 @@ public class RangedEnemy : MonoBehaviour
             if (shotCooldown <= 0)
             {
                 //Attack
-                Instantiate(bullet, firepoint.position, firepoint.rotation);
-                Debug.Log("Shooting");
+                Destroy(Instantiate(bullet, firepoint.position, firepoint.rotation), 2f);
+                //Debug.Log("Shooting");
                 shotCooldown = startShotCooldown;
                 //anim.SetTrigger("attack");
             }

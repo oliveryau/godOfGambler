@@ -32,9 +32,14 @@ public class Bullet : MonoBehaviour
         if (collision.tag == "Player")
         {
             collision.gameObject.GetComponent<PlayerLife>().TakeDamage(bulletDamage);
-            Debug.Log("hit");
-            Destroy(gameObject, 0.4f);
+            //Debug.Log("hit");
+            Destroy(gameObject);
             //anim.SetTrigger("Explode");
+        }
+
+        if (collision.tag == "Terrain Wall")
+        {
+            Destroy(gameObject);
         }
 
     }

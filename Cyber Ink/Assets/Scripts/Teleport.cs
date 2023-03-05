@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleportation : MonoBehaviour
+public class Teleport : MonoBehaviour
 {
     [Header("Game Objects")]
     public GameObject portal;
@@ -37,7 +37,7 @@ public class Teleportation : MonoBehaviour
             else
             {
                 player.transform.position = portal.transform.position;
-                playerRespawn.respawnPoint = new Vector2(18f, 0f);
+                playerRespawn.respawnPoint = new Vector2(10f, 0f);
             }
         }
     }

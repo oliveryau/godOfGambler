@@ -62,7 +62,7 @@ public class PlayerLife : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 8);
         Physics2D.IgnoreLayerCollision(3, 8);
         anim.SetLayerWeight(1, 1); //Animator layer 1(gethurt animation), weight 1(visible)
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         anim.SetLayerWeight(1, 0); //Animator layer 0(base), weight 0(invisible)
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
@@ -160,8 +160,8 @@ public class PlayerLife : MonoBehaviour
     private void Die()
     {
         playerMovement.knockCounter = 0;
-        rb.bodyType = RigidbodyType2D.Static; //Make player rb unable to move
-        anim.SetTrigger("death"); //Animation state/condition
+        rb.bodyType = RigidbodyType2D.Static;
+        anim.SetTrigger("death");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

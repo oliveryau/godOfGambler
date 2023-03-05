@@ -6,14 +6,16 @@ public class JumpPadHorizontal : MonoBehaviour
 {
     public Vector2 bounceAngle;
     public float bounceForce;
-
     public float bounceTime;
+
+    public Animator anim;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(ExternalForce(collision));
+            anim.SetTrigger("step");
         }
     }
 

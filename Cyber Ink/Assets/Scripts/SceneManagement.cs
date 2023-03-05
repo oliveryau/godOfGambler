@@ -34,6 +34,10 @@ public class SceneManagement : MonoBehaviour
         {
             SceneManager.LoadScene("Start");
         }
+        else if (scene.name == "Level 1")
+        {
+            SceneManager.LoadScene("Level 1");
+        }
         else if (scene.name == "Level 2")
         {
             SceneManager.LoadScene("Level 2");
@@ -48,9 +52,9 @@ public class SceneManagement : MonoBehaviour
 
         if (scene.name == "Start")
         {
-            SceneManager.LoadScene("Level 2");
+            SceneManager.LoadScene("Level 2"); //Level 1
         }
-        else if (scene.name == "Level 2")
+        else if (scene.name == "Level 1" || scene.name == "Level 2")
         {
             SceneManager.LoadScene("Start");
         }

@@ -26,11 +26,8 @@ public class KeySystem : MonoBehaviour
 
     private void Start()
     {
-        if (sceneManagement.scene.name == "Level 2")
-        {
-            keyText.SetText("Keycards: " + keyCount + " / 2");
-            keyCount = 0;
-        }
+        keyText.SetText("Keycards: " + keyCount + " / " + maxKeys);
+        keyCount = 0;
     }
 
     private void Update()
@@ -49,7 +46,7 @@ public class KeySystem : MonoBehaviour
                     dialogue.StartDialogue();
                     Destroy(keys[i]);
                     ++keyCount;
-                    keyText.SetText("Keycards: " + keyCount + " / 2");
+                    keyText.SetText("Keycards: " + keyCount + " / " + maxKeys);
                 }
             }
         }
