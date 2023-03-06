@@ -36,7 +36,10 @@ public class GameOverMenu : MonoBehaviour
         gameOverScreen.SetActive(true);
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
-        keyText.SetActive(false);
+        if (sceneManagement.scene.name == "Level 2")
+        {
+            keyText.SetActive(false);
+        }
         Time.timeScale = 0f;
     }
 
@@ -48,7 +51,10 @@ public class GameOverMenu : MonoBehaviour
         playerRespawn.RespawnNow();
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
-        keyText.SetActive(true);
+        if (sceneManagement.scene.name == "Level 2")
+        {
+            keyText.SetActive(true);
+        }
         gameOverScreen.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -56,7 +62,7 @@ public class GameOverMenu : MonoBehaviour
     public void GoToMenu()
     {
         StopAllCoroutines();
-        StartCoroutine(sceneManagement.MusicFadeChangeScene());
+        StartCoroutine(sceneManagement.MusicFadeMenu());
         Time.timeScale = 1f;
     }
 }

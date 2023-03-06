@@ -12,7 +12,7 @@ public class StartMenu : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(sceneManagement.MusicFadeChangeScene());
+        StartCoroutine(sceneManagement.MusicFadeNextScene());
     }
 
     public void StartCredits()

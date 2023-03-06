@@ -24,6 +24,26 @@ public class SceneManagement : MonoBehaviour
         fadePanel.SetActive(true);
     }
 
+    public IEnumerator MusicFadeNextScene() //For going to the next scene
+    {
+        fadeAnim.SetTrigger("fadeOut");
+        musicAnim.SetTrigger("fadeOut");
+        yield return new WaitForSeconds(waitTime);
+
+        if (scene.name == "Start")
+        {
+            SceneManager.LoadScene("Level 1");
+        }
+        else if (scene.name == "Level 1")
+        {
+            SceneManager.LoadScene("Level 2");
+        }
+        else if (scene.name == "Level 2")
+        {
+            SceneManager.LoadScene("Start");
+        }
+    }
+
     public IEnumerator MusicFadeSameScene() //For retry
     {
         fadeAnim.SetTrigger("fadeOut");
@@ -44,7 +64,7 @@ public class SceneManagement : MonoBehaviour
         }
     }
 
-    public IEnumerator MusicFadeChangeScene() //For returning to main menu
+    public IEnumerator MusicFadeMenu() //For returning to main menu
     {
         fadeAnim.SetTrigger("fadeOut");
         musicAnim.SetTrigger("fadeOut");
@@ -52,7 +72,7 @@ public class SceneManagement : MonoBehaviour
 
         if (scene.name == "Start")
         {
-            SceneManager.LoadScene("Level 2"); //Level 1
+            SceneManager.LoadScene("Level 1");
         }
         else if (scene.name == "Level 1" || scene.name == "Level 2")
         {

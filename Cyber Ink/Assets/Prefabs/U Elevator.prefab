@@ -147,7 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {fileID: 0}
   endPosition: {fileID: 0}
-  speed: 5
+  speed: 6
+  playerMovement: {fileID: 0}
 --- !u!1 &6220751561694885210
 GameObject:
   m_ObjectHideFlags: 0

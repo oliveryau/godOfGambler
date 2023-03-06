@@ -86,13 +86,19 @@ public class PauseMenu : MonoBehaviour
         {
             healthBar.enabled = false;
             dashCooldownImage.enabled = false;
-            keyText.SetActive(false);
+            if (sceneManagement.scene.name == "Level 2")
+            {
+                keyText.SetActive(false);
+            }
         }
         else if (isDialogueActive == false && playerLife.currentHealth > 0 && isPaused == false) //Special setting
         {
             healthBar.enabled = true;
             dashCooldownImage.enabled = true;
-            keyText.SetActive(true);
+            if (sceneManagement.scene.name == "Level 2")
+            {
+                keyText.SetActive(true);
+            }
         }
     }
 
@@ -105,7 +111,10 @@ public class PauseMenu : MonoBehaviour
 
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
-        keyText.SetActive(false);
+        if (sceneManagement.scene.name == "Level 2")
+        {
+            keyText.SetActive(false);
+        }
         Time.timeScale = 0f;
     }
 
@@ -117,7 +126,10 @@ public class PauseMenu : MonoBehaviour
 
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;
-        keyText.SetActive(true);
+        if (sceneManagement.scene.name == "Level 2")
+        {
+            keyText.SetActive(true);
+        }
         Time.timeScale = 1f;
     }
 
@@ -145,7 +157,7 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
 
-        StartCoroutine(sceneManagement.MusicFadeChangeScene());
+        StartCoroutine(sceneManagement.MusicFadeMenu());
         Time.timeScale = 1f;
     }
 }

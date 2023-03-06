@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf62be57fef2e3c48a586c25a0b20476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  storeSpeed: 5
+  speed: 6
+  storeSpeed: 6
   colliderType: {fileID: 895839889147861131}
   frontCast: {fileID: 895839889147861131}
   enemy: {fileID: 4784192427112385400}

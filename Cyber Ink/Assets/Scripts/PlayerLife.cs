@@ -62,7 +62,7 @@ public class PlayerLife : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 8);
         Physics2D.IgnoreLayerCollision(3, 8);
         anim.SetLayerWeight(1, 1); //Animator layer 1(gethurt animation), weight 1(visible)
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         anim.SetLayerWeight(1, 0); //Animator layer 0(base), weight 0(invisible)
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);

@@ -33,6 +33,7 @@ public class RangedEnemy : MonoBehaviour
     //Collider2D playerCollider; 
     [SerializeField]
     private Transform enemy;
+    public SpriteRenderer sr;
 
     //Coroutine playerTracker; 
 
@@ -44,6 +45,7 @@ public class RangedEnemy : MonoBehaviour
     public Collider2D rearDetection;
     public float agroRange;
     private bool movingRight = true;
+
     bool ChasingPlayer = false;
     bool withinRange;//able to use function but this way it is more robust 
 
@@ -72,6 +74,7 @@ public class RangedEnemy : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
+        //sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -130,7 +133,15 @@ public class RangedEnemy : MonoBehaviour
     {
         bool val = false;
         float castDist = distance;
-        Vector2 endPos = castPoint.position + castPoint.right * distance;
+        Vector2 endPos;
+        //if(faceLeft() == true)
+        //{
+        //    endPos = castPoint.position + -(castPoint.right) * distance;
+        //}
+        //else
+        //{
+            endPos = castPoint.position + castPoint.right * distance;
+        //}
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Player"));
         if (hit.collider != null)
         {
@@ -150,6 +161,18 @@ public class RangedEnemy : MonoBehaviour
 
         return val;
     }
+
+    //public bool faceLeft()
+    //{
+    //    if (transform.localScale.x < 0)
+    //    {
+    //        Debug.Log("Face Left");
+    //        return true;
+    //    }
+            
+    //    else
+    //        return false;
+    //}
 
 
     private void MoveToPlayer()

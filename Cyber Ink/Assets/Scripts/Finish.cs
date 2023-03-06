@@ -22,9 +22,22 @@ public class Finish : MonoBehaviour
 
     private void Update()
     {
-        if (sceneManagement.scene.name == "Level 2")
+        if (sceneManagement.scene.name == "Level 1")
+        {
+            LevelOneCheck();
+        }
+        else if (sceneManagement.scene.name == "Level 2")
         {
             LevelTwoKeyCheck();
+        }
+    }
+
+    public void LevelOneCheck()
+    {
+        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E) &&
+            pauseMenu.isPaused == false && successDialogue.activeDialogue == false)
+        {
+            StartCoroutine(FinishingLevel());
         }
     }
 
@@ -60,6 +73,6 @@ public class Finish : MonoBehaviour
     {
         successDialogue.StartDialogue();
         yield return new WaitForSeconds(1f);
-        StartCoroutine(sceneManagement.MusicFadeChangeScene());
+        StartCoroutine(sceneManagement.MusicFadeNextScene());
     }
 }

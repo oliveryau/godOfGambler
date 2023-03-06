@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {fileID: 0}
   endPosition: {fileID: 0}
-  dropSpeed: 40
+  dropSpeed: 50
   elevateSpeed: 3
 --- !u!1 &2874918954480727501
 GameObject:
