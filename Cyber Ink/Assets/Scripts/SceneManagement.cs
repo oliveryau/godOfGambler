@@ -11,8 +11,8 @@ public class SceneManagement : MonoBehaviour
     public Animator fadeAnim;
     public GameObject fadePanel;
 
-    [Header("Music Transition")]
-    public Animator musicAnim;
+    //[Header("Music Transition")]
+    //public Animator musicAnim;
 
     [Header("Scene Delay Time")]
     public float waitTime;
@@ -27,7 +27,7 @@ public class SceneManagement : MonoBehaviour
     public IEnumerator MusicFadeNextScene() //For going to the next scene
     {
         fadeAnim.SetTrigger("fadeOut");
-        musicAnim.SetTrigger("fadeOut");
+        //musicAnim.SetTrigger("fadeOut");
         yield return new WaitForSeconds(waitTime);
 
         if (scene.name == "Start")
@@ -47,7 +47,7 @@ public class SceneManagement : MonoBehaviour
     public IEnumerator MusicFadeSameScene() //For retry
     {
         fadeAnim.SetTrigger("fadeOut");
-        musicAnim.SetTrigger("fadeOut");
+        //musicAnim.SetTrigger("fadeOut");
         yield return new WaitForSeconds(waitTime);
 
         if (scene.name == "Start")
@@ -67,7 +67,7 @@ public class SceneManagement : MonoBehaviour
     public IEnumerator MusicFadeMenu() //For returning to main menu
     {
         fadeAnim.SetTrigger("fadeOut");
-        musicAnim.SetTrigger("fadeOut");
+        //musicAnim.SetTrigger("fadeOut");
         yield return new WaitForSeconds(waitTime);
 
         if (scene.name == "Start")

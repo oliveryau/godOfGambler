@@ -17,7 +17,7 @@ public class Signboards : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E) && dialogue.activeDialogue == false && pauseMenu.isPaused == false)
+        if (Vector2.Distance(transform.position, player.transform.position) < 1.5f && Input.GetKeyDown(KeyCode.E) && dialogue.activeDialogue == false && pauseMenu.isPaused == false)
         {
             dialogue.StartDialogue();
         }

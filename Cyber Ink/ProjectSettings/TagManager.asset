@@ -17,6 +17,7 @@ TagManager:
   - Key
   - Terrain Wall
   - Laser (H)
+  - Audio
   layers:
   - Default
   - TransparentFX

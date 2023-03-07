@@ -34,7 +34,7 @@ public class Finish : MonoBehaviour
 
     public void LevelOneCheck()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E) &&
+        if (Vector2.Distance(transform.position, player.transform.position) < 3f && Input.GetKeyDown(KeyCode.E) &&
             pauseMenu.isPaused == false && successDialogue.activeDialogue == false)
         {
             StartCoroutine(FinishingLevel());
@@ -45,7 +45,7 @@ public class Finish : MonoBehaviour
     {
         if (keySystem.keyCount != keySystem.maxKeys) //Unsuccessful
         {
-            if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E) && 
+            if (Vector2.Distance(transform.position, player.transform.position) < 3f && Input.GetKeyDown(KeyCode.E) && 
                 pauseMenu.isPaused == false && failDialogue.activeDialogue == false)
             {
                 MissingKey();
@@ -53,7 +53,7 @@ public class Finish : MonoBehaviour
         }
         else //Successful
         {
-            if (Vector2.Distance(transform.position, player.transform.position) < 1f && Input.GetKeyDown(KeyCode.E) &&
+            if (Vector2.Distance(transform.position, player.transform.position) < 3f && Input.GetKeyDown(KeyCode.E) &&
                 pauseMenu.isPaused == false && successDialogue.activeDialogue == false)
             {
                 StartCoroutine(FinishingLevel());

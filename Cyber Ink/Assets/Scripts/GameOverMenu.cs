@@ -30,8 +30,10 @@ public class GameOverMenu : MonoBehaviour
             StartCoroutine(DelayMenu());
         }
     }
+
     public IEnumerator DelayMenu()
     {
+        //playerLife.anim.SetTrigger("death");
         yield return new WaitForSeconds(1.5f);
         gameOverScreen.SetActive(true);
         healthBar.enabled = false;

@@ -8,7 +8,7 @@ public class PlayerLife : MonoBehaviour
 {
     public Rigidbody2D rb;
     public PlayerMovement playerMovement;
-    private Animator anim;
+    public Animator anim;
 
     [Header("Player Health")]
     public Image healthBar;
@@ -79,68 +79,7 @@ public class PlayerLife : MonoBehaviour
         healthBar.color = healthColor;
     }
 
-    public void FallDamage()
-    {
-        currentHealth -= fallDamage;
-        if (currentHealth <= 0)
-        {
-            Die();
-            SetHealth();
-        }
-        else
-        {
-            SetHealth();
-            StartCoroutine(GetHurt());
-        }
-    }
-
-    public void SlowDamage()
-    {
-        currentHealth -= slowDamage;
-        playerMovement.checkSlow = true;
-        if (currentHealth <= 0)
-        {
-            Die();
-            SetHealth();
-        }
-        else
-        {
-            SetHealth();
-            StartCoroutine(GetHurt());
-        }
-    }
-
-    public void TrapDamage()
-    {
-        currentHealth -= trapDamage;
-        if (currentHealth <= 0)
-        {
-            Die();
-            SetHealth();
-        }
-        else
-        {
-            SetHealth();
-            StartCoroutine(GetHurt());
-        }
-    }
-
-    public void EnemyDamage()
-    {
-        currentHealth -= enemyDamage;
-        if (currentHealth <= 0)
-        {
-            Die();
-            SetHealth();
-        }
-        else
-        {
-            SetHealth();
-            StartCoroutine(GetHurt());
-        }
-    }
-
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage) //Walking enemy and bullet
     {
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
         if (currentHealth > 0)
@@ -168,12 +107,33 @@ public class PlayerLife : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Respawn"))
         {
-            FallDamage();
+            currentHealth -= fallDamage;
+            if (currentHealth > 0)
+            {
+                StartCoroutine(GetHurt());
+                SetHealth();
+            }
+            else
+            {
+                Die();
+                SetHealth();
+            }
         }
 
         if (collision.gameObject.CompareTag("Slow Trap"))
         {
-            SlowDamage();
+            currentHealth -= slowDamage;
+            playerMovement.checkSlow = true;
+            if (currentHealth > 0)
+            {
+                StartCoroutine(GetHurt());
+                SetHealth();
+            }
+            else
+            {
+                Die();
+                SetHealth();
+            }
         }
 
         if (collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("Falling Object"))
@@ -189,7 +149,17 @@ public class PlayerLife : MonoBehaviour
                 playerMovement.knockedRight = false;
             }
 
-            TrapDamage();
+            currentHealth -= trapDamage;
+            if (currentHealth > 0)
+            {
+                StartCoroutine(GetHurt());
+                SetHealth();
+            }
+            else
+            {
+                Die();
+                SetHealth();
+            }
         }
 
         if (collision.gameObject.CompareTag("Laser (H)"))
@@ -219,7 +189,17 @@ public class PlayerLife : MonoBehaviour
                 }
             }
 
-            TrapDamage();
+            currentHealth -= trapDamage;
+            if (currentHealth > 0)
+            {
+                StartCoroutine(GetHurt());
+                SetHealth();
+            }
+            else
+            {
+                Die();
+                SetHealth();
+            }
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
@@ -235,7 +215,17 @@ public class PlayerLife : MonoBehaviour
                 playerMovement.knockedRight = false;
             }
 
-            EnemyDamage();
+            currentHealth -= enemyDamage;
+            if (currentHealth > 0)
+            {
+                StartCoroutine(GetHurt());
+                SetHealth();
+            }
+            else
+            {
+                Die();
+                SetHealth();
+            }
         }
     }
 }

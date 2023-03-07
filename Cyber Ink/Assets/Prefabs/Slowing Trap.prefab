@@ -52,10 +52,10 @@ MonoBehaviour:
   m_Intensity: 0.7
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: ffb62be800000000
+  m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 3
@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 6345743790828172407}
   - component: {fileID: 6345743790828172400}
   - component: {fileID: 5564522892664112179}
+  - component: {fileID: 7948218194403455074}
   m_Layer: 7
   m_Name: Slowing Trap
   m_TagString: Slow Trap
@@ -349,3 +350,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &7948218194403455074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345743790828172402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a4d08e62f80c944ade93d9d63633bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -41,7 +41,7 @@ public class KeySystem : MonoBehaviour
         {
             if (keys[i] != null)
             {
-                if (Vector2.Distance(transform.position, keys[i].transform.position) < 1f && Input.GetKeyDown(KeyCode.E) && pauseMenu.isPaused == false)
+                if (Vector2.Distance(transform.position, keys[i].transform.position) < 1.5f && Input.GetKeyDown(KeyCode.E) && pauseMenu.isPaused == false)
                 {
                     dialogue.StartDialogue();
                     Destroy(keys[i]);

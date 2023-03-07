@@ -223,7 +223,7 @@ MonoBehaviour:
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
+  m_LightOrder: 1
   m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 4
@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 8318158164915991044}
   - component: {fileID: 8318158164915991047}
   - component: {fileID: 9051464890697280884}
+  - component: {fileID: 2148321122184069513}
   m_Layer: 7
   m_Name: Laser
   m_TagString: Laser
@@ -531,3 +532,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &2148321122184069513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318158164915991046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a4d08e62f80c944ade93d9d63633bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

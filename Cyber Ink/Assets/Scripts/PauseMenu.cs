@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     [Header("Pause")]
     public GameObject pauseScreen;
     public GameObject controlsScreen;
+    public GameObject soundScreen;
     public bool isPaused = false;
     public bool noFocus = false;
 
@@ -23,7 +24,6 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Dialogue Pause Settings")]
     public bool isDialogueActive;
-    public AudioSource dialogueAudio;
     public GameObject[] dialogues = new GameObject[] { };
 
     [Header("Others")]
@@ -106,7 +106,8 @@ public class PauseMenu : MonoBehaviour
     {
         pauseScreen.SetActive(true);
         controlsScreen.SetActive(false);
-        dialogueAudio.Pause();
+        soundScreen.SetActive(false);
+        AudioManager.Instance.sfxSource.Pause();
         isPaused = true;
 
         healthBar.enabled = false;
@@ -121,7 +122,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         pauseScreen.SetActive(false);
-        dialogueAudio.UnPause();
+        AudioManager.Instance.sfxSource.UnPause();
         isPaused = false;
 
         healthBar.enabled = true;
@@ -143,13 +144,22 @@ public class PauseMenu : MonoBehaviour
 
     public void GoToControls()
     {
-        pauseScreen.SetActive(false);
         controlsScreen.SetActive(true);
+        soundScreen.SetActive(false);
+        pauseScreen.SetActive(false);
+    }
+
+    public void GoToSound()
+    {
+        controlsScreen.SetActive(false);
+        soundScreen.SetActive(true);
+        pauseScreen.SetActive(false);
     }
 
     public void BackToPause()
     {
         controlsScreen.SetActive(false);
+        soundScreen.SetActive(false);
         pauseScreen.SetActive(true);
     }
 

@@ -54,12 +54,13 @@ public class PlayerMovement : MonoBehaviour
     public float knockForceY;
     public float knockCounter;
     public float knockTotalTime;
-    private bool knockedHorizontal; //All traps except horizontal lasers
+    private bool knockedHorizontal; //All traps
     public bool knockedRight;
-    private bool knockedVerticalUp;
+    private bool knockedVerticalUp; //Horizonal laser
     public bool knockedTopRight;
-    private bool knockedVerticalDown;
+    private bool knockedVerticalDown; //Horizontal laser
     public bool knockedBottomRight;
+    private bool knocked = false; //Stop dash after being knocked
 
     [Header("Other Settings")]
     public CameraControl cameraControl;
@@ -82,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pauseMenu.pauseScreen.activeSelf || pauseMenu.controlsScreen.activeSelf || 
+        if (pauseMenu.pauseScreen.activeSelf || pauseMenu.controlsScreen.activeSelf || pauseMenu.soundScreen.activeSelf ||
             pauseMenu.isDialogueActive == true || playerLife.currentHealth <= 0)
         {
             canMove = false;
@@ -90,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
             canDash = false;
 
             anim.enabled = false;
-            if (!isDashing)
+            if (!isDashing && playerLife.currentHealth > 0)
             {
                 rb.velocity = Vector2.zero;
             }
@@ -211,12 +212,17 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (!isDashingCooldown) //&& IsGrounded()
+            if (!isDashingCooldown)
             {
                 ableToDash = true;
             }
 
             CheckSlowed();
+
+            if (knocked == true) //If knockbacked, cannot dash for awhile
+            {
+                StartCoroutine(PauseDash());
+            }
 
             UpdateAnimation();
         }
@@ -261,7 +267,10 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                CheckKnockback();
+                if (playerLife.currentHealth > 0)
+                {
+                    CheckKnockback();
+                }
             }
         }
     }
@@ -337,6 +346,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void CheckKnockback()
     {
+        knocked = true;
         if (knockedHorizontal == true)
         {
             if (knockedRight == true)
@@ -374,6 +384,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         knockCounter -= Time.deltaTime;
+    }
+
+    private IEnumerator PauseDash()
+    {
+        ableToDash = false;
+        knocked = true;
+        yield return new WaitForSeconds(0.5f);
+        ableToDash = true;
+        knocked = false;
     }
 
     public void UpdateAnimation()

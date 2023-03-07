@@ -15,9 +15,6 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
     public bool activeDialogue;
 
-    [Header("Audio")]
-    public AudioSource dialogueAudio;
-
     private int index;
 
     // Update is called once per frame
@@ -46,7 +43,7 @@ public class Dialogue : MonoBehaviour
         dialoguePanel.SetActive(true);
         mainText.text = string.Empty;
         index = 0;
-        dialogueAudio.Play();
+        AudioManager.Instance.PlaySFX("Dialogue");
         StartCoroutine(TypeLine());
     }
 
@@ -65,14 +62,14 @@ public class Dialogue : MonoBehaviour
         {
             index++;
             mainText.text = string.Empty;
-            dialogueAudio.Play();
+            AudioManager.Instance.PlaySFX("Dialogue");
             StartCoroutine(TypeLine());
         }
         else
         {
             activeDialogue = false;
             gameObject.SetActive(false);
-            dialogueAudio.Stop();
+            AudioManager.Instance.sfxSource.Stop();
         }
     }
 }

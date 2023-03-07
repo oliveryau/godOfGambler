@@ -7,12 +7,25 @@ public class StartMenu : MonoBehaviour
 {
     public SceneManagement sceneManagement;
 
+    [Header("Settings")]
+    public GameObject soundScreen;
+
     [Header("Credits")]
     public GameObject creditsScreen;
 
     public void StartGame()
     {
         StartCoroutine(sceneManagement.MusicFadeNextScene());
+    }
+
+    public void StartSound()
+    {
+        soundScreen.SetActive(true);
+    }
+
+    public void ExitSound()
+    {
+        soundScreen.SetActive(false);
     }
 
     public void StartCredits()
