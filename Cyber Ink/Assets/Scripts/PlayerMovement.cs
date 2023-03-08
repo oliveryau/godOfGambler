@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     public CameraControl cameraControl;
     public PauseMenu pauseMenu;
 
-    private enum movementState { idle, running, jumping, falling } //Like array 0,1,2,3
+    private enum movementState { idle, running, jumping, falling } //Array 0, 1, 2, 3
 
     // Start is called before the first frame update
     private void Start()
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (pauseMenu.pauseScreen.activeSelf || pauseMenu.controlsScreen.activeSelf || pauseMenu.soundScreen.activeSelf ||
-            pauseMenu.isDialogueActive == true || playerLife.currentHealth <= 0)
+            pauseMenu.isDialogueActive == true)
         {
             canMove = false;
             canJump = false;
@@ -95,6 +95,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = Vector2.zero;
             }
+        }
+        else if (playerLife.currentHealth <= 0)
+        {
+            canMove = false;
+            canJump = false;
+            canDash = false;
         }
         else
         {
@@ -398,6 +404,7 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateAnimation()
     {
         movementState state;
+
 
         if (moveInput > 0f) //Running - Right/positive direction
         {

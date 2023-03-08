@@ -138,7 +138,7 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
 
-        StartCoroutine(sceneManagement.MusicFadeSameScene());
+        StartCoroutine(sceneManagement.FadeSameScene());
         Time.timeScale = 1f;
     }
 
@@ -167,7 +167,7 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = false;
 
-        StartCoroutine(sceneManagement.MusicFadeMenu());
+        StartCoroutine(sceneManagement.FadeMenu());
         Time.timeScale = 1f;
     }
 }

@@ -73,6 +73,6 @@ public class Finish : MonoBehaviour
     {
         successDialogue.StartDialogue();
         yield return new WaitForSeconds(1f);
-        StartCoroutine(sceneManagement.MusicFadeNextScene());
+        StartCoroutine(sceneManagement.FadeNextScene());
     }
 }

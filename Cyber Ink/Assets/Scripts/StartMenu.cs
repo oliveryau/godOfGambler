@@ -15,7 +15,7 @@ public class StartMenu : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(sceneManagement.MusicFadeNextScene());
+        StartCoroutine(sceneManagement.FadeNextScene());
     }
 
     public void StartSound()

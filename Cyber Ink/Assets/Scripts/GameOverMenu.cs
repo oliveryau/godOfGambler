@@ -33,8 +33,7 @@ public class GameOverMenu : MonoBehaviour
 
     public IEnumerator DelayMenu()
     {
-        //playerLife.anim.SetTrigger("death");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         gameOverScreen.SetActive(true);
         healthBar.enabled = false;
         dashCooldownImage.enabled = false;
@@ -64,7 +63,7 @@ public class GameOverMenu : MonoBehaviour
     public void GoToMenu()
     {
         StopAllCoroutines();
-        StartCoroutine(sceneManagement.MusicFadeMenu());
+        StartCoroutine(sceneManagement.FadeMenu());
         Time.timeScale = 1f;
     }
 }
