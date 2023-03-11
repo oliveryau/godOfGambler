@@ -19,6 +19,13 @@ public class Finish : MonoBehaviour
     public Image healthBar;
     public Image dashCooldownImage;
     public GameObject keyPanel;
+    private Animator anim;
+    private bool passBy = false;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -74,5 +81,23 @@ public class Finish : MonoBehaviour
         successDialogue.StartDialogue();
         yield return new WaitForSeconds(1f);
         StartCoroutine(sceneManagement.FadeNextScene());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && passBy == false)
+        {
+            passBy = true;
+            anim.SetTrigger("glow");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && passBy == true)
+        {
+            passBy = false;
+            anim.SetTrigger("fadeOut");
+        }
     }
 }

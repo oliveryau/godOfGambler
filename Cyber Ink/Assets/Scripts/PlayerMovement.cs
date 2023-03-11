@@ -11,14 +11,13 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim; //Trigger animation
     public LayerMask groundLayer;
     private BoxCollider2D rbCollider; //GroundCheckTransform for rb
-    //private TrailRenderer trail;
 
     [Header("Movement")]
     public bool canMove;
     private float moveInput; //Horizontal Movement
     public float moveSpeed = 10f;
     public float acceleration = 13f;
-    public float deceleration = 13f;
+    public float deceleration = 25f;
     public float velPower = 1f;
     public float frictionAmount = 1f;
 
@@ -39,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     public bool canDash; //in general
     public bool ableToDash = true; //for in game dashing
+    public ParticleSystem dashEffect; //dash particle system
     public Image dashCooldownIcon;
     private bool isDashing;
     private bool isDashingCooldown;
@@ -68,13 +68,17 @@ public class PlayerMovement : MonoBehaviour
 
     private enum movementState { idle, running, jumping, falling } //Array 0, 1, 2, 3
 
+    private void Awake()
+    {
+        dashEffect.Stop();
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rbCollider = GetComponent<BoxCollider2D>();
-        //trail = GetComponent<TrailRenderer>();
         dashCooldownIcon.fillAmount = 0;
         Physics2D.IgnoreLayerCollision(8, 9);
         Physics2D.IgnoreLayerCollision(12, 8);
@@ -94,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isDashing && playerLife.currentHealth > 0)
             {
                 rb.velocity = Vector2.zero;
+                rb.gravityScale = 0f;
             }
         }
         else if (playerLife.currentHealth <= 0)
@@ -108,6 +113,10 @@ public class PlayerMovement : MonoBehaviour
             canJump = true;
             canDash = true;
             anim.enabled = true;
+            if (!isDashing)
+            {
+                rb.gravityScale = originalGravity;
+            }
         }
 
         if (!canMove && !canJump && !canDash)
@@ -308,18 +317,20 @@ public class PlayerMovement : MonoBehaviour
         externalForce = false; // for jump pads
 
         Vector2 direction = new Vector2(moveInput, 0f);
-        if (rbSprite.flipX == true)
+        if (rbSprite.flipX == true) //faced left
         {
             direction = new Vector2(-dashingPower, 0f);
+            dashEffect.transform.eulerAngles = new Vector3(0f, 90f, 0f);
         }
-        else if (rbSprite.flipX == false)
+        else if (rbSprite.flipX == false) //faced right
         {
             direction = new Vector2(dashingPower, 0f);
+            dashEffect.transform.eulerAngles = new Vector3(0f, -90f, 0f);
         }
 
         rb.velocity = direction.normalized * dashingPower;
+        dashEffect.Play();
         anim.SetTrigger("dashing");
-        //trail.emitting = true;
         StartCoroutine(cameraControl.ScreenShake());
         Physics2D.IgnoreLayerCollision(7, 8, true);
         Physics2D.IgnoreLayerCollision(3, 8, true);
@@ -327,7 +338,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         rb.gravityScale = dashGravity;
         isDashing = false;
-        //trail.emitting = false;
+        dashEffect.Stop();
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
         yield return new WaitForSeconds(dashingCooldown);
@@ -339,13 +350,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (checkSlow == true) //Slow debuff timer
         {
-            moveSpeed = 5f;
-            slowTimer += Time.deltaTime;
-            if (slowTimer >= 1.5f) //1.5 second debuff similar to gethurt
+            if (playerLife.currentHealth <= 0)
             {
-                moveSpeed = 10f;
-                slowTimer = 0f;
                 checkSlow = false;
+            }
+            else
+            {
+                moveSpeed = 5f;
+                slowTimer += Time.deltaTime;
+                if (slowTimer >= 1f) //Similar debuff time to GetHurt()
+                {
+                    moveSpeed = 10f;
+                    slowTimer = 0f;
+                    checkSlow = false;
+                }
             }
         }
     }
@@ -396,7 +414,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ableToDash = false;
         knocked = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         ableToDash = true;
         knocked = false;
     }

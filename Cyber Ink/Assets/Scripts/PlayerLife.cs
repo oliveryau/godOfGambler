@@ -40,10 +40,7 @@ public class PlayerLife : MonoBehaviour
         {
             if (currentHealth < maxHealth) //Health regen
             {
-                if (rb.velocity.x == 0f)
-                {
-                    currentHealth += heal * Time.deltaTime;
-                }
+                currentHealth += heal * Time.deltaTime;
             }
         }
 
@@ -123,9 +120,9 @@ public class PlayerLife : MonoBehaviour
         if (collision.gameObject.CompareTag("Slow Trap"))
         {
             currentHealth -= slowDamage;
-            playerMovement.checkSlow = true;
             if (currentHealth > 0)
             {
+                playerMovement.checkSlow = true;
                 StartCoroutine(GetHurt());
                 SetHealth();
             }

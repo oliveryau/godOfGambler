@@ -14,10 +14,16 @@ public class Teleport : MonoBehaviour
     public Dialogue dialogue;
     private GameObject player;
 
+    [Header("Animations")]
+    public Animator destinationAnim;
+    private Animator anim;
+    private bool passBy = false;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -38,7 +44,26 @@ public class Teleport : MonoBehaviour
             {
                 player.transform.position = portal.transform.position;
                 playerRespawn.respawnPoint = new Vector2(10f, 0f);
+                destinationAnim.SetTrigger("glow");
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && passBy == false)
+        {
+            passBy = true;
+            anim.SetTrigger("glow");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && passBy == true)
+        {
+            passBy = false;
+            anim.SetTrigger("fadeOut");
         }
     }
 }

@@ -9,6 +9,7 @@ public class GameOverMenu : MonoBehaviour
 {
     public SceneManagement sceneManagement;
     public PlayerLife playerLife;
+    public PlayerMovement playerMovement;
 
     [Header("UI")]
     public Image healthBar;
@@ -49,6 +50,7 @@ public class GameOverMenu : MonoBehaviour
         StopAllCoroutines();
         playerLife.currentHealth = 100f;
         playerLife.rb.bodyType = RigidbodyType2D.Dynamic;
+        playerMovement.anim.SetInteger("state", 0); //Idle anim
         playerRespawn.RespawnNow();
         healthBar.enabled = true;
         dashCooldownImage.enabled = true;

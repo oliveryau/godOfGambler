@@ -18,7 +18,7 @@ public class FallPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && collision.transform.position.y > transform.position.y && startDestroying == false)
         {
             startDestroying = true;
-            Destroy(gameObject, 0.5f);
+            Destroy(gameObject, 0.6f);
             anim.SetTrigger("destroying");
             FallPlatformManager.Instance.StartCoroutine("SpawnPlatform", new Vector2(transform.position.x, transform.position.y));
         }

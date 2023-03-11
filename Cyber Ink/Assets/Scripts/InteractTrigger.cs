@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IntroTrigger : MonoBehaviour
+public class InteractTrigger : MonoBehaviour
 {
     public bool dialogueTriggered = false;
     public Dialogue interactDialogue;
