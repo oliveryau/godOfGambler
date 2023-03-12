@@ -19,6 +19,19 @@ public class SceneManagement : MonoBehaviour
     {
         scene = SceneManager.GetActiveScene();
         fadePanel.SetActive(true);
+
+        if (scene.name == "Start")
+        {
+            AudioManager.Instance.PlayMusic("Menu BGM");
+        }
+        else if (scene.name == "Level 1")
+        {
+            AudioManager.Instance.PlayMusic("Level 1 BGM");
+        }
+        else if (scene.name == "Level 2")
+        {
+            AudioManager.Instance.PlayMusic("Level 2 BGM");
+        }
     }
 
     public IEnumerator FadeNextScene() //For going to the next scene
@@ -36,7 +49,11 @@ public class SceneManagement : MonoBehaviour
         }
         else if (scene.name == "Level 2")
         {
-            SceneManager.LoadScene("Start");
+            SceneManager.LoadScene("Level 3");
+        }
+        else if (scene.name == "Level 3")
+        {
+            SceneManager.LoadScene("End Credits");
         }
     }
 
@@ -57,6 +74,10 @@ public class SceneManagement : MonoBehaviour
         {
             SceneManager.LoadScene("Level 2");
         }
+        else if (scene.name == "Level 3")
+        {
+            SceneManager.LoadScene("Level 3");
+        }
     }
 
     public IEnumerator FadeMenu() //For returning to main menu
@@ -68,7 +89,7 @@ public class SceneManagement : MonoBehaviour
         {
             SceneManager.LoadScene("Level 1");
         }
-        else if (scene.name == "Level 1" || scene.name == "Level 2")
+        else if (scene.name == "Level 1" || scene.name == "Level 2" || scene.name == "Level 3")
         {
             SceneManager.LoadScene("Start");
         }

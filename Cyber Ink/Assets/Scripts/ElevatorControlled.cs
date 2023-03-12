@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ElevatorControlled : MonoBehaviour
 {
+    public PlayerMovement playerMovement;
+
     [Header("Positions")]
     public Transform startPosition;
     public Transform endPosition;
@@ -11,9 +13,6 @@ public class ElevatorControlled : MonoBehaviour
     [Header("Speed")]
     public float speed;
     private bool movingElevator;
-
-    [Header("Others")]
-    public PlayerMovement playerMovement;
 
     // Update is called once per frame
     void Update()

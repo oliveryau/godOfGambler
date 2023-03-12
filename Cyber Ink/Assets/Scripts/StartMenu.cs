@@ -13,9 +13,24 @@ public class StartMenu : MonoBehaviour
     [Header("Credits")]
     public GameObject creditsScreen;
 
+    [Header("Prologue")]
+    public DialoguePrologue prologue;
+
+    private void Update()
+    {
+        if (soundScreen.activeSelf || creditsScreen.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                soundScreen.SetActive(false);
+                creditsScreen.SetActive(false);
+            }
+        }
+    }
+
     public void StartGame()
     {
-        StartCoroutine(sceneManagement.FadeNextScene());
+        prologue.StartDialogue();
     }
 
     public void StartSound()

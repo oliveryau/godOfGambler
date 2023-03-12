@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Dialogue : MonoBehaviour
+public class DialoguePrologue : MonoBehaviour
 {
     public SceneManagement sceneManagement;
 
     [Header("Triggers")]
     public GameObject dialoguePanel;
     public TextMeshProUGUI mainText;
-    public PauseMenu pauseMenu;
 
     [Header("Dialogue")]
     public string[] lines;
@@ -22,22 +21,20 @@ public class Dialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (pauseMenu.isPaused == false)
+            if (mainText.text == lines[index])
             {
-                if (mainText.text == lines[index])
-                {
-                    NextLine();
-                }
-                else
-                {
-                    StopAllCoroutines();
-                    mainText.text = lines[index];
-                }
+                NextLine();
+            }
+            else
+            {
+                StopAllCoroutines();
+                mainText.text = lines[index];
             }
         }
     }
+
 
     public void StartDialogue()
     {
@@ -71,15 +68,7 @@ public class Dialogue : MonoBehaviour
         {
             activeDialogue = false;
             AudioManager.Instance.effectsSource.Stop();
-            if (sceneManagement.scene.name == "Level 3")
-            {
-                StartCoroutine(sceneManagement.FadeNextScene());
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
-
+            StartCoroutine(sceneManagement.FadeNextScene());
         }
     }
 }

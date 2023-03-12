@@ -18,9 +18,9 @@ public class PauseMenu : MonoBehaviour
     public bool noFocus = false;
 
     [Header("UI")]
-    public Image healthBar;
-    public Image dashCooldownImage;
+    public GameObject healthBar;
     public GameObject keyText;
+    public Image dashCooldownImage;
 
     [Header("Dialogue Pause Settings")]
     public bool isDialogueActive;
@@ -84,21 +84,30 @@ public class PauseMenu : MonoBehaviour
 
         if (isDialogueActive == true)
         {
-            healthBar.enabled = false;
-            dashCooldownImage.enabled = false;
+            if (sceneManagement.scene.name == "Level 1" || sceneManagement.scene.name == "Level 2")
+            {
+                healthBar.SetActive(false);
+            }
+
             if (sceneManagement.scene.name == "Level 2")
             {
                 keyText.SetActive(false);
             }
+
+            dashCooldownImage.enabled = false;
         }
         else if (isDialogueActive == false && playerLife.currentHealth > 0 && isPaused == false) //Special setting
         {
-            healthBar.enabled = true;
-            dashCooldownImage.enabled = true;
+            if (sceneManagement.scene.name == "Level 1" || sceneManagement.scene.name == "Level 2")
+            {
+                healthBar.SetActive(true);
+            }
+
             if (sceneManagement.scene.name == "Level 2")
             {
                 keyText.SetActive(true);
             }
+            dashCooldownImage.enabled = true;
         }
     }
 
@@ -107,30 +116,41 @@ public class PauseMenu : MonoBehaviour
         pauseScreen.SetActive(true);
         controlsScreen.SetActive(false);
         soundScreen.SetActive(false);
-        AudioManager.Instance.sfxSource.Pause();
+        AudioManager.Instance.effectsSource.Pause();
+
         isPaused = true;
 
-        healthBar.enabled = false;
-        dashCooldownImage.enabled = false;
+        if (sceneManagement.scene.name == "Level 1" || sceneManagement.scene.name == "Level 2")
+        {
+            healthBar.SetActive(false);
+        }
+
         if (sceneManagement.scene.name == "Level 2")
         {
             keyText.SetActive(false);
         }
+
+        dashCooldownImage.enabled = false;
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
         pauseScreen.SetActive(false);
-        AudioManager.Instance.sfxSource.UnPause();
+        AudioManager.Instance.effectsSource.UnPause();
+
         isPaused = false;
 
-        healthBar.enabled = true;
-        dashCooldownImage.enabled = true;
+        if (sceneManagement.scene.name == "Level 1" || sceneManagement.scene.name == "Level 2")
+        {
+            healthBar.SetActive(true);
+        }
+
         if (sceneManagement.scene.name == "Level 2")
         {
             keyText.SetActive(true);
         }
+        dashCooldownImage.enabled = true;
         Time.timeScale = 1f;
     }
 

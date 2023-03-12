@@ -15,10 +15,6 @@ public class Finish : MonoBehaviour
     [Header("Finish Condition")]
     public KeySystem keySystem;
 
-    [Header("Others")]
-    public Image healthBar;
-    public Image dashCooldownImage;
-    public GameObject keyPanel;
     private Animator anim;
     private bool passBy = false;
 
@@ -70,9 +66,6 @@ public class Finish : MonoBehaviour
 
     private void MissingKey()
     {
-        healthBar.enabled = false;
-        dashCooldownImage.enabled = false;
-        keyPanel.SetActive(false);
         failDialogue.StartDialogue();
     }
 

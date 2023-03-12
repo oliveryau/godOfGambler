@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,9 +10,9 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sounds")]
     public Sound[] musicSounds;
-    public Sound[] sfxSounds;
+    public Sound[] effectsSounds;
     public AudioSource musicSource;
-    public AudioSource sfxSource;
+    public AudioSource effectsSource;
 
     private void Awake()
     {
@@ -26,11 +27,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        PlayMusic("BGM");
-    }
-
     public void PlayMusic(string name)
     {
         Sound s = Array.Find(musicSounds, x=> x.name == name);
@@ -39,12 +35,12 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-    public void PlaySFX(string name)
+    public void PlayEffects(string name)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        Sound s = Array.Find(effectsSounds, x => x.name == name);
 
-        sfxSource.clip = s.clip;
-        sfxSource.Play();
+        effectsSource.clip = s.clip;
+        effectsSource.Play();
     }
 
     public void ToggleMusic()
@@ -52,9 +48,9 @@ public class AudioManager : MonoBehaviour
         musicSource.mute = !musicSource.mute;
     }
 
-    public void ToggleSFX()
+    public void ToggleEffects()
     {
-        sfxSource.mute = !sfxSource.mute;
+        effectsSource.mute = !effectsSource.mute;
     }
 
     public void MusicVolume(float volume)
@@ -63,9 +59,9 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("musicVolume", volume);
     }
 
-    public void SFXVolume(float volume)
+    public void EffectsVolume(float volume)
     {
-        sfxSource.volume = volume;
-        PlayerPrefs.SetFloat("sfxVolume", volume);
+        effectsSource.volume = volume;
+        PlayerPrefs.SetFloat("effectsVolume", volume);
     }
 }

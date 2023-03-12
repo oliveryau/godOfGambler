@@ -7,7 +7,6 @@ using TMPro;
 public class KeySystem : MonoBehaviour
 {
     public SceneManagement sceneManagement;
-    public PlayerMovement playerMovement;
     public PauseMenu pauseMenu;
 
     [Header("Key UI")]
@@ -18,11 +17,6 @@ public class KeySystem : MonoBehaviour
     [Header("Keys")]
     public int maxKeys;
     public GameObject[] keys = new GameObject[] { };
-
-    [Header("Other UI")]
-    public Image healthBar;
-    public Image dashCooldownImage;
-    public GameObject keyPanel;
 
     private void Start()
     {

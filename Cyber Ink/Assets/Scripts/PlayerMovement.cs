@@ -356,13 +356,22 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                moveSpeed = 5f;
-                slowTimer += Time.deltaTime;
-                if (slowTimer >= 1f) //Similar debuff time to GetHurt()
+                moveSpeed = 6f;
+
+                if (isDashing)
                 {
                     moveSpeed = 10f;
-                    slowTimer = 0f;
                     checkSlow = false;
+                }
+                else
+                {
+                    slowTimer += Time.deltaTime;
+                    if (slowTimer >= 1f) //Similar debuff time to GetHurt()
+                    {
+                        moveSpeed = 10f;
+                        slowTimer = 0f;
+                        checkSlow = false;
+                    }
                 }
             }
         }
@@ -440,11 +449,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump and fall here after movement as jump takes higher priority over run
-        if (rb.velocity.y > .1f) //Jump
+        if (rb.velocity.y > 0.1f) //Jump
         {
             state = movementState.jumping;
         }
-        else if (rb.velocity.y < -.1f) //Fall
+        else if (rb.velocity.y < -0.1f || !IsGrounded()) //Fall, including apex of jump
         {
             state = movementState.falling;
         }

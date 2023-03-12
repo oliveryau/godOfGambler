@@ -51,7 +51,6 @@ public class PlayerLife : MonoBehaviour
 
         lerpSpeed = 3f * Time.deltaTime;
         SetHealth();
-        HealthBarColor();
     }
 
     private IEnumerator GetHurt() //can use for hearts too
@@ -68,12 +67,6 @@ public class PlayerLife : MonoBehaviour
     public void SetHealth()
     {
         healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, lerpSpeed);
-    }
-
-    private void HealthBarColor()
-    {
-        Color healthColor = Color.Lerp(Color.red, Color.cyan, (currentHealth / maxHealth));
-        healthBar.color = healthColor;
     }
 
     public void TakeDamage(float damage) //Walking enemy and bullet

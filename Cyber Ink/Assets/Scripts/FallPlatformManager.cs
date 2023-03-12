@@ -31,7 +31,7 @@ public class FallPlatformManager : MonoBehaviour
         //Checkpoint 2 - 3
         Instantiate(platformPrefab, new Vector2(72.5f, -15.5f), platformPrefab.transform.rotation);
         Instantiate(platformPrefab, new Vector2(102.5f, -14.5f), platformPrefab.transform.rotation);
-        Instantiate(platformPrefab, new Vector2(126.5f, -10.5f), platformPrefab.transform.rotation);
+        Instantiate(platformPrefab, new Vector2(126.5f, -10.75f), platformPrefab.transform.rotation);
 
         //Checkpoint 3 - 4
         Instantiate(platformPrefab, new Vector2(156.5f, -10.5f), platformPrefab.transform.rotation);
