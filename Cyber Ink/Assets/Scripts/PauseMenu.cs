@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour
     [Header("UI")]
     public GameObject healthBar;
     public GameObject keyText;
-    public Image dashCooldownImage;
+    public GameObject dashCooldownIcon;
 
     [Header("Dialogue Pause Settings")]
     public bool isDialogueActive;
@@ -94,7 +94,7 @@ public class PauseMenu : MonoBehaviour
                 keyText.SetActive(false);
             }
 
-            dashCooldownImage.enabled = false;
+            dashCooldownIcon.SetActive(false);
         }
         else if (isDialogueActive == false && playerLife.currentHealth > 0 && isPaused == false) //Special setting
         {
@@ -107,7 +107,8 @@ public class PauseMenu : MonoBehaviour
             {
                 keyText.SetActive(true);
             }
-            dashCooldownImage.enabled = true;
+
+            dashCooldownIcon.SetActive(true);
         }
     }
 
@@ -130,7 +131,7 @@ public class PauseMenu : MonoBehaviour
             keyText.SetActive(false);
         }
 
-        dashCooldownImage.enabled = false;
+        dashCooldownIcon.SetActive(false);
         Time.timeScale = 0f;
     }
 
@@ -150,7 +151,8 @@ public class PauseMenu : MonoBehaviour
         {
             keyText.SetActive(true);
         }
-        dashCooldownImage.enabled = true;
+
+        dashCooldownIcon.SetActive(true);
         Time.timeScale = 1f;
     }
 

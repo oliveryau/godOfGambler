@@ -36,6 +36,7 @@ public class StartMenu : MonoBehaviour
     public void StartSound()
     {
         soundScreen.SetActive(true);
+        creditsScreen.SetActive(false);
     }
 
     public void ExitSound()
@@ -46,6 +47,7 @@ public class StartMenu : MonoBehaviour
     public void StartCredits()
     {
         creditsScreen.SetActive(true);
+        soundScreen.SetActive(false);
     }
 
     public void ExitCredits()

@@ -11,11 +11,13 @@ public class GameOverMenu : MonoBehaviour
     public PlayerLife playerLife;
     public PlayerMovement playerMovement;
 
+    [Header("Game Over")]
+    public GameObject gameOverScreen;
+
     [Header("UI")]
     public GameObject healthBar;
     public GameObject keyText;
-    public Image dashCooldownImage;
-    public GameObject gameOverScreen;
+    public GameObject dashCooldownIcon;
 
     private PlayerRespawn playerRespawn;
 
@@ -37,7 +39,7 @@ public class GameOverMenu : MonoBehaviour
         yield return new WaitForSeconds(2f);
         gameOverScreen.SetActive(true);
         healthBar.SetActive(false);
-        dashCooldownImage.enabled = false;
+        dashCooldownIcon.SetActive(false);
         if (sceneManagement.scene.name == "Level 2")
         {
             keyText.SetActive(false);
@@ -53,7 +55,7 @@ public class GameOverMenu : MonoBehaviour
         playerMovement.anim.SetInteger("state", 0); //Idle anim
         playerRespawn.RespawnNow();
         healthBar.SetActive(true);
-        dashCooldownImage.enabled = true;
+        dashCooldownIcon.SetActive(true);
         if (sceneManagement.scene.name == "Level 2")
         {
             keyText.SetActive(true);

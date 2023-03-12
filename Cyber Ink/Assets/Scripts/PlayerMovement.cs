@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (pauseMenu.pauseScreen.activeSelf || pauseMenu.controlsScreen.activeSelf || pauseMenu.soundScreen.activeSelf ||
-            pauseMenu.isDialogueActive == true)
+            pauseMenu.isDialogueActive)
         {
             canMove = false;
             canJump = false;
@@ -217,6 +217,11 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
+            if (!isDashingCooldown)
+            {
+                ableToDash = true;
+            }
+
             if (isCooldown)
             {
                 dashCooldownIcon.fillAmount -= 1 / dashingCooldown * Time.deltaTime;
@@ -225,11 +230,6 @@ public class PlayerMovement : MonoBehaviour
                     dashCooldownIcon.fillAmount = 0;
                     isCooldown = false;
                 }
-            }
-
-            if (!isDashingCooldown)
-            {
-                ableToDash = true;
             }
 
             CheckSlowed();
