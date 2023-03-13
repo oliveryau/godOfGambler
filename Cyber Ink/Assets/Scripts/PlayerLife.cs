@@ -90,6 +90,8 @@ public class PlayerLife : MonoBehaviour
     {
         playerMovement.knockCounter = 0;
         rb.bodyType = RigidbodyType2D.Static;
+        Physics2D.IgnoreLayerCollision(7, 8, true);
+        Physics2D.IgnoreLayerCollision(3, 8, true);
         anim.SetTrigger("death");
     }
 

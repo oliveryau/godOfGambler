@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
-    public SceneManagement sceneManagement;
-
     [Header("Settings")]
     public GameObject soundScreen;
 
@@ -15,6 +12,7 @@ public class StartMenu : MonoBehaviour
 
     [Header("Prologue")]
     public DialoguePrologue prologue;
+    private bool playing = false;
 
     private void Update()
     {
@@ -30,7 +28,11 @@ public class StartMenu : MonoBehaviour
 
     public void StartGame()
     {
-        prologue.StartDialogue();
+        if (prologue.activeDialogue == false && !playing)
+        {
+            playing = true;
+            prologue.StartDialogue();
+        }
     }
 
     public void StartSound()

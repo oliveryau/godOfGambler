@@ -35,12 +35,20 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-    public void PlayEffects(string name)
+    public void PlayEffects(string name) //Able to disable sound effect
     {
         Sound s = Array.Find(effectsSounds, x => x.name == name);
 
         effectsSource.clip = s.clip;
         effectsSource.Play();
+    }
+
+    public void PlayEffectsOneShot(string name) //Play whole sound effect
+    {
+        Sound s = Array.Find(effectsSounds, x => x.name == name);
+
+        effectsSource.clip = s.clip;
+        effectsSource.PlayOneShot(s.clip);
     }
 
     public void ToggleMusic()

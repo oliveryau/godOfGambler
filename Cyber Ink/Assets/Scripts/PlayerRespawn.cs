@@ -19,6 +19,8 @@ public class PlayerRespawn : MonoBehaviour
     {
         if (playerLife.currentHealth > 0)
         {
+            Physics2D.IgnoreLayerCollision(7, 8, false);
+            Physics2D.IgnoreLayerCollision(3, 8, false);
             playerMovement.externalForce = false;
             transform.position = respawnPoint;
         }

@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     public bool canJump;
     public bool isJumping;
+    public bool jumped;
     public float jumpForce = 15f;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -298,6 +299,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator JumpCooldown()
     {
         isJumping = true;
+        AudioManager.Instance.PlayEffectsOneShot("Jump");
         yield return new WaitForSeconds(0.4f);
         isJumping = false;
     }

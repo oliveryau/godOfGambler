@@ -20,6 +20,7 @@ public class FallPlatform : MonoBehaviour
             startDestroying = true;
             Destroy(gameObject, 0.6f);
             anim.SetTrigger("destroying");
+            AudioManager.Instance.PlayEffectsOneShot("Disappearing Platform");
             FallPlatformManager.Instance.StartCoroutine("SpawnPlatform", new Vector2(transform.position.x, transform.position.y));
         }
     }
