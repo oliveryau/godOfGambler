@@ -14,6 +14,7 @@ public class JumpPad : MonoBehaviour
         {
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounceForce, ForceMode2D.Impulse);
             anim.SetTrigger("step");
+            AudioManager.Instance.PlayEffectsOneShot("Jump Pad");
         }
     }
 }

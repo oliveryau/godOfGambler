@@ -14,6 +14,11 @@ public class SceneManagement : MonoBehaviour
     [Header("Scene Delay Time")]
     public float waitTime;
 
+    private void Awake()
+    {
+        Screen.SetResolution(1920, 1080, false);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

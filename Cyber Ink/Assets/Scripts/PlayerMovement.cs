@@ -333,6 +333,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = direction.normalized * dashingPower;
         dashEffect.Play();
         anim.SetTrigger("dashing");
+        AudioManager.Instance.PlayEffectsOneShot("Dash");
         StartCoroutine(cameraControl.ScreenShake());
         Physics2D.IgnoreLayerCollision(7, 8, true);
         Physics2D.IgnoreLayerCollision(3, 8, true);

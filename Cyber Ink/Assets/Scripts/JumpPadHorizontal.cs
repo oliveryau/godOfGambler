@@ -16,6 +16,7 @@ public class JumpPadHorizontal : MonoBehaviour
         {
             StartCoroutine(ExternalForce(collision));
             anim.SetTrigger("step");
+            AudioManager.Instance.PlayEffectsOneShot("Jump Pad");
         }
     }
 

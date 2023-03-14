@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class StartMenu : MonoBehaviour
 {
+    [Header("UI")]
+    public GameObject titleLogo;
+    public GameObject startButton;
+    public GameObject settingsButton;
+    public GameObject creditsButton;
+    public GameObject quitButton;
+
+
     [Header("Settings")]
     public GameObject soundScreen;
 
@@ -16,13 +24,13 @@ public class StartMenu : MonoBehaviour
 
     private void Update()
     {
-        if (soundScreen.activeSelf || creditsScreen.activeSelf)
+        if (soundScreen.activeSelf && Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                soundScreen.SetActive(false);
-                creditsScreen.SetActive(false);
-            }
+            ExitSound();
+        }
+        else if (creditsScreen.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitCredits();
         }
     }
 
@@ -38,23 +46,45 @@ public class StartMenu : MonoBehaviour
     public void StartSound()
     {
         soundScreen.SetActive(true);
-        creditsScreen.SetActive(false);
+
+        titleLogo.SetActive(false);
+        startButton.SetActive(false);
+        settingsButton.SetActive(false);
+        creditsButton.SetActive(false);
+        quitButton.SetActive(false);
     }
 
     public void ExitSound()
     {
         soundScreen.SetActive(false);
+
+        titleLogo.SetActive(true);
+        startButton.SetActive(true);
+        settingsButton.SetActive(true);
+        creditsButton.SetActive(true);
+        quitButton.SetActive(true);
     }
 
     public void StartCredits()
     {
         creditsScreen.SetActive(true);
-        soundScreen.SetActive(false);
+
+        titleLogo.SetActive(false);
+        startButton.SetActive(false);
+        settingsButton.SetActive(false);
+        creditsButton.SetActive(false);
+        quitButton.SetActive(false);
     }
 
     public void ExitCredits()
     {
         creditsScreen.SetActive(false);
+
+        titleLogo.SetActive(true);
+        startButton.SetActive(true);
+        settingsButton.SetActive(true);
+        creditsButton.SetActive(true);
+        quitButton.SetActive(true);
     }
 
     public void ExitGame()

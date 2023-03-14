@@ -128,7 +128,7 @@ public class PlayerLife : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("Falling Object"))
+        if (collision.gameObject.CompareTag("Laser"))
         {
             //Knockback
             playerMovement.knockCounter = playerMovement.knockTotalTime;
@@ -144,6 +144,7 @@ public class PlayerLife : MonoBehaviour
             currentHealth -= trapDamage;
             if (currentHealth > 0)
             {
+                AudioManager.Instance.PlayEffectsOneShot("Laser");
                 StartCoroutine(GetHurt());
                 SetHealth();
             }
@@ -184,6 +185,33 @@ public class PlayerLife : MonoBehaviour
             currentHealth -= trapDamage;
             if (currentHealth > 0)
             {
+                AudioManager.Instance.PlayEffectsOneShot("Laser");
+                StartCoroutine(GetHurt());
+                SetHealth();
+            }
+            else
+            {
+                Die();
+                SetHealth();
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Falling Object"))
+        {
+            playerMovement.knockCounter = playerMovement.knockTotalTime;
+            if (collision.transform.position.x <= transform.position.x)
+            {
+                playerMovement.knockedRight = true;
+            }
+            if (collision.transform.position.x >= transform.position.x)
+            {
+                playerMovement.knockedRight = false;
+            }
+
+            currentHealth -= trapDamage;
+            if (currentHealth > 0)
+            {
+                AudioManager.Instance.PlayEffectsOneShot("Falling Object");
                 StartCoroutine(GetHurt());
                 SetHealth();
             }
