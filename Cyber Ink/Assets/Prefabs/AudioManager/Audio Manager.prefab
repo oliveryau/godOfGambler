@@ -68,6 +68,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: fc6bfa25f4d52de40ba7c983bf50dd6e, type: 3}
   - name: Falling Object
     clip: {fileID: 8300000, guid: b0c73770bca6a8e42a9f39983240808c, type: 3}
+  - name: Bullet
+    clip: {fileID: 8300000, guid: ad3bf9956445efb4e8387b8e318e5c11, type: 3}
+  - name: Death
+    clip: {fileID: 8300000, guid: bd97957cc174a35498bb5775cefa7619, type: 3}
+  - name: Slow Trap
+    clip: {fileID: 8300000, guid: a3c9cacf2be3db84c800dcd4f8fe752e, type: 3}
   musicSource: {fileID: 6430960106962870149}
   effectsSource: {fileID: 6430960107928281305}
 --- !u!1 &6430960106962870148

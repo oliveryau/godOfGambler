@@ -9,33 +9,17 @@ public class GroundEnemy : MonoBehaviour
     [SerializeField]
     private float speed;
     public float storeSpeed; //for restarting the patrol() sequence
-    //[SerializeField]
-    //private EnemyData data;
-    //[SerializeField]
-    //private Text statusText;  
-    //[SerializeField]
-    //private float waitTime = 0.3f;
 
     private GameObject player;
-    //public Transform pathHolder;
     Transform playerlocation;
-
-    //public Light spotlight;
-    //public float viewDistance;
-    //public LayerMask viewMask;
-    //float viewAngle;
 
     Rigidbody2D myRigidbody;
     [SerializeField]
     Collider2D colliderType;
     [SerializeField]
     Collider2D frontCast;
-    //[SerializeField]
-    //Collider2D playerCollider;
     [SerializeField]
     private Transform enemy;
-
-    //Coroutine playerTracker;
 
     [Header("Player Detection")]
     [SerializeField] private BoxCollider2D boxCollider;
@@ -46,7 +30,6 @@ public class GroundEnemy : MonoBehaviour
     public float agroRange;
     private bool movingRight = true;
     bool ChasingPlayer = false;
-    bool withinRange;//able to use function but this way it is more robust
 
     [Header("Attack Range")]
     [SerializeField] private float attackCooldown;
@@ -58,16 +41,6 @@ public class GroundEnemy : MonoBehaviour
     private Animator anim;
     private PlayerLife playerHealth;
     private PlayerMovement playerMovement;
-
-
-    //[Header("Dash")]
-    //public bool canDash = true;
-    //private bool isDashing;
-    //private bool isDashingCooldown;
-    //private float dashingPower = 30f;
-    //private float dashingTime = 0.2f;
-    //private float dashingCooldown = 0.1f;
-
 
     private void Awake()
     {
@@ -87,11 +60,9 @@ public class GroundEnemy : MonoBehaviour
         if (colliderType.IsTouchingLayers(LayerMask.GetMask("Waypoint Collider")))
         {
             FlipEnemy();
-            //Debug.Log("collided");
         }
         else if (CanSeePlayer(agroRange) == true)
         {
-            //Debug.Log("chasing");
             ChasingPlayer = true;
             MoveToPlayer();
         }
@@ -115,7 +86,6 @@ public class GroundEnemy : MonoBehaviour
             {
                 // chase the enemy
                 val = true;
-                
             }
 
             else
@@ -141,34 +111,28 @@ public class GroundEnemy : MonoBehaviour
     }
     private void FlipEnemy()
     {
-        //Debug.Log("Flip");
         if (movingRight == true)
         {
             transform.eulerAngles = new Vector3(0, -180, 0);
             movingRight = false;
         }
-
         else
         {
             transform.eulerAngles = new Vector3(0, 0, 0);
             movingRight = true;
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-
         if (collider.CompareTag("Player") && ChasingPlayer == true)
         {
-
             if (movingRight == true)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 movingRight = false;
                 MoveToPlayer();
             }
-
             else
             {
 
@@ -177,8 +141,6 @@ public class GroundEnemy : MonoBehaviour
                 MoveToPlayer();
             }
         }
-
-
     }
 
 

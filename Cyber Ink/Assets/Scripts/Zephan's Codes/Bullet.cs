@@ -24,20 +24,13 @@ public class Bullet : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
+            AudioManager.Instance.PlayEffectsOneShot("Bullet");
             collision.gameObject.GetComponent<PlayerLife>().TakeDamage(bulletDamage);
-            //Debug.Log("hit");
             Destroy(gameObject);
-            //anim.SetTrigger("Explode");
         }
 
         if (collision.tag == "Terrain Wall")

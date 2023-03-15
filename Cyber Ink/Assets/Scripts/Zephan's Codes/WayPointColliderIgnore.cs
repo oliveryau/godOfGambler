@@ -14,10 +14,4 @@ public class WayPointColliderIgnore : MonoBehaviour
         Physics2D.IgnoreLayerCollision(3, 9);
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -6,36 +6,19 @@ public class RangedEnemy : MonoBehaviour
 {
     [SerializeField]
     private float speed;
-    public float storeSpeed; //for restarting the patrol() sequence 
-
-    //[SerializeField] 
-    //private EnemyData data; 
-    //[SerializeField] 
-    //private Text statusText;   
-    //[SerializeField] 
-    //private float waitTime = 0.3f; 
+    public float storeSpeed; //for restarting the patrol() sequence
 
     private GameObject player;
-    //public Transform pathHolder; 
     Transform playerlocation;
-
-    //public Light spotlight; 
-    //public float viewDistance; 
-    //public LayerMask viewMask; 
-    //float viewAngle; 
 
     Rigidbody2D myRigidbody;
     [SerializeField]
     Collider2D colliderType;
     [SerializeField]
     Collider2D frontCast;
-    //[SerializeField] 
-    //Collider2D playerCollider; 
     [SerializeField]
     private Transform enemy;
     public SpriteRenderer sr;
-
-    //Coroutine playerTracker; 
 
     [Header("Player Detection")]
     [SerializeField] private BoxCollider2D boxCollider;
@@ -81,32 +64,14 @@ public class RangedEnemy : MonoBehaviour
     void Update()
     {
         cooldownTimer += Time.deltaTime;
-
-        //float distanceToplayer; 
-        //RaycastHit2D front = Physics2D.Linecast(transform.position, player.transform.position); 
-        //RaycastHit2D front = Physics2D.Raycast(transform.position, Vector2.right, agroRange); 
         if (colliderType.IsTouchingLayers(LayerMask.GetMask("Waypoint Collider")))
         {
             FlipEnemy();
-            //Debug.Log("collided"); 
         }
-        //else if (PlayerInSight()) 
-        //{ 
-        //    ChasingPlayer = true; 
-        //    MoveToPlayer(); 
-        //    //if (cooldownTimer >= attackCooldown) 
-        //    //{ 
-        //    //    //Attack 
-        //    //    cooldownTimer = 0; 
-        //    //    anim.SetTrigger("attack"); 
-        //    //    DamagePlayer(); 
-        //    //} 
-        //} 
 
-        //} 
+
         else if (CanSeePlayer(agroRange) == true)
         {
-            //Debug.Log("chasing"); 
             ChasingPlayer = true;
             MoveToPlayer();
 
@@ -114,9 +79,7 @@ public class RangedEnemy : MonoBehaviour
             {
                 //Attack
                 Destroy(Instantiate(bullet, firepoint.position, firepoint.rotation), 2f);
-                //Debug.Log("Shooting");
                 shotCooldown = startShotCooldown;
-                //anim.SetTrigger("attack");
             }
             else
                 shotCooldown -= Time.deltaTime;
@@ -134,14 +97,7 @@ public class RangedEnemy : MonoBehaviour
         bool val = false;
         float castDist = distance;
         Vector2 endPos;
-        //if(faceLeft() == true)
-        //{
-        //    endPos = castPoint.position + -(castPoint.right) * distance;
-        //}
-        //else
-        //{
-            endPos = castPoint.position + castPoint.right * distance;
-        //}
+        endPos = castPoint.position + castPoint.right * distance;
         RaycastHit2D hit = Physics2D.Linecast(castPoint.position, endPos, 1 << LayerMask.NameToLayer("Player"));
         if (hit.collider != null)
         {
@@ -162,22 +118,10 @@ public class RangedEnemy : MonoBehaviour
         return val;
     }
 
-    //public bool faceLeft()
-    //{
-    //    if (transform.localScale.x < 0)
-    //    {
-    //        Debug.Log("Face Left");
-    //        return true;
-    //    }
-            
-    //    else
-    //        return false;
-    //}
 
 
     private void MoveToPlayer()
     {
-        //transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         if (transform.position.x < player.transform.position.x)
         {
             myRigidbody.velocity = new Vector2(speed * Time.deltaTime, 0);
@@ -198,7 +142,6 @@ public class RangedEnemy : MonoBehaviour
     }
     private void FlipEnemy()
     {
-        //Debug.Log("Flip");
         if (movingRight == true)
         {
             transform.eulerAngles = new Vector3(0, -180, 0);

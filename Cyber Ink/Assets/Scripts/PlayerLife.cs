@@ -92,6 +92,7 @@ public class PlayerLife : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Static;
         Physics2D.IgnoreLayerCollision(7, 8, true);
         Physics2D.IgnoreLayerCollision(3, 8, true);
+        AudioManager.Instance.PlayEffectsOneShot("Death");
         anim.SetTrigger("death");
     }
 
@@ -118,6 +119,7 @@ public class PlayerLife : MonoBehaviour
             if (currentHealth > 0)
             {
                 playerMovement.checkSlow = true;
+                AudioManager.Instance.PlayEffectsOneShot("Slow Trap");
                 StartCoroutine(GetHurt());
                 SetHealth();
             }
