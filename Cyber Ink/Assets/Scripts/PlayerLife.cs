@@ -52,8 +52,12 @@ public class PlayerLife : MonoBehaviour
         lerpSpeed = 3f * Time.deltaTime;
         SetHealth();
     }
+    public void SetHealth()
+    {
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, lerpSpeed);
+    }
 
-    private IEnumerator GetHurt() //can use for hearts too
+    private IEnumerator GetHurt()
     {
         Physics2D.IgnoreLayerCollision(7, 8);
         Physics2D.IgnoreLayerCollision(3, 8);
@@ -63,29 +67,6 @@ public class PlayerLife : MonoBehaviour
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
     }
-
-    public void SetHealth()
-    {
-        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, currentHealth / maxHealth, lerpSpeed);
-    }
-
-    public void TakeDamage(float damage) //Walking enemy and bullet
-    {
-        currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
-        if (currentHealth > 0)
-        {
-            //player hurt
-            SetHealth();
-            StartCoroutine(GetHurt());
-        }
-        else
-        {
-            //player die
-            Die();
-            SetHealth();
-        }
-    }
-
     private void Die()
     {
         playerMovement.knockCounter = 0;
@@ -94,6 +75,22 @@ public class PlayerLife : MonoBehaviour
         Physics2D.IgnoreLayerCollision(3, 8, true);
         AudioManager.Instance.PlayEffectsOneShot("Death");
         anim.SetTrigger("death");
+    }
+
+    public void TakeDamage(float damage) //Walking enemy and bullet
+    {
+        currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
+        if (currentHealth > 0)
+        {
+            anim.SetTrigger("getHit");
+            SetHealth();
+            StartCoroutine(GetHurt());
+        }
+        else
+        {
+            Die();
+            SetHealth();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -147,6 +144,7 @@ public class PlayerLife : MonoBehaviour
             if (currentHealth > 0)
             {
                 AudioManager.Instance.PlayEffectsOneShot("Laser");
+                anim.SetTrigger("getHit");
                 StartCoroutine(GetHurt());
                 SetHealth();
             }
@@ -188,6 +186,7 @@ public class PlayerLife : MonoBehaviour
             if (currentHealth > 0)
             {
                 AudioManager.Instance.PlayEffectsOneShot("Laser");
+                anim.SetTrigger("getHit");
                 StartCoroutine(GetHurt());
                 SetHealth();
             }
@@ -214,6 +213,7 @@ public class PlayerLife : MonoBehaviour
             if (currentHealth > 0)
             {
                 AudioManager.Instance.PlayEffectsOneShot("Falling Object");
+                anim.SetTrigger("getHit");
                 StartCoroutine(GetHurt());
                 SetHealth();
             }
@@ -226,17 +226,6 @@ public class PlayerLife : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            //Knockback
-            playerMovement.knockCounter = playerMovement.knockTotalTime;
-            if (collision.transform.position.x <= transform.position.x)
-            {
-                playerMovement.knockedRight = true;
-            }
-            if (collision.transform.position.x >= transform.position.x)
-            {
-                playerMovement.knockedRight = false;
-            }
-
             currentHealth -= enemyDamage;
             if (currentHealth > 0)
             {
