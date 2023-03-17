@@ -5,8 +5,6 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
-    public SceneManagement sceneManagement;
-
     [Header("Triggers")]
     public GameObject dialoguePanel;
     public TextMeshProUGUI mainText;
@@ -71,15 +69,7 @@ public class Dialogue : MonoBehaviour
         {
             activeDialogue = false;
             AudioManager.Instance.effectsSource.Stop();
-            if (sceneManagement.scene.name == "Level 3")
-            {
-                StartCoroutine(sceneManagement.FadeNextScene());
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
-
+            gameObject.SetActive(false);
         }
     }
 }

@@ -25,7 +25,7 @@ public class SceneManagement : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         fadePanel.SetActive(true);
 
-        if (scene.name == "Start")
+        if (scene.name == "Start") //BGMs
         {
             AudioManager.Instance.PlayMusic("Menu BGM");
         }
@@ -90,11 +90,7 @@ public class SceneManagement : MonoBehaviour
         fadeAnim.SetTrigger("fadeOut");
         yield return new WaitForSeconds(waitTime);
 
-        if (scene.name == "Start")
-        {
-            SceneManager.LoadScene("Level 1");
-        }
-        else if (scene.name == "Level 1" || scene.name == "Level 2" || scene.name == "Level 3")
+        if (scene.name == "Level 1" || scene.name == "Level 2" || scene.name == "Level 3")
         {
             SceneManager.LoadScene("Start");
         }

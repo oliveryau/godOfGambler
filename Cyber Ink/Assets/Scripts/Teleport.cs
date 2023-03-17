@@ -5,6 +5,7 @@ using UnityEngine;
 public class Teleport : MonoBehaviour
 {
     [Header("Game Objects")]
+    public KeySystem keySystem;
     public GameObject portal;
     public GameObject teleportCondition;
     public PlayerRespawn playerRespawn;
@@ -12,6 +13,8 @@ public class Teleport : MonoBehaviour
 
     [Header("Dialogue")]
     public Dialogue dialogue;
+    public Dialogue nextDialogue;
+    public Dialogue finalDialogue;
     private GameObject player;
 
     [Header("Animations")]
@@ -43,8 +46,17 @@ public class Teleport : MonoBehaviour
             else
             {
                 player.transform.position = portal.transform.position;
-                playerRespawn.respawnPoint = new Vector2(10f, 0f);
+                playerRespawn.respawnPoint = new Vector2(14f, 0f);
                 destinationAnim.SetTrigger("glow");
+
+                if (keySystem.keyCount == 1)
+                {
+                    nextDialogue.StartDialogue();
+                }
+                else if (keySystem.keyCount == 2)
+                {
+                    finalDialogue.StartDialogue();
+                }
             }
         }
     }

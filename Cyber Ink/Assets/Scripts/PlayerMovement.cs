@@ -317,7 +317,6 @@ public class PlayerMovement : MonoBehaviour
         float dashGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         externalForce = false; // for jump pads
-
         Vector2 direction = new Vector2(moveInput, 0f);
         if (rbSprite.flipX == true) //faced left
         {
@@ -329,7 +328,6 @@ public class PlayerMovement : MonoBehaviour
             direction = new Vector2(dashingPower, 0f);
             dashEffect.transform.eulerAngles = new Vector3(0f, -90f, 0f);
         }
-
         rb.velocity = direction.normalized * dashingPower;
         dashEffect.Play();
         anim.SetTrigger("dashing");
@@ -337,14 +335,24 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(cameraControl.ScreenShake());
         Physics2D.IgnoreLayerCollision(7, 8, true);
         Physics2D.IgnoreLayerCollision(3, 8, true);
+
         yield return new WaitForSeconds(dashingTime);
+
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         rb.gravityScale = dashGravity;
         isDashing = false;
+        while (pauseMenu.isDialogueActive)
+        {
+            dashEffect.Pause();
+            yield return null;
+            dashEffect.Play();
+        }
         dashEffect.Stop();
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
+
         yield return new WaitForSeconds(dashingCooldown);
+
         ableToDash = true;
         isDashingCooldown = false;
     }
@@ -426,7 +434,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ableToDash = false;
         knocked = true;
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         ableToDash = true;
         knocked = false;
     }

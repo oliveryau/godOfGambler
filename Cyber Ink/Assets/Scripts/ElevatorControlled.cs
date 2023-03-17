@@ -12,6 +12,7 @@ public class ElevatorControlled : MonoBehaviour
 
     [Header("Speed")]
     public float speed;
+    private float backSpeed = 2f;
     private bool movingElevator;
 
     // Update is called once per frame
@@ -28,7 +29,7 @@ public class ElevatorControlled : MonoBehaviour
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, startPosition.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, startPosition.position, backSpeed * Time.deltaTime);
         }
     }
 

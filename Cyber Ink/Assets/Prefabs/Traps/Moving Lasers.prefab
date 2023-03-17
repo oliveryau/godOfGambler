@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {fileID: 0}
   endPosition: {fileID: 0}
-  speed: 0
+  speed: 5
 --- !u!114 &7712277578347277284
 MonoBehaviour:
   m_ObjectHideFlags: 0
