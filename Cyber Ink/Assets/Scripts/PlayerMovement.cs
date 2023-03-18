@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     public bool canJump;
     public bool isJumping;
-    public bool jumped;
+    public bool falling;
     public float jumpForce = 15f;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canDash; //in general
     public bool ableToDash = true; //for in game dashing
     public ParticleSystem dashEffect; //dash particle system
+    public Image dashCooldownBorder;
     public Image dashCooldownIcon;
     private bool isDashing;
     private bool isDashingCooldown;
@@ -80,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         rbSprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rbCollider = GetComponent<BoxCollider2D>();
+        dashCooldownBorder.enabled = false;
         dashCooldownIcon.fillAmount = 0;
         Physics2D.IgnoreLayerCollision(8, 9);
         Physics2D.IgnoreLayerCollision(12, 8);
@@ -205,6 +207,17 @@ public class PlayerMovement : MonoBehaviour
                 rb.gravityScale = originalGravity;
             }
 
+            if (!IsGrounded())
+            {
+                falling = true;
+            }
+
+            if (falling && IsGrounded())
+            {
+                AudioManager.Instance.PlayEffectsOneShot("Land");
+                falling = false;
+            }
+
             if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
             {
                 if (ableToDash)
@@ -225,9 +238,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (isCooldown)
             {
+                dashCooldownBorder.enabled = true;
                 dashCooldownIcon.fillAmount -= 1 / dashingCooldown * Time.deltaTime;
                 if (dashCooldownIcon.fillAmount <= 0)
                 {
+                    dashCooldownBorder.enabled = false;
                     dashCooldownIcon.fillAmount = 0;
                     isCooldown = false;
                 }
@@ -318,6 +333,7 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0f;
         externalForce = false; // for jump pads
         Vector2 direction = new Vector2(moveInput, 0f);
+
         if (rbSprite.flipX == true) //faced left
         {
             direction = new Vector2(-dashingPower, 0f);
@@ -328,6 +344,7 @@ public class PlayerMovement : MonoBehaviour
             direction = new Vector2(dashingPower, 0f);
             dashEffect.transform.eulerAngles = new Vector3(0f, -90f, 0f);
         }
+
         rb.velocity = direction.normalized * dashingPower;
         dashEffect.Play();
         anim.SetTrigger("dashing");
@@ -341,9 +358,16 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         rb.gravityScale = dashGravity;
         isDashing = false;
-        dashEffect.Stop();
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
+
+        while (pauseMenu.isDialogueActive)
+        {
+            dashEffect.Pause();
+            yield return null;
+            dashEffect.Play();
+        }
+        dashEffect.Stop();
 
         yield return new WaitForSeconds(dashingCooldown);
 
@@ -429,7 +453,6 @@ public class PlayerMovement : MonoBehaviour
         ableToDash = false;
         knocked = true;
         yield return new WaitForSeconds(0.5f);
-        ableToDash = true;
         knocked = false;
     }
 

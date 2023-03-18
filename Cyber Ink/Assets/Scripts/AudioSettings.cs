@@ -21,16 +21,6 @@ public class AudioSettings : MonoBehaviour
         }
     }
 
-    public void ToggleMusic()
-    {
-        AudioManager.Instance.ToggleMusic();
-    }
-
-    public void ToggleEffects()
-    {
-        AudioManager.Instance.ToggleEffects();
-    }
-
     public void SetMusicVolume()
     {
         AudioManager.Instance.MusicVolume(musicSlider.value);

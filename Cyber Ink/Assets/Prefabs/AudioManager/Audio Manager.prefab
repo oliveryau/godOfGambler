@@ -56,6 +56,8 @@ MonoBehaviour:
   effectsSounds:
   - name: Jump
     clip: {fileID: 8300000, guid: 08a73ed08c1588b4a91c3045193fb15a, type: 3}
+  - name: Land
+    clip: {fileID: 8300000, guid: 0eb6f3262c7b49e4494a488e23296d83, type: 3}
   - name: Dash
     clip: {fileID: 8300000, guid: cf5e41519dddef245af911d25f95b0b3, type: 3}
   - name: Dialogue

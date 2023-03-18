@@ -42,7 +42,6 @@ public class DialoguePrologue : MonoBehaviour
         dialoguePanel.SetActive(true);
         mainText.text = string.Empty;
         index = 0;
-        AudioManager.Instance.PlayEffects("Dialogue");
         StartCoroutine(TypeLine());
     }
 
@@ -51,6 +50,7 @@ public class DialoguePrologue : MonoBehaviour
         foreach (char c in lines[index].ToCharArray())
         {
             mainText.text += c;
+            AudioManager.Instance.PlayEffectsOneShot("Bullet");
             yield return new WaitForSeconds(textSpeed);
         }
     }
@@ -61,7 +61,6 @@ public class DialoguePrologue : MonoBehaviour
         {
             index++;
             mainText.text = string.Empty;
-            AudioManager.Instance.PlayEffects("Dialogue");
             StartCoroutine(TypeLine());
         }
         else
