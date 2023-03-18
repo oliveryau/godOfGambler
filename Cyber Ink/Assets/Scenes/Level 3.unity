@@ -10711,7 +10711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLife: {fileID: 912119653}
   playerMovement: {fileID: 912119646}
-  respawnPoint: {x: 0, y: 0}
+  respawnPoint: {x: 2, y: 1}
 --- !u!1 &916260663
 GameObject:
   m_ObjectHideFlags: 0

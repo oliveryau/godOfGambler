@@ -341,12 +341,6 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         rb.gravityScale = dashGravity;
         isDashing = false;
-        while (pauseMenu.isDialogueActive)
-        {
-            dashEffect.Pause();
-            yield return null;
-            dashEffect.Play();
-        }
         dashEffect.Stop();
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
