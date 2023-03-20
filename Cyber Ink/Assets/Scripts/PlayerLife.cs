@@ -229,6 +229,7 @@ public class PlayerLife : MonoBehaviour
             currentHealth -= enemyDamage;
             if (currentHealth > 0)
             {
+                anim.SetTrigger("getHit");
                 StartCoroutine(GetHurt());
                 SetHealth();
             }

@@ -51,7 +51,7 @@ public class Dialogue : MonoBehaviour
         foreach (char c in lines[index].ToCharArray())
         {
             mainText.text += c;
-            AudioManager.Instance.PlayEffectsOneShot("Bullet");
+            AudioManager.Instance.PlayEffectsOneShot("Dialogue");
             yield return new WaitForSeconds(textSpeed);
         }
     }

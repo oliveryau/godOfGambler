@@ -65,11 +65,13 @@ public class GroundEnemy : MonoBehaviour
         {
             ChasingPlayer = true;
             MoveToPlayer();
+            anim.SetTrigger("attacking");
         }
         else
         {
             speed = storeSpeed;
             Patrol();
+            anim.SetTrigger("moving");
         }
 
     }
@@ -87,7 +89,6 @@ public class GroundEnemy : MonoBehaviour
                 // chase the enemy
                 val = true;
             }
-
             else
             {
                 val = false;
@@ -142,20 +143,4 @@ public class GroundEnemy : MonoBehaviour
             }
         }
     }
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
 }

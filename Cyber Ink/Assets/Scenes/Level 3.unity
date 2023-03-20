@@ -1522,7 +1522,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477098156}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 5
   stopAction: 0
   cullingMode: 0
@@ -6877,7 +6877,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11
+  orthographic size: 6.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -10592,7 +10592,6 @@ MonoBehaviour:
   frictionAmount: 1
   canJump: 1
   isJumping: 0
-  jumped: 0
   jumpForce: 15
   coyoteTime: 0.2
   jumpBufferTime: 0.2

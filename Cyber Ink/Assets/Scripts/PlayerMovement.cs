@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     public bool canJump;
     public bool isJumping;
-    public bool falling;
     public float jumpForce = 15f;
     public float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
@@ -185,6 +184,8 @@ public class PlayerMovement : MonoBehaviour
 
                 jumpBufferCounter = 0f;
 
+                AudioManager.Instance.PlayEffectsOneShot("Jump");
+
                 StartCoroutine(JumpCooldown());
             }
 
@@ -205,17 +206,6 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 rb.gravityScale = originalGravity;
-            }
-
-            if (!IsGrounded())
-            {
-                falling = true;
-            }
-
-            if (falling && IsGrounded())
-            {
-                AudioManager.Instance.PlayEffectsOneShot("Land");
-                falling = false;
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
@@ -314,7 +304,6 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator JumpCooldown()
     {
         isJumping = true;
-        AudioManager.Instance.PlayEffectsOneShot("Jump");
         yield return new WaitForSeconds(0.4f);
         isJumping = false;
     }
@@ -324,12 +313,12 @@ public class PlayerMovement : MonoBehaviour
         externalForce = value;
     }
 
-    public IEnumerator Dash()
+    private IEnumerator Dash()
     {
         ableToDash = false;
         isDashing = true;
         isDashingCooldown = true;
-        float dashGravity = rb.gravityScale;
+        float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         externalForce = false; // for jump pads
         Vector2 direction = new Vector2(moveInput, 0f);
@@ -355,21 +344,25 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(dashingTime);
 
-        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        rb.gravityScale = dashGravity;
-        isDashing = false;
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(3, 8, false);
 
-        while (pauseMenu.isDialogueActive)
-        {
-            dashEffect.Pause();
-            yield return null;
-            dashEffect.Play();
-        }
-        dashEffect.Stop();
+        rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
 
-        yield return new WaitForSeconds(dashingCooldown);
+        float coolingDown = dashingCooldown;
+        while (coolingDown > 0f)
+        {
+            while (playerLife.currentHealth <= 0 || pauseMenu.isDialogueActive)
+            {
+                dashEffect.Pause();
+                yield return null;
+                dashEffect.Play();
+            }
+            coolingDown -= Time.deltaTime;
+            yield return null;
+        }
 
         ableToDash = true;
         isDashingCooldown = false;

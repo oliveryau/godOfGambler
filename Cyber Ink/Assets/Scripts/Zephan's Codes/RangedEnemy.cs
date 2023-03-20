@@ -53,6 +53,7 @@ public class RangedEnemy : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
+
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -68,8 +69,6 @@ public class RangedEnemy : MonoBehaviour
         {
             FlipEnemy();
         }
-
-
         else if (CanSeePlayer(agroRange) == true)
         {
             ChasingPlayer = true;
@@ -80,10 +79,10 @@ public class RangedEnemy : MonoBehaviour
                 //Attack
                 Destroy(Instantiate(bullet, firepoint.position, firepoint.rotation), 2f);
                 shotCooldown = startShotCooldown;
+                anim.SetTrigger("shoot");
             }
             else
                 shotCooldown -= Time.deltaTime;
-
         }
         else
         {
@@ -92,6 +91,7 @@ public class RangedEnemy : MonoBehaviour
         }
 
     }
+
     bool CanSeePlayer(float distance)
     {
         bool val = false;
@@ -107,18 +107,14 @@ public class RangedEnemy : MonoBehaviour
                 val = true;
 
             }
-
             else
             {
                 val = false;
             }
             Debug.DrawLine(castPoint.position, endPos, Color.blue);
         }
-
         return val;
     }
-
-
 
     private void MoveToPlayer()
     {
@@ -140,6 +136,7 @@ public class RangedEnemy : MonoBehaviour
         else
             transform.Translate(Vector2.right * storeSpeed * Time.deltaTime);
     }
+
     private void FlipEnemy()
     {
         if (movingRight == true)
@@ -168,17 +165,13 @@ public class RangedEnemy : MonoBehaviour
                 movingRight = false;
                 MoveToPlayer();
             }
-
             else
             {
-
                 transform.eulerAngles = new Vector3(0, 0, 0);
                 movingRight = true;
                 MoveToPlayer();
             }
         }
-
-
     }
 }
 
