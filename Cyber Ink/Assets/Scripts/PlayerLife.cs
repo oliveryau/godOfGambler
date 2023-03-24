@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
@@ -77,22 +76,6 @@ public class PlayerLife : MonoBehaviour
         anim.SetTrigger("death");
     }
 
-    public void TakeDamage(float damage) //Walking enemy and bullet
-    {
-        currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
-        if (currentHealth > 0)
-        {
-            anim.SetTrigger("getHit");
-            SetHealth();
-            StartCoroutine(GetHurt());
-        }
-        else
-        {
-            Die();
-            SetHealth();
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Respawn"))
@@ -109,8 +92,7 @@ public class PlayerLife : MonoBehaviour
                 SetHealth();
             }
         }
-
-        if (collision.gameObject.CompareTag("Slow Trap"))
+        else if (collision.gameObject.CompareTag("Slow Trap"))
         {
             currentHealth -= slowDamage;
             if (currentHealth > 0)
@@ -126,8 +108,7 @@ public class PlayerLife : MonoBehaviour
                 SetHealth();
             }
         }
-
-        if (collision.gameObject.CompareTag("Laser"))
+        else if (collision.gameObject.CompareTag("Laser"))
         {
             //Knockback
             playerMovement.knockCounter = playerMovement.knockTotalTime;
@@ -154,8 +135,7 @@ public class PlayerLife : MonoBehaviour
                 SetHealth();
             }
         }
-
-        if (collision.gameObject.CompareTag("Laser (H)"))
+        else if (collision.gameObject.CompareTag("Laser (H)"))
         {
             //Knockback + More vertical height
             playerMovement.knockCounter = playerMovement.knockTotalTime;
@@ -196,8 +176,7 @@ public class PlayerLife : MonoBehaviour
                 SetHealth();
             }
         }
-
-        if (collision.gameObject.CompareTag("Falling Object"))
+        else if (collision.gameObject.CompareTag("Falling Object"))
         {
             playerMovement.knockCounter = playerMovement.knockTotalTime;
             if (collision.transform.position.x <= transform.position.x)
@@ -223,12 +202,27 @@ public class PlayerLife : MonoBehaviour
                 SetHealth();
             }
         }
-
-        if (collision.gameObject.CompareTag("Enemy"))
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
             currentHealth -= enemyDamage;
             if (currentHealth > 0)
             {
+                anim.SetTrigger("getHit");
+                StartCoroutine(GetHurt());
+                SetHealth();
+            }
+            else
+            {
+                Die();
+                SetHealth();
+            }
+        }
+        else if (collision.gameObject.CompareTag("Bullet"))
+        {
+            currentHealth -= enemyDamage;
+            if (currentHealth > 0)
+            {
+                AudioManager.Instance.PlayEffectsOneShot("Bullet");
                 anim.SetTrigger("getHit");
                 StartCoroutine(GetHurt());
                 SetHealth();

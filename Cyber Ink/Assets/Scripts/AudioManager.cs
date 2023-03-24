@@ -35,6 +35,11 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
+    public void StopMusic()
+    {
+        musicSource.Stop();
+    }
+
     public void PlayEffectsOneShot(string name) //Play whole sound effect
     {
         Sound s = Array.Find(effectsSounds, x => x.name == name);

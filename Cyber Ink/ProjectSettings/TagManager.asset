@@ -18,6 +18,7 @@ TagManager:
   - Terrain Wall
   - Laser (H)
   - Audio
+  - Bullet
   layers:
   - Default
   - TransparentFX

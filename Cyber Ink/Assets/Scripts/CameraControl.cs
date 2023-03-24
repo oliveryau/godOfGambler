@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    public SceneManagement sceneManagement;
+
     [Header("Player Focus")]
     [SerializeField] private Transform target; //Player
     private Vector3 offset = new Vector3(0f, 0f, -10f);
+    private Vector3 storyOffset = new Vector3(0f, 2f, -10f);
     private float smoothTime = 0.1f;
     private Vector3 velocity = Vector3.zero;
 
@@ -17,8 +20,16 @@ public class CameraControl : MonoBehaviour
     private void Update()
     {
         //Smooth camera follow
-        Vector3 targetposition = target.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, smoothTime);   
+        if (sceneManagement.scene.name == "Level 3") //Different offset
+        {
+            Vector3 targetposition = target.position + storyOffset;
+            transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, smoothTime);
+        }
+        else
+        {
+            Vector3 targetposition = target.position + offset;
+            transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, smoothTime);   
+        }
     }
     
     public IEnumerator ScreenShake()

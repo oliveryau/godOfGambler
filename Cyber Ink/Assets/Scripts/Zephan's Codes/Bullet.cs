@@ -26,17 +26,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
-        {
-            AudioManager.Instance.PlayEffectsOneShot("Bullet");
-            collision.gameObject.GetComponent<PlayerLife>().TakeDamage(bulletDamage);
-            Destroy(gameObject);
-        }
-
-        if (collision.tag == "Terrain Wall")
+        if (collision.tag == "Player" || collision.tag == "Terrain Wall")
         {
             Destroy(gameObject);
         }
-
     }
 }

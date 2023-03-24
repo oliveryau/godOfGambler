@@ -37,6 +37,10 @@ public class SceneManagement : MonoBehaviour
         {
             AudioManager.Instance.PlayMusic("Level 2 BGM");
         }
+        else if (scene.name == "End Credits")
+        {
+            AudioManager.Instance.StopMusic();
+        }
     }
 
     public IEnumerator FadeNextScene() //For going to the next scene
@@ -90,9 +94,6 @@ public class SceneManagement : MonoBehaviour
         fadeAnim.SetTrigger("fadeOut");
         yield return new WaitForSeconds(waitTime);
 
-        if (scene.name == "Level 1" || scene.name == "Level 2" || scene.name == "Level 3")
-        {
-            SceneManager.LoadScene("Start");
-        }
+        SceneManager.LoadScene("Start");
     }
 }
