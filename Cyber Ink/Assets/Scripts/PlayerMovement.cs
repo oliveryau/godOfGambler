@@ -441,11 +441,11 @@ public class PlayerMovement : MonoBehaviour
         knockCounter -= Time.deltaTime;
     }
 
-    private IEnumerator PauseDash()
+    public IEnumerator PauseDash()
     {
         ableToDash = false;
         knocked = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         knocked = false;
     }
 
@@ -484,7 +484,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("Falling Object") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Laser") || collision.gameObject.CompareTag("Falling Object"))
         {
             knockedHorizontal = true;
             knockedVerticalUp = false;

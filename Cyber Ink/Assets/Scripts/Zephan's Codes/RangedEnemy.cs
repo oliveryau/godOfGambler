@@ -79,6 +79,7 @@ public class RangedEnemy : MonoBehaviour
                 //Attack
                 Destroy(Instantiate(bullet, firepoint.position, firepoint.rotation), 2f);
                 shotCooldown = startShotCooldown;
+                AudioManager.Instance.PlayEffectsOneShot("Shoot");
                 anim.SetTrigger("shoot");
             }
             else

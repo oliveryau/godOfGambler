@@ -207,6 +207,7 @@ public class PlayerLife : MonoBehaviour
             currentHealth -= enemyDamage;
             if (currentHealth > 0)
             {
+                AudioManager.Instance.PlayEffectsOneShot("Drill");
                 anim.SetTrigger("getHit");
                 StartCoroutine(GetHurt());
                 SetHealth();

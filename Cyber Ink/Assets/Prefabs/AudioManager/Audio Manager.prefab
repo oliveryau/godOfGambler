@@ -73,7 +73,11 @@ MonoBehaviour:
   - name: Slow Trap
     clip: {fileID: 8300000, guid: 3b460959a65884c4485915937ab9b642, type: 3}
   - name: Bullet
-    clip: {fileID: 8300000, guid: f2489a8455a771341ad3e76a269bb9f4, type: 3}
+    clip: {fileID: 8300000, guid: b27d20d7602654444b91b421666e366e, type: 3}
+  - name: Shoot
+    clip: {fileID: 8300000, guid: 60ffd73ad44d5db4b8debdf2f1e90ffc, type: 3}
+  - name: Drill
+    clip: {fileID: 8300000, guid: cc575eaba9f1c5446bcd0b416b5c8e23, type: 3}
   musicSource: {fileID: 6430960106962870149}
   effectsSource: {fileID: 6430960107928281305}
 --- !u!1 &6430960106962870148

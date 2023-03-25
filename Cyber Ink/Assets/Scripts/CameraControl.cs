@@ -9,7 +9,7 @@ public class CameraControl : MonoBehaviour
     [Header("Player Focus")]
     [SerializeField] private Transform target; //Player
     private Vector3 offset = new Vector3(0f, 0f, -10f);
-    private Vector3 storyOffset = new Vector3(0f, 2f, -10f);
+    //private Vector3 storyOffset = new Vector3(0f, 2f, -10f);
     private float smoothTime = 0.1f;
     private Vector3 velocity = Vector3.zero;
 
@@ -22,13 +22,14 @@ public class CameraControl : MonoBehaviour
         //Smooth camera follow
         if (sceneManagement.scene.name == "Level 3") //Different offset
         {
-            Vector3 targetposition = target.position + storyOffset;
-            transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, smoothTime);
+            //Vector3 targetposition = target.position + storyOffset;
+            Vector3 targetPos = new Vector3(target.position.x, 2f, -10f);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
         }
         else
         {
-            Vector3 targetposition = target.position + offset;
-            transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, smoothTime);   
+            Vector3 targetPos = target.position + offset;
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);   
         }
     }
     
