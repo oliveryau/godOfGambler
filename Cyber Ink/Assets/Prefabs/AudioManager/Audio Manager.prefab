@@ -57,27 +57,31 @@ MonoBehaviour:
   - name: Dialogue
     clip: {fileID: 8300000, guid: 16c8c9c6825a85f41a21c732c6072952, type: 3}
   - name: Jump
-    clip: {fileID: 8300000, guid: 59c197736d5089947babcdd5ac63457b, type: 3}
+    clip: {fileID: 8300000, guid: 17cb8478b93d92e4ba06854c65adddc5, type: 3}
   - name: Dash
-    clip: {fileID: 8300000, guid: f696c169dcb773b42a2e7a2210f38de4, type: 3}
+    clip: {fileID: 8300000, guid: 05d7fbdd08813bf4e972a20f920cfb02, type: 3}
   - name: Death
-    clip: {fileID: 8300000, guid: 75e8249c07d1f524999716540032e22e, type: 3}
+    clip: {fileID: 8300000, guid: 5fd5f6b205fb91a40bafb787d6b919ff, type: 3}
   - name: Disappearing Platform
-    clip: {fileID: 8300000, guid: acbb8ec447245c243bc2fa2e1e5e994d, type: 3}
+    clip: {fileID: 8300000, guid: aa3e7b8ff8abd7042a29eccc7ff6c2b3, type: 3}
   - name: Jump Pad
-    clip: {fileID: 8300000, guid: be565fb5c099b5f4882c712c962f67a8, type: 3}
+    clip: {fileID: 8300000, guid: 0185912a83b78e745a707c1f481a036b, type: 3}
   - name: Laser
-    clip: {fileID: 8300000, guid: 348d4ebf7b0fbb643be4a414e6a5d4c2, type: 3}
+    clip: {fileID: 8300000, guid: 3a660b50a82d77f44821efc18da595a3, type: 3}
   - name: Falling Object
-    clip: {fileID: 8300000, guid: ccdab0c9eb26e3d40896cd7067b4bc0e, type: 3}
+    clip: {fileID: 8300000, guid: b21c192d1e20c2c4684bc8590081b1a2, type: 3}
   - name: Slow Trap
-    clip: {fileID: 8300000, guid: 3b460959a65884c4485915937ab9b642, type: 3}
+    clip: {fileID: 8300000, guid: bf4a0929bc04af24b82db0b4e6eb6823, type: 3}
   - name: Bullet
-    clip: {fileID: 8300000, guid: b27d20d7602654444b91b421666e366e, type: 3}
+    clip: {fileID: 8300000, guid: d869d54547256c94a96bd4e1d3561354, type: 3}
   - name: Shoot
-    clip: {fileID: 8300000, guid: 60ffd73ad44d5db4b8debdf2f1e90ffc, type: 3}
+    clip: {fileID: 8300000, guid: 9e0ec1ace71b7d44d8ddb5ab5d3b3bbe, type: 3}
   - name: Drill
-    clip: {fileID: 8300000, guid: cc575eaba9f1c5446bcd0b416b5c8e23, type: 3}
+    clip: {fileID: 8300000, guid: 0d8e9c2f27d3f094fa049e094b0de7d9, type: 3}
+  - name: Mouse Hover
+    clip: {fileID: 8300000, guid: f34d135124569dd4ea003c1fc18e8259, type: 3}
+  - name: Mouse Click
+    clip: {fileID: 8300000, guid: bcc5ed359ac70fe4fba9134193003798, type: 3}
   musicSource: {fileID: 6430960106962870149}
   effectsSource: {fileID: 6430960107928281305}
 --- !u!1 &6430960106962870148

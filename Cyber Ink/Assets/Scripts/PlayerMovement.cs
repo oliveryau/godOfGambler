@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     public bool canDash; //in general
     public bool ableToDash = true; //for in game dashing
-    public ParticleSystem dashEffect; //dash particle system
     public Image dashCooldownBorder;
     public Image dashCooldownIcon;
     private bool isDashing;
@@ -64,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private bool knocked = false; //Stop dash after being knocked
 
     [Header("Other Settings")]
+    public ParticleSystem dashEffect; //dash particle system
     public CameraControl cameraControl;
     public PauseMenu pauseMenu;
 

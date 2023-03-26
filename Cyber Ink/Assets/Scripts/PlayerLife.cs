@@ -22,6 +22,9 @@ public class PlayerLife : MonoBehaviour
     public float trapDamage; //laser and falling object
     public float enemyDamage; //all walking enemies
 
+    [Header("Others")]
+    public GameObject bulletEffect;
+
     private void Awake()
     {
         GameObject.FindGameObjectWithTag("Respawn");
@@ -221,6 +224,7 @@ public class PlayerLife : MonoBehaviour
         else if (collision.gameObject.CompareTag("Bullet"))
         {
             currentHealth -= enemyDamage;
+            Instantiate(bulletEffect, transform.position, Quaternion.identity);
             if (currentHealth > 0)
             {
                 AudioManager.Instance.PlayEffectsOneShot("Bullet");
