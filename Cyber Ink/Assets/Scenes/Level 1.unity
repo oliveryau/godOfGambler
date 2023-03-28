@@ -68805,6 +68805,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 819469382}
+    - target: {fileID: 9058970462624662273, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292064824
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058970462896919162, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292064824
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058970463343055357, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292064824
+      objectReference: {fileID: 0}
     - target: {fileID: 9058970463538522582, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -68892,6 +68904,22 @@ PrefabInstance:
     - target: {fileID: 9058970463538522585, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
       propertyPath: m_Name
       value: Pause Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058970463538522585, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058970463599036712, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292064824
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058970463819243176, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292064824
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058970464011541117, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4292064824
       objectReference: {fileID: 0}
     - target: {fileID: 9058970464045565732, guid: 89f7faf556e7cc440a1b9245aa5613e4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

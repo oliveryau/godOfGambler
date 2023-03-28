@@ -21,7 +21,7 @@ public class CameraControl : MonoBehaviour
         //Smooth camera follow
         if (sceneManagement.scene.name == "Level 3") //Different offset
         {
-            Vector3 targetPos = new Vector3(target.position.x, 4f, -10f);
+            Vector3 targetPos = new Vector3(target.position.x, 2.5f, -10f);
             transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
         }
         else

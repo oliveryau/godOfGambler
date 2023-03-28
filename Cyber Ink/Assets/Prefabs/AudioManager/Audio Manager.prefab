@@ -57,13 +57,13 @@ MonoBehaviour:
   - name: Dialogue
     clip: {fileID: 8300000, guid: 16c8c9c6825a85f41a21c732c6072952, type: 3}
   - name: Jump
-    clip: {fileID: 8300000, guid: 17cb8478b93d92e4ba06854c65adddc5, type: 3}
+    clip: {fileID: 8300000, guid: 8b32288c9c386704799f086bf2260ec5, type: 3}
   - name: Dash
     clip: {fileID: 8300000, guid: 05d7fbdd08813bf4e972a20f920cfb02, type: 3}
   - name: Death
     clip: {fileID: 8300000, guid: 5fd5f6b205fb91a40bafb787d6b919ff, type: 3}
   - name: Disappearing Platform
-    clip: {fileID: 8300000, guid: aa3e7b8ff8abd7042a29eccc7ff6c2b3, type: 3}
+    clip: {fileID: 8300000, guid: 78ecb3dd54d9b4b499d80d2c9a902be4, type: 3}
   - name: Jump Pad
     clip: {fileID: 8300000, guid: 0185912a83b78e745a707c1f481a036b, type: 3}
   - name: Laser
@@ -75,9 +75,9 @@ MonoBehaviour:
   - name: Bullet
     clip: {fileID: 8300000, guid: d869d54547256c94a96bd4e1d3561354, type: 3}
   - name: Shoot
-    clip: {fileID: 8300000, guid: 9e0ec1ace71b7d44d8ddb5ab5d3b3bbe, type: 3}
+    clip: {fileID: 8300000, guid: 652e6440d800a604bbbedce890b890c9, type: 3}
   - name: Drill
-    clip: {fileID: 8300000, guid: 0d8e9c2f27d3f094fa049e094b0de7d9, type: 3}
+    clip: {fileID: 8300000, guid: 4cc2bc690483d7340b344c129cd6f791, type: 3}
   - name: Mouse Hover
     clip: {fileID: 8300000, guid: f34d135124569dd4ea003c1fc18e8259, type: 3}
   - name: Mouse Click
