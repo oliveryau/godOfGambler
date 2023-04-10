@@ -37,6 +37,10 @@ public class SceneManagement : MonoBehaviour
         {
             AudioManager.Instance.PlayMusic("Level 2 BGM");
         }
+        else if (scene.name == "Level 3")
+        {
+            AudioManager.Instance.PlayMusic("Level 3 BGM");
+        }
         else if (scene.name == "End Credits")
         {
             AudioManager.Instance.StopMusic();

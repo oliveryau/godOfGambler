@@ -53,6 +53,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: e387b2c6ab1155846afca3a0583d0831, type: 3}
   - name: Level 2 BGM
     clip: {fileID: 8300000, guid: d6af89726dd7cf94e8d66743862c9ff2, type: 3}
+  - name: Level 3 BGM
+    clip: {fileID: 8300000, guid: 07a2a03f2a3f7864d86bde249417207c, type: 3}
   effectsSounds:
   - name: Dialogue
     clip: {fileID: 8300000, guid: 16c8c9c6825a85f41a21c732c6072952, type: 3}
